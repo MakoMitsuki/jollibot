@@ -19,7 +19,8 @@
   "homepage": "https://github.com/MakoMitsuki/jollibot#readme",
   "dependencies": {
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "node-schedule": "^2.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
