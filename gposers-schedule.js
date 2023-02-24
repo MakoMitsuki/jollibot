@@ -34,9 +34,10 @@ module.exports = {
         	rule_second_notif_preday.second = 0;
         	rule_second_notif_preday.tz = 'America/New_York';
         	var staff_meeting_second_notif_preday = schedule.scheduleJob(rule_second_notif_preday, function(){
-        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting Saturday at 5pm EST / 10pm BST! If you haven't already, make sure you have enabled and double checked notifications for each relevant recurring meeting in Google Calendar:** <https://calendar.google.com>`).catch(console.error);
+        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting Saturday at 5pm Eastern US Time!`).catch(console.error);
         		//console.log(`1st Monthly Staff Meeting Announced Day Prior.`);
         	});
+            
         var rule_second_notif_day = new schedule.RecurrenceRule();
         	rule_second_notif_day.month = months;
         	rule_second_notif_day.date = second_sat_dates;
@@ -46,7 +47,7 @@ module.exports = {
         	rule_second_notif_day.second = 0;
         	rule_second_notif_day.tz = 'America/New_York';
         	var staff_meeting_second_notif_day = schedule.scheduleJob(rule_second_notif_day, function(){
-        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting today at 5pm EST / 10pm BST! If you haven't already, make sure you have enabled and double checked notifications for each relevant recurring meeting in Google Calendar:** <https://calendar.google.com>`).catch(console.error);
+        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting **today** at 5pm Eastern US Time!`).catch(console.error);
         		//console.log(`1st Monthly Staff Meeting Announced Day Of.`);
         	});
         var rule_second_notif_hour = new schedule.RecurrenceRule();
@@ -58,7 +59,7 @@ module.exports = {
         	rule_second_notif_hour.second = 0;
         	rule_second_notif_hour.tz = 'America/New_York';
         	var staff_meeting_second_notif_hour = schedule.scheduleJob(rule_second_notif_hour, function(){
-        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting today in one hour! If you haven't already, make sure you have enabled and double checked notifications for each relevant recurring meeting in Google Calendar:** <https://calendar.google.com>`).catch(console.error);
+        		client.channels.get(channel_staff_announce).send(`**Reminder: We have a** <@&466300432478896148>**-wide meeting today in one hour!`).catch(console.error);
         		//console.log(`1st Monthly Staff Meeting Announced Hour Before.`);
         	});
         var rule_second_notif_start = new schedule.RecurrenceRule();
@@ -70,7 +71,7 @@ module.exports = {
         	rule_second_notif_start.second = 0;
         	rule_second_notif_start.tz = 'America/New_York';
         	var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, function(){
-        		client.channels.get(channel_staff_announce).send(`<@&466300432478896148>**-wide is starting now! If you haven't already, make sure you have enabled and double checked notifications for each relevant recurring meeting in Google Calendar:** <https://calendar.google.com>`).catch(console.error);
+        		client.channels.get(channel_staff_announce).send(`<@&466300432478896148>-wide is starting now!`).catch(console.error);
         		//console.log(`1st Monthly Staff Meeting Announced.`);
         	});
 
@@ -83,18 +84,29 @@ module.exports = {
         	rule_design_first_notif.tz = 'America/New_York';
         	var design_first_notif = schedule.scheduleJob(rule_design_first_notif, function(){
         		client.channels.get(channel_staff_announce).send(`<@&466303902879318026> Today is the 1st. **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
-        		//console.log(`Designer 1st Notification Announced.`);
+				client.channels.get(channel_staff_announce).send(`<@&466300432478896148> <@&642850100606926873> **TODAY IS THE LAST DAY TO SIGN THE CONTRIBUTORS TAB!** No exceptions! Don't make us hunt you down!`).catch(console.error);
+        		//console.log(`Designer 1st Notification Announced and Contributors List is reminded`);
         	});
-        var rule_glam_auth_soft_notif = new schedule.RecurrenceRule();
-        	rule_glam_auth_soft_notif.month = months;
-        	rule_glam_auth_soft_notif.date = 5;
-        	rule_glam_auth_soft_notif.hour = 12;
-        	rule_glam_auth_soft_notif.minute = 0;
-        	rule_glam_auth_soft_notif.second = 0;
-        	rule_glam_auth_soft_notif.tz = 'America/New_York';
-        	var glam_auth_soft_notif = schedule.scheduleJob(rule_glam_auth_soft_notif, function(){
+		var rule_glam_soft_notif = new schedule.RecurrenceRule();
+        	rule_glam_soft_notif.month = months;
+        	rule_glam_soft_notif.date = 3;
+        	rule_glam_soft_notif.hour = 12;
+        	rule_glam_soft_notif.minute = 0;
+        	rule_glam_soft_notif.second = 0;
+        	rule_glam_soft_notif.tz = 'America/New_York';
+        	var glam_soft_notif = schedule.scheduleJob(rule_glam_soft_notif, function(){
+        		client.channels.get(channel_staff_announce).send(`<@&1071837611276120156> **soft deadline for in-house Community Couture is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
+			});//console.log(`Glam Artists Soft Deadline Announced.`);
+        var rule_glam_auth_mid_notif = new schedule.RecurrenceRule();
+        	rule_glam_auth_mid_notif.month = months;
+        	rule_glam_auth_mid_notif.date = 5;
+        	rule_glam_auth_mid_notif.hour = 12;
+        	rule_glam_auth_mid_notif.minute = 0;
+        	rule_glam_auth_mid_notif.second = 0;
+        	rule_glam_auth_mid_notif.tz = 'America/New_York';
+        	var glam_auth_mid_notif = schedule.scheduleJob(rule_glam_auth_mid_notif, function(){
         		client.channels.get(channel_staff_announce).send(`<@&466303792892346368> <@&466381392477945857> **soft deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
-        		//console.log(`Authors Glam Artists Soft Deadline Announced.`);
+        		//console.log(`Authors Soft Deadline / Glam Artists Hard Deadline Announced.`);
         	});
         var rule_glam_auth_hard_notif = new schedule.RecurrenceRule();
         	rule_glam_auth_hard_notif.month = months;
