@@ -367,7 +367,7 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.guildId === staffDiscordId ) {
 			const nextMeeting = staff_meeting_second_start.nextInvocation();
 
-			await interaction.reply(`Your next scheduled jolli-meeting is at **${nextMeeting.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })}**`)
+			await interaction.reply(`Your next scheduled jolli-meeting is at **${nextMeeting?.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })}**`)
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
@@ -380,11 +380,11 @@ client.on('interactionCreate', async interaction => {
 
     if (interaction.isButton()) {
       // BUTTON COMMANDS
-      if (interaction.customId('yesbreakbutton')) {
+      if (interaction.customId === 'yesbreakbutton') {
 		// PAUSE ALL NOTIFS
 		await pauseStaffReminders(interaction);
       } 
-	  else if (interaction.customId('nobreakbutton')) {
+	  else if (interaction.customId === 'nobreakbutton') {
 		// DONT CANCEL ALL NOTIFS
 		await interaction.reply(`Gotcha! No break for now.`);
 	  } else {
