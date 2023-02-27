@@ -85,7 +85,7 @@ var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, f
 
 // TEST
 schedule.scheduleJob({second: 0}, function(){
-	client.channels.cache.get(502517962893426688).send(`**[TEST]** ${hammerTimeHelper(staff_meeting_second_start, 'F')} ${hammerTimeHelper(staff_meeting_second_start, 'R')}`).catch(console.error);
+	client.channels.cache.get('502517962893426688').send(`**[TEST]** ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'F')} ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}`).catch(console.error);
   });
 
 var rule_second_notif_preday = new schedule.RecurrenceRule();
@@ -98,7 +98,7 @@ var rule_second_notif_preday = new schedule.RecurrenceRule();
 	rule_second_notif_preday.second = 0;
 var staff_meeting_second_notif_preday = schedule.scheduleJob(rule_second_notif_preday, function(){
     client.channels.cache.get(channel_staff_announce).send(
-		`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting this weekend: ${hammerTimeHelper(staff_meeting_second_start, 'F')} ${hammerTimeHelper(staff_meeting_second_start, 'R')}`
+		`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting this weekend: ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'F')} ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}`
 		).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Prior.`);
 });
@@ -112,7 +112,7 @@ var rule_second_notif_day = new schedule.RecurrenceRule();
 	rule_second_notif_day.minute = 0;
 	rule_second_notif_day.second = 0;
 var staff_meeting_second_notif_day = schedule.scheduleJob(rule_second_notif_day, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting really soon! It starts ${hammerTimeHelper(staff_meeting_second_start, 'R')} at ${hammerTimeHelper(staff_meeting_second_start, 'f')}`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting really soon! It starts ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'f')}`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Of.`);
 });
 
