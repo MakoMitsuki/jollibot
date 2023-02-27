@@ -16,6 +16,7 @@ const channels_weekly_feature = process.env.CHANNEL_WEEKLY_FEATURE;
 const channels_community_couture = process.env.CHANNEL_COMMUNITY_COUTURE;
 
 const staffDiscordId = process.env.STAFF_DISCORD_ID;
+const testDiscordId = process.env.ROBOT_YULIA_SERVER_ID;
 
 const yuliaPing = process.env.YULIA;
 const edeonPing = process.env.EDEON;
@@ -306,7 +307,7 @@ const commands = [
 	},
     {
       name: 'breakmonth',
-      description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications (only includes staff deadlines and meetings) starting now until the next month. Note that this should ideally be done on the 28th before the break month.',
+      description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications.',
     }, 
 	{
 		name: 'when-meeting',
@@ -332,8 +333,8 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
-
-    if (!interaction.isChatInputCommand() && !interaction.isButton()) return;
+	try {
+		if (!interaction.isChatInputCommand() && !interaction.isButton()) return;
 
     if (interaction.commandName === 'urmom') {
         await interaction.reply('gay');
@@ -341,7 +342,7 @@ client.on('interactionCreate', async interaction => {
     
     if (interaction.commandName === 'breakmonth') {
 		// EDITOR ONLY
-		if (interaction.member.roles.includes(staffEditorRole) || interaction.member.roles.includes(ricardoRole)) {
+		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
 			// BREAK MONTH
 			const isBreakMonth_row = new ActionRowBuilder()
 			.addComponents(
@@ -364,10 +365,10 @@ client.on('interactionCreate', async interaction => {
     }
 
 	if (interaction.commandName === 'when-meeting') {
-		if (interaction.guildId === staffDiscordId ) {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			const nextMeeting = staff_meeting_second_start.nextInvocation();
 
-			await interaction.reply(`Your next scheduled jolli-meeting is at **${nextMeeting?.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })}**`)
+			await interaction.reply(`Your next scheduled jolli-meeting is at **${nextMeeting}**`)
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
@@ -391,7 +392,13 @@ client.on('interactionCreate', async interaction => {
 		return;
 	  }
     }
+	} catch (error) {
+		console.log(`SOMETHING WENT WRONG: ${error}`);
+		return;
+	}
 
+    
+	
 });
 
 client.login(TOKEN);
