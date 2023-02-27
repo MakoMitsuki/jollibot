@@ -36,6 +36,16 @@ const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 
+const hammerTimeHelper = (d, format) => {
+	try {
+		const epoch = parseInt(d.getTime() / 1000);
+		return `<t:${epoch}:${format}>`;
+	} catch (error) {
+		console.log(`[[HAMMERTIME HELPER ERROR - d = ${d} // format = ${format}]] ${error}`);
+		return d;
+	}
+}
+
 // WEEKLY FEATURE OPEN
 schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0}, function(){
   client.channels.cache.get(channels_weekly_feature).send(`**[Submissions for the Weekly Feature are now OPEN!]**`).catch(console.error);
@@ -275,15 +285,6 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 	F : dayofweek dd MM yyyy hh:mm
 	R : time till
 */
-const hammerTimeHelper = (d, format) => {
-	try {
-		const epoch = parseInt(d.getTime() / 1000);
-		return `<t:${epoch}:${format}>`;
-	} catch (error) {
-		console.log(`[[HAMMERTIME HELPER ERROR - d = ${d} // format = ${format}]] ${error}`);
-		return d;
-	}
-}
 
 const pauseStaffReminders = (interaction) => {
   try {
