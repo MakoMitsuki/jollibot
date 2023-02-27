@@ -83,11 +83,6 @@ var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, f
 	//console.log(`1st Monthly Staff Meeting Announced.`);
 });
 
-// TEST
-schedule.scheduleJob({second: 0}, function(){
-	client.channels.cache.get('502517962893426688').send(`**[TEST]** ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'F')} ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}`).catch(console.error);
-  });
-
 var rule_second_notif_preday = new schedule.RecurrenceRule();
   rule_second_notif_preday.tz= 'America/New_York';
 	rule_second_notif_preday.month = months;
