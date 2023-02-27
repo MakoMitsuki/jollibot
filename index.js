@@ -354,8 +354,7 @@ client.on('message', async msg => {
 		if (msg.content === "+jollidance") {
 			msg.reply(`https://tenor.com/view/jollibee-chicken-joy-gif-26175242`);
 		}
-
-		if (msg.content === "+when-meeting") {
+		else if (msg.content === "+when-meeting") {
 			if (msg.guildId === staffDiscordId || msg.guildId === testDiscordId) {
 				const nextMeeting = staff_meeting_second_start.nextInvocation();
 				const hmNextMeeting = hammerTimeHelper(nextMeeting, 'F');
@@ -366,6 +365,9 @@ client.on('message', async msg => {
 				await msg.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
 			}
 			return;
+		}
+		else if (msg.content === "+hey") {
+			console.log(msg.content);
 		}
 	} catch (error) {
 		console.log(`SOMETHING WENT WRONG WITH A MESSAGE COMMAND: ${error}`);
