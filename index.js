@@ -59,6 +59,25 @@ schedule.scheduleJob({date: 14, hour: 0, minute: 0}, function(){
   //console.log(`Community Collection closed.`);
 });
 
+// NEXT MONTHLY MEETING
+var rule_second_notif_start = new schedule.RecurrenceRule();
+  rule_second_notif_start.tz = 'America/New_York';
+	rule_second_notif_start.month = months;
+	rule_second_notif_start.date = second_sat_dates;
+	rule_second_notif_start.dayOfWeek = 6;
+	rule_second_notif_start.hour = 17;
+	rule_second_notif_start.minute = 0;
+	rule_second_notif_start.second = 0;
+var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, function(){
+	client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting is starting now!`).catch(console.error);
+	//console.log(`1st Monthly Staff Meeting Announced.`);
+});
+
+// TEST
+schedule.scheduleJob({second: 0}, function(){
+	client.channels.cache.get(502517962893426688).send(`**[TEST]** ${hammerTimeHelper(staff_meeting_second_start, 'F')} ${hammerTimeHelper(staff_meeting_second_start, 'R')}`).catch(console.error);
+  });
+
 var rule_second_notif_preday = new schedule.RecurrenceRule();
   rule_second_notif_preday.tz= 'America/New_York';
 	rule_second_notif_preday.month = months;
@@ -68,7 +87,9 @@ var rule_second_notif_preday = new schedule.RecurrenceRule();
 	rule_second_notif_preday.minute = 0;
 	rule_second_notif_preday.second = 0;
 var staff_meeting_second_notif_preday = schedule.scheduleJob(rule_second_notif_preday, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting Saturday at 5pm Eastern!`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(
+		`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting this weekend: ${hammerTimeHelper(staff_meeting_second_start, 'F')} ${hammerTimeHelper(staff_meeting_second_start, 'R')}`
+		).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Prior.`);
 });
 
@@ -81,7 +102,7 @@ var rule_second_notif_day = new schedule.RecurrenceRule();
 	rule_second_notif_day.minute = 0;
 	rule_second_notif_day.second = 0;
 var staff_meeting_second_notif_day = schedule.scheduleJob(rule_second_notif_day, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting today at 5pm Eastern!`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting really soon! It starts ${hammerTimeHelper(staff_meeting_second_start, 'R')} at ${hammerTimeHelper(staff_meeting_second_start, 'f')}`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Of.`);
 });
 
@@ -94,23 +115,9 @@ var rule_second_notif_hour = new schedule.RecurrenceRule();
 	rule_second_notif_hour.minute = 0;
 	rule_second_notif_hour.second = 0;
 var staff_meeting_second_notif_hour = schedule.scheduleJob(rule_second_notif_hour, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting today in one hour!`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting today in about hour!`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Hour Before.`);
 });
-
-var rule_second_notif_start = new schedule.RecurrenceRule();
-  rule_second_notif_start.tz = 'America/New_York';
-	rule_second_notif_start.month = months;
-	rule_second_notif_start.date = second_sat_dates;
-	rule_second_notif_start.dayOfWeek = 6;
-	rule_second_notif_start.hour = 17;
-	rule_second_notif_start.minute = 0;
-	rule_second_notif_start.second = 0;
-	var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting is starting now!`).catch(console.error);
-		//console.log(`1st Monthly Staff Meeting Announced.`);
-	});
-
 
 var rule_design_first_notif = new schedule.RecurrenceRule();
   rule_design_first_notif.tz = 'America/New_York';
