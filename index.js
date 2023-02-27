@@ -6,7 +6,7 @@ const schedule = require('node-schedule');
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent] });
 
 /* ================================= SCHEDULE START ================================= */
 
