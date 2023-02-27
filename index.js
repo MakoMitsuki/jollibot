@@ -263,6 +263,21 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 
 /* ================================= SCHEDULE END =================================== */
 
+/*
+	f : dd MM yyyy hh:mm
+	F : dayofweek dd MM yyyy hh:mm
+	R : time till
+*/
+const hammerTimeHelper = (d, format) => {
+	try {
+		const epoch = parseInt(d.getTime() / 1000);
+		return `<t:${epoch}:${format}>`;
+	} catch (error) {
+		console.log(`[[HAMMERTIME HELPER ERROR - d = ${d} // format = ${format}]] ${error}`);
+		return d;
+	}
+}
+
 const pauseStaffReminders = (interaction) => {
   try {
     // skip next month's meeting reminders
@@ -332,6 +347,32 @@ client.on('ready', () => {
 
 });
 
+client.on('message', async msg => {
+	try {
+		if (msg.author.bot) return;
+
+		if (msg.content === "+jollidance") {
+			msg.reply(`https://tenor.com/view/jollibee-chicken-joy-gif-26175242`);
+		}
+
+		if (msg.content === "+when-meeting") {
+			if (msg.guildId === staffDiscordId || msg.guildId === testDiscordId) {
+				const nextMeeting = staff_meeting_second_start.nextInvocation();
+				const hmNextMeeting = hammerTimeHelper(nextMeeting, 'F');
+				const tillNextMeeting = hammerTimeHelper(nextMeeting, 'R');
+				await msg.reply(`Your next scheduled jolli-meeting is at ${hmNextMeeting} which is ${tillNextMeeting} from now`);
+			}
+			else {
+				await msg.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+			}
+			return;
+		}
+	} catch (error) {
+		console.log(`SOMETHING WENT WRONG WITH A MESSAGE COMMAND: ${error}`);
+		return;
+	}
+});
+
 client.on('interactionCreate', async interaction => {
 	try {
 		if (!interaction.isChatInputCommand() && !interaction.isButton()) return;
@@ -367,8 +408,9 @@ client.on('interactionCreate', async interaction => {
 	if (interaction.commandName === 'when-meeting') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			const nextMeeting = staff_meeting_second_start.nextInvocation();
-
-			await interaction.reply(`Your next scheduled jolli-meeting is at **${nextMeeting}**`)
+			const hmNextMeeting = hammerTimeHelper(nextMeeting, 'F');
+			const tillNextMeeting = hammerTimeHelper(nextMeeting, 'R');
+			await interaction.reply(`Your next scheduled jolli-meeting is at ${hmNextMeeting} which is ${tillNextMeeting} from now`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
@@ -393,7 +435,7 @@ client.on('interactionCreate', async interaction => {
 	  }
     }
 	} catch (error) {
-		console.log(`SOMETHING WENT WRONG: ${error}`);
+		console.log(`SOMETHING WENT WRONG ON AN INTERACTION: ${error}`);
 		return;
 	}
 
