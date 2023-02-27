@@ -343,8 +343,8 @@ const commands = [
 })();
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-
+ 	console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setPresence({activities: [{name: 'Overwatch with my best friend Iza'}], status: 'available'});
 });
 
 client.on('message', async msg => {
