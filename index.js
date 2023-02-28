@@ -13,7 +13,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const channel_collaborators = process.env.CHANNEL_COLLABORATORS;
 const channel_staff_announce = process.env.CHANNEL_STAFF_ANNOUNCE;
 const channels_weekly_feature = process.env.CHANNEL_WEEKLY_FEATURE;
-const channels_community_couture = process.env.CHANNEL_COMMUNITY_COUTURE;
+const channels_community_collection = process.env.CHANNEL_COMMUNITY_COLLECTION;
 
 const staffDiscordId = process.env.STAFF_DISCORD_ID;
 const testDiscordId = process.env.ROBOT_YULIA_SERVER_ID;
@@ -59,13 +59,13 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5}, function(){
 
 // COMMUNITY COLLECTION OPEN
 schedule.scheduleJob({date: 28, hour: 12, minute: 0}, function(){
-  client.channels.cache.get(channels_community_couture).send(`**[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
+  client.channels.cache.get(channels_community_collection).send(`**[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE
 schedule.scheduleJob({date: 14, hour: 0, minute: 0}, function(){
-  client.channels.cache.get(channels_community_couture).send(`**[CLOSED!]**`).catch(console.error);
+  client.channels.cache.get(channels_community_collection).send(`**[CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
 
