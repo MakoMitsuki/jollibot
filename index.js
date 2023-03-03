@@ -32,7 +32,7 @@ const authorPing = process.env.AUTHOR;
 const photographerPing = process.env.PHOTOGRAPHER;
 const proofreaderPing = process.env.PROOFREADER;
 
-const contestAlertsPing = process.env.CONTESTS_ALERTS_PING;
+const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 
 const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
@@ -49,24 +49,24 @@ const hammerTimeHelper = (d, format) => {
 }
 
 // WEEKLY FEATURE OPEN
-schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0}, function(){
+schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_weekly_feature).send(`<@&${contestAlertsPing}> **[Submissions for the Weekly Feature are now OPEN!]**`).catch(console.error);
 });
 
 // WEEKLY FEATURE CLOSE
-schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5}, function(){
+schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_weekly_feature).send(`<@&${contestAlertsPing}> **[WEEKLY FEATURE SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Weekly Feature closed.`);
 });
 
 // COMMUNITY COLLECTION OPEN
-schedule.scheduleJob({date: 28, hour: 12, minute: 0}, function(){
+schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE
-schedule.scheduleJob({date: 14, hour: 0, minute: 0}, function(){
+schedule.scheduleJob({date: 14, hour: 0, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
