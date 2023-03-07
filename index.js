@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { REST, Routes, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { REST, Routes, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const CLIENT_ID = process.env.CLIENT_ID;
 const TOKEN = process.env.TOKEN;
 const schedule = require('node-schedule');
@@ -373,6 +373,10 @@ const commands = [
 		name: 'when-meeting',
 		description: '[STAFF DISCORD ONLY] Lets you know when your next staff meeting is.'
 	},
+	{
+		name: 'when-deadlines',
+		description: '[STAFF DISCORD ONLY] Lets you know when all the deadlines are'
+	},
   ];
 
 (async () => {
@@ -458,6 +462,47 @@ client.on('interactionCreate', async interaction => {
 			const hmNextMeeting = hammerTimeHelper(nextMeeting, 'F');
 			const tillNextMeeting = hammerTimeHelper(nextMeeting, 'R');
 			await interaction.reply(`Your next scheduled jolli-meeting is at ${hmNextMeeting} which is ${tillNextMeeting} from now`);
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
+	}
+
+	if (interaction.commandName === 'when-deadlines') {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			const deadlineEmbed = new EmbedBuilder()
+				.setColor(0xff0000)
+				.setTitle('GPOSERS Staff Deadlines')
+				.setDescription(`Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.addFields(
+					{
+						"name": `GLAM ARTIST`,
+						"value": `Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
+					  },
+					  {
+						"name": `AUTHOR`,
+						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}\nHard Deadline- 11th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`
+					  },
+					  {
+						"name": `PHOTOGRAPHER`,
+						"value": `In-house CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nGeneral Soft Deadline and In-house CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}\nHard Deadline - ()\nRevision Deadline - ()`
+					  },
+					  {
+						"name": `DESIGNER`,
+						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}\nSoft Deadline - 1st - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 1st - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}\nIndesign Turn In Deadline - 1st - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+					  },
+					  {
+						"name": `ARTIST`,
+						"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
+					  },
+					  {
+						"name": `QA / PROOFREADER`,
+						"value": `QA Photo CC Soft Deadline - 12th - ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'R')}\nProofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}\nQA Photo Hard Deadline - 12th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}\nQA Design Hard Deadline - 12th - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+					  }
+				)
+				.setTimestamp()
+
+			interaction.reply({ embeds: [deadlineEmbed] });
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
