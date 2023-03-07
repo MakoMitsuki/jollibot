@@ -201,7 +201,7 @@ var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
 	rule_photo_cc_soft_notif.minute = 0;
 	rule_photo_cc_soft_notif.second = 0;
 	var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft deadline for internal Community Couture articles is today**. Make sure you have started all internal Community Couture photography work before the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft deadline for internal Community Couture articles is today**. Make sure you have started all internal Community Couture photography work before the end of the day.\n\n<@&${proofreaderPing}> **hard deadline for proofreading internal CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
 		//console.log(`Photographers CC Soft Deadline Announced.`);
 	});
 var rule_photo_soft_notif = new schedule.RecurrenceRule();
@@ -497,7 +497,7 @@ client.on('interactionCreate', async interaction => {
 					  },
 					  {
 						"name": `QA / PROOFREADER`,
-						"value": `QA Photo CC Soft Deadline - 12th - ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'R')}\nProofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}\nQA Photo Hard Deadline - 12th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}\nQA Design Hard Deadline - 12th - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nQA Photo CC Soft Deadline - 12th - ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'R')}\nProofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}\nQA Photo Hard Deadline - 12th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}\nQA Design Hard Deadline - 12th - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
 					  }
 				)
 				.setTimestamp()
