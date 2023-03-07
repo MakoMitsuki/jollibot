@@ -31,6 +31,7 @@ const artistPing = process.env.ARTIST;
 const authorPing = process.env.AUTHOR;
 const photographerPing = process.env.PHOTOGRAPHER;
 const proofreaderPing = process.env.PROOFREADER;
+const qaPing = process.env.QA;
 
 const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 
@@ -215,6 +216,18 @@ var rule_photo_soft_notif = new schedule.RecurrenceRule();
 		//console.log(`Photographers Soft Deadline Announced.`);
 	});
 
+var rule_qa_cc_hard_notif = new schedule.RecurrenceRule();
+	rule_qa_cc_hard_notif.tz = 'America/New_York';
+	rule_qa_cc_hard_notif.month = months;
+	rule_qa_cc_hard_notif.date = 12;
+	rule_qa_cc_hard_notif.hour = 12;
+	rule_qa_cc_hard_notif.minute = 0;
+	rule_qa_cc_hard_notif.second = 0;
+	  var qa_cc_hard_notif = schedule.scheduleJob(rule_qa_cc_hard_notif, function(){
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for QA for all Community Couture photos is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+		  //console.log(`QA CC Photo Hard Deadline Announced.`);
+	  });
+
 var rule_photo_hard_notif = new schedule.RecurrenceRule();
   rule_photo_hard_notif.tz = 'America/New_York';
 	rule_photo_hard_notif.month = months;
@@ -223,7 +236,7 @@ var rule_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_photo_hard_notif.minute = 0;
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard deadline for all articles is today**. Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
 		//console.log(`Photographers Hard Deadline Announced.`);
 	});
 
@@ -235,9 +248,21 @@ var rule_proof_hard_notif = new schedule.RecurrenceRule();
 	rule_proof_hard_notif.minute = 1;
 	rule_proof_hard_notif.second = 0;
 	var proof_hard_notif = schedule.scheduleJob(rule_proof_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard deadline is today**. Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard deadline is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
 		//console.log(`Proofreaders Hard Deadline Announced.`);
 	});
+
+var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
+	rule_qa_photo_hard_notif.tz = 'America/New_York';
+	rule_qa_photo_hard_notif.month = months;
+	rule_qa_photo_hard_notif.date = 15;
+	rule_qa_photo_hard_notif.hour = 12;
+	rule_qa_photo_hard_notif.minute = 0;
+	rule_qa_photo_hard_notif.second = 0;
+	  var qa_photo_hard_notif = schedule.scheduleJob(rule_qa_photo_hard_notif, function(){
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for all photo QA is today**! Ensure that all photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+		  //console.log(`QA Photo Hard Deadline Announced.`);
+	  });
 
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
@@ -258,7 +283,19 @@ var rule_design_hard_notif = new schedule.RecurrenceRule();
 	rule_design_hard_notif.minute = 0;
 	rule_design_hard_notif.second = 0;
 	var design_hard_notif = schedule.scheduleJob(rule_design_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard deadline is today**. Make sure you have submitted your completed designs by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard deadline is today**! Make sure you have submitted your completed designs by the end of the day.`).catch(console.error);
+		//console.log(`Designers Hard Deadline Announced.`);
+	});
+
+var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
+	rule_design_qa_hard_notif.tz = 'America/New_York';
+	rule_design_qa_hard_notif.month = months;
+	rule_design_qa_hard_notif.date = 23;
+	rule_design_qa_hard_notif.hour = 12;
+	rule_design_qa_hard_notif.minute = 0;
+	rule_design_qa_hard_notif.second = 0;
+	var design_qa_hard_notif = schedule.scheduleJob(rule_design_qa_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day. <@&${designerPing}> should ensure that your InDesign packages are uploaded to the Drive with the right revisions! `).catch(console.error);
 		//console.log(`Designers Hard Deadline Announced.`);
 	});
 
@@ -301,9 +338,12 @@ const pauseStaffReminders = (interaction) => {
     photo_cc_soft_notif.cancelNext(true);
     photo_soft_notif.cancelNext(true);
     photo_hard_notif.cancelNext(true);
+	qa_cc_hard_notif.cancelNext(true);
     proof_hard_notif.cancelNext(true);
+	qa_photo_hard_notif.cancelNext(true);
     design_soft_notif.cancelNext(true);
     design_hard_notif.cancelNext(true);
+	design_qa_hard_notif.cancelNext(true);
     
     // TODO: client log success
     interaction.reply(`**Break month commenced!** All magazine deadlines have been paused until this time next month. Enoy the jolli-day!`);
