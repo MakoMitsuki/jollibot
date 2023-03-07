@@ -485,11 +485,11 @@ client.on('interactionCreate', async interaction => {
 					  },
 					  {
 						"name": `PHOTOGRAPHER`,
-						"value": `In-house CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nGeneral Soft Deadline and In-house CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}\nHard Deadline - ()\nRevision Deadline - ()`
+						"value": `In-house CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nGeneral Soft Deadline and In-house CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}\n`
 					  },
 					  {
 						"name": `DESIGNER`,
-						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}\nSoft Deadline - 1st - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 1st - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}\nIndesign Turn In Deadline - 1st - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}\nSoft Deadline - 19th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 22nd - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}\nIndesign Turn In Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `ARTIST`,
