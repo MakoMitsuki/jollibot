@@ -204,6 +204,19 @@ var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft deadline for internal Community Couture articles is today**. Make sure you have started all internal Community Couture photography work before the end of the day.\n\n<@&${proofreaderPing}> **hard deadline for proofreading internal CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
 		//console.log(`Photographers CC Soft Deadline Announced.`);
 	});
+
+var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
+	rule_proof_cc_hard_notif.tz = 'America/New_York';
+	rule_proof_cc_hard_notif.month = months;
+	rule_proof_cc_hard_notif.date = 10;
+	rule_proof_cc_hard_notif.hour = 12;
+	rule_proof_cc_hard_notif.minute = 0;
+	rule_proof_cc_hard_notif.second = 0;
+	  var proof_cc_hard_notif = schedule.scheduleJob(rule_proof_cc_hard_notif, function(){
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard deadline to proofread all Community Couture articles is today**. Make sure that all the CC entries have been checked by three proofreaders by the end of today`).catch(console.error);
+		  //console.log(`Proofreaders CC Hard Deadline Announced.`);
+	  });
+
 var rule_photo_soft_notif = new schedule.RecurrenceRule();
   rule_photo_soft_notif.tz = 'America/New_York';
 	rule_photo_soft_notif.month = months;
@@ -336,6 +349,7 @@ const pauseStaffReminders = (interaction) => {
     auth_soft_glam_hard_notif.cancelNext(true);
     auth_hard_notif.cancelNext(true);
     photo_cc_soft_notif.cancelNext(true);
+	proof_cc_hard_notif.cancelNext(true);
     photo_soft_notif.cancelNext(true);
     photo_hard_notif.cancelNext(true);
 	qa_cc_hard_notif.cancelNext(true);
@@ -472,32 +486,47 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
+				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
 				.setTitle('GPOSERS Staff Deadlines')
+				.setThumbnail(interaction.guild.iconURL)
 				.setDescription(`Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
 				.addFields(
 					{
 						"name": `GLAM ARTIST`,
-						"value": `Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
+						"value": `Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}\n
+							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `AUTHOR`,
-						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}\nHard Deadline- 11th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`
+						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}\n
+							Hard Deadline- 11th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `PHOTOGRAPHER`,
-						"value": `In-house CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nGeneral Soft Deadline and In-house CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}\n`
+						"value": `In-house CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\n
+							General Soft Deadline and In-house CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}\n
+							Hard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}\n`
 					  },
 					  {
 						"name": `DESIGNER`,
-						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}\nSoft Deadline - 19th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 22nd - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}\nIndesign Turn In Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}\n
+							Soft Deadline - 19th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}\n
+							Hard Deadline - 22nd - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}\n
+							Indesign Turn In Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `ARTIST`,
-						"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}\nHard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
+						"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}\n
+							Hard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `QA / PROOFREADER`,
-						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\nQA Photo CC Soft Deadline - 12th - ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'R')}\nProofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}\nQA Photo Hard Deadline - 15th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}\nQA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+						"value": `Proofreader In-house CC Hard Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}\n
+							Proofreader CC Hard Deadline - 9th - ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'R')}\n
+							QA Photo CC Soft Deadline - 12th - ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_hard_notif.nextInvocation(), 'R')}\n
+							Proofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}\n
+							QA Photo Hard Deadline - 15th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}\n
+							QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
 					  }
 				)
 				.setTimestamp()
