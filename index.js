@@ -3,7 +3,7 @@ const { REST, Routes, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder
 const CLIENT_ID = process.env.CLIENT_ID;
 const TOKEN = process.env.TOKEN;
 const schedule = require('node-schedule');
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 const { Client, GatewayIntentBits } = require('discord.js');
