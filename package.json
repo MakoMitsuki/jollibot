@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple utility Discord bot for GPOSERS Staff",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
