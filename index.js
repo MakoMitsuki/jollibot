@@ -554,6 +554,7 @@ client.on('interactionCreate', async interaction => {
 			.then(json => interaction.reply(json.results[0].url))
 			.catch(e => {
 				interaction.reply('Failed to find a Ricardo Gif');
+				console.log(e);
 				return;
 			});
 	}
