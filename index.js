@@ -549,8 +549,8 @@ client.on('interactionCreate', async interaction => {
 	}
 
 	if (interaction.commandName === 'ricardo') {
-		await fetch(`https://api.tenor.com/v1/random?key=${tenorAPI}&q=ricardo%20milos&limit=1`)
-			then(response => response.json())
+		await fetch(`https://g.tenor.com/v1/random?key=${tenorAPI}&q=ricardo%20milos&limit=1&media_filter=gif`)
+			.then(response => response.json())
 			.then(data => {
 				const gifUrl = data.results[0].media[0].gif.url;
 				interaction.reply(gifUrl);
