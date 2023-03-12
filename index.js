@@ -3,10 +3,13 @@ const { REST, Routes, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder
 const CLIENT_ID = process.env.CLIENT_ID;
 const TOKEN = process.env.TOKEN;
 const schedule = require('node-schedule');
+const fetch = require("node-fetch");
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent] });
+
+const tenorAPI = process.env.TENOR_API_KEY;
 
 /* ================================= SCHEDULE START ================================= */
 
@@ -82,7 +85,7 @@ var rule_second_notif_start = new schedule.RecurrenceRule();
 	rule_second_notif_start.minute = 0;
 	rule_second_notif_start.second = 0;
 var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, function(){
-	client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting is starting now!`).catch(console.error);
+	client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
 	//console.log(`1st Monthly Staff Meeting Announced.`);
 });
 
@@ -96,7 +99,7 @@ var rule_second_notif_preday = new schedule.RecurrenceRule();
 	rule_second_notif_preday.second = 0;
 var staff_meeting_second_notif_preday = schedule.scheduleJob(rule_second_notif_preday, function(){
     client.channels.cache.get(channel_staff_announce).send(
-		`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting this weekend: ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'F')} ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}`
+		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'F')} ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}`
 		).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Prior.`);
 });
@@ -110,7 +113,7 @@ var rule_second_notif_day = new schedule.RecurrenceRule();
 	rule_second_notif_day.minute = 0;
 	rule_second_notif_day.second = 0;
 var staff_meeting_second_notif_day = schedule.scheduleJob(rule_second_notif_day, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting really soon! It starts ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'f')}`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon!** It starts ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'f')}`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Day Of.`);
 });
 
@@ -123,7 +126,7 @@ var rule_second_notif_hour = new schedule.RecurrenceRule();
 	rule_second_notif_hour.minute = 0;
 	rule_second_notif_hour.second = 0;
 var staff_meeting_second_notif_hour = schedule.scheduleJob(rule_second_notif_hour, function(){
-    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a** <@&${staffPing}>/<@&${hiatusPing}>**-wide jolli-meeting today in about hour!`).catch(console.error);
+    client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}!**`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Hour Before.`);
 });
 
@@ -321,7 +324,7 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 	rule_eorzea_collection_notif.minute = 0;
 	rule_eorzea_collection_notif.second = 0;
 	var eorzea_collection_notif = schedule.scheduleJob(rule_eorzea_collection_notif, function(){
-		client.channels.cache.get(channel_collaborators).send(`<@${edeonPing}> **It is time to renew the blood pact.**`).catch(console.error);
+		client.channels.cache.get(channel_collaborators).send(`<@${edeonPing}> **It is time to renew the jolli-blood pact.**`).catch(console.error);
 		//console.log(`Eorzea Collection ping sent.`);
 	});
 
@@ -378,6 +381,10 @@ const commands = [
 	{
 		name: 'jollidance',
 		description: 'I will Jollidance for you.'
+	},
+	{
+		name: 'ricardo',
+		description: 'A random Ricardo.'
 	},
     {
       name: 'breakmonth',
@@ -539,6 +546,16 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'jollidance') {
 		await interaction.reply(`https://tenor.com/view/jollibee-chicken-joy-gif-26175242`);
+	}
+
+	if (interaction.commandName === 'ricardo') {
+		await fetch(`https://api.tenor.com/v1/random?key=${tenorAPI}&q=ricardo%20milos&limit=1`)
+			.then(res => res.json())
+			.then(json => interaction.reply(json.results[0].url))
+			.catch(e => {
+				interaction.reply('Failed to find a Ricardo Gif');
+				return;
+			});
 	}
 
     if (interaction.isButton()) {
