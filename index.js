@@ -550,8 +550,10 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'ricardo') {
 		await fetch(`https://api.tenor.com/v1/random?key=${tenorAPI}&q=ricardo%20milos&limit=1`)
-			.then(res => { res.json(); console.log(res.json()) })
-			.then(json => interaction.reply(json.results[0].url))
+			.then(response => {
+				const gifUrl = response.data.results[0].media[0].gif.url;
+				interaction.reply(gifUrl);
+			})
 			.catch(e => {
 				interaction.reply('Failed to find a Ricardo Gif');
 				console.log(e);
