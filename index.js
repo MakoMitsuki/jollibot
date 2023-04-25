@@ -64,13 +64,13 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}
 });
 
 // COMMUNITY COLLECTION OPEN
-schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var ccopen = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE
-schedule.scheduleJob({date: 14, hour: 0, minute: 0, tz: 'America/New_York'}, function(){
+var ccclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
@@ -311,8 +311,20 @@ var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_design_qa_hard_notif.minute = 0;
 	rule_design_qa_hard_notif.second = 0;
 	var design_qa_hard_notif = schedule.scheduleJob(rule_design_qa_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day. <@&${designerPing}> should ensure that your InDesign packages are uploaded to the Drive with the right revisions! `).catch(console.error);
-		//console.log(`Designers Hard Deadline Announced.`);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
+	});
+
+var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
+	rule_design_ti_hard_notif.tz = 'America/New_York';
+	rule_design_ti_hard_notif.month = months;
+	rule_design_ti_hard_notif.hour = 12;
+	rule_design_ti_hard_notif.date = 23;
+	rule_design_ti_hard_notif.minute = 0;
+	rule_design_ti_hard_notif.second = 0;
+	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> should ensure that your InDesign packages are uploaded to the Drive with the right revisions! `).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
 	});
 
 // EORZEA COLLECTION PING EDEON
@@ -361,6 +373,7 @@ const pauseStaffReminders = (interaction) => {
     design_soft_notif.cancelNext(true);
     design_hard_notif.cancelNext(true);
 	design_qa_hard_notif.cancelNext(true);
+	design_ti_hard_notif.cancelNext(true);
     
     // TODO: client log success
     interaction.reply(`**Break month commenced!** All magazine deadlines have been paused until this time next month. Enoy the jolli-day!`);
@@ -397,6 +410,10 @@ const commands = [
 	{
 		name: 'when-deadlines',
 		description: '[STAFF DISCORD ONLY] Lets you know when all the deadlines are'
+	},
+	{
+		name: 'when-cc',
+		description: '[STAFF DISCORD ONLY] CCTest'
 	},
   ];
 
@@ -489,6 +506,17 @@ client.on('interactionCreate', async interaction => {
 		}
 	}
 
+    if (interaction.commandName === 'when-cc') {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			const opentime = ccopen.nextInvocation();
+			const closetime = ccclose.nextInvocation();
+			await interaction.reply(`Your next scheduled CCOpen is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now. Closing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
+	}
+
 	if (interaction.commandName === 'when-deadlines') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			const deadlineEmbed = new EmbedBuilder()
@@ -518,7 +546,7 @@ client.on('interactionCreate', async interaction => {
 						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
 							Soft Deadline - 19th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
 							Hard Deadline - 22nd - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
-							Indesign Turn In Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+							Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(ddesign_ti_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `ARTIST`,
