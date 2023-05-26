@@ -319,7 +319,7 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 	rule_design_ti_hard_notif.tz = 'America/New_York';
 	rule_design_ti_hard_notif.month = months;
 	rule_design_ti_hard_notif.hour = 12;
-	rule_design_ti_hard_notif.date = 23;
+	rule_design_ti_hard_notif.date = 24;
 	rule_design_ti_hard_notif.minute = 0;
 	rule_design_ti_hard_notif.second = 0;
 	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
@@ -546,7 +546,7 @@ client.on('interactionCreate', async interaction => {
 						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
 							Soft Deadline - 19th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
 							Hard Deadline - 22nd - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
-							Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(ddesign_ti_hard_notif.nextInvocation(), 'R')}`
+							Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
 						"name": `ARTIST`,
