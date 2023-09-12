@@ -548,14 +548,13 @@ client.on('interactionCreate', async interaction => {
 			let ffMeeting = staff_mtg_start_even.nextInvocation();
 
 			// check next meeting
-			if (staff_mtg_start_even.nextInvocation() < staff_mtg_start_odd.nextInvocation())
+			if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
 			{
 				nextMeeting = staff_mtg_start_even.nextInvocation();
 				ffMeeting = staff_mtg_start_odd.nextInvocation();
 			}
 
-			await interaction.reply(`Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now \n\n
-				The following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now `);
+			await interaction.reply(`Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now \n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now `);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
