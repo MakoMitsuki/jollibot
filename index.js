@@ -555,7 +555,7 @@ client.on('interactionCreate', async interaction => {
 			}
 
 			await interaction.reply(`Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now \n\n
-				The following meeting after that won't be till ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'F')} which is ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation, 'R')} from now `);
+				The following meeting after that won't be till ${hammerTimeHelper(ffMeeting.nextInvocation(), 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now `);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
