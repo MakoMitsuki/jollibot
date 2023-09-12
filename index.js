@@ -85,7 +85,7 @@ var rule_second_notif_start = new schedule.RecurrenceRule();
 	rule_second_notif_start.minute = 0;
 	rule_second_notif_start.second = 0;
 var staff_meeting_second_start = schedule.scheduleJob(rule_second_notif_start, function(){
-	client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
+	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
 	//console.log(`1st Monthly Staff Meeting Announced.`);
 });
 
@@ -149,7 +149,7 @@ var rule_glam_soft_notif = new schedule.RecurrenceRule();
 	rule_glam_soft_notif.minute = 0;
 	rule_glam_soft_notif.second = 0;
 	var glam_soft_notif = schedule.scheduleJob(rule_glam_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **soft deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
 		//console.log(`Glam Artists Soft Deadline Announced.`);
 	});
 var rule_artist_soft_notif = new schedule.RecurrenceRule();
@@ -160,7 +160,7 @@ var rule_artist_soft_notif = new schedule.RecurrenceRule();
 	rule_artist_soft_notif.minute = 1;
 	rule_artist_soft_notif.second = 0;
 	var artist_soft_notif = schedule.scheduleJob(rule_artist_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **soft deadline for all magazine-related artwork is today**. Make sure you have started all artwork before the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **soft jolli-deadline for all magazine-related artwork is today**. Make sure you have started all artwork before the end of the day.`).catch(console.error);
 		//console.log(`Artists Soft Deadline Announced.`);
 	});
 var rule_artist_hard_notif = new schedule.RecurrenceRule();
@@ -171,7 +171,7 @@ var rule_artist_hard_notif = new schedule.RecurrenceRule();
 	rule_artist_hard_notif.minute = 2;
 	rule_artist_hard_notif.second = 0;
 	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
 		//console.log(`Artists Hard Deadline Announced.`);
 	});
 var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
@@ -182,7 +182,7 @@ var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_auth_soft_glam_hard_notif.minute = 0;
 	rule_auth_soft_glam_hard_notif.second = 0;
 	var auth_soft_glam_hard_notif = schedule.scheduleJob(rule_auth_soft_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.\n\n<@&${glamArtistPing}> **hard deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.\n\n<@&${glamArtistPing}> **hard jolli-deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
 		//console.log(`Authors Soft Deadline Announced. Glam Artists Hard Deadline Announced.`);
 	});
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
@@ -193,7 +193,7 @@ var rule_auth_hard_notif = new schedule.RecurrenceRule();
 	rule_auth_hard_notif.minute = 0;
 	rule_auth_hard_notif.second = 0;
 	var auth_hard_notif = schedule.scheduleJob(rule_auth_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **hard deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **hard jolli-deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
 		//console.log(`Authors Hard Deadline Announced.`);
 	});
 var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
@@ -204,7 +204,7 @@ var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
 	rule_photo_cc_soft_notif.minute = 0;
 	rule_photo_cc_soft_notif.second = 0;
 	var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft deadline for internal Community Couture articles is today**. Make sure you have started all internal Community Couture photography work before the end of the day.\n\n<@&${proofreaderPing}> **hard deadline for proofreading internal CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for internal Community Couture articles is today**. Make sure you have started all internal Community Couture photography work before the end of the day.\n\n<@&${proofreaderPing}> **hard jolli-deadline for proofreading internal CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
 		//console.log(`Photographers CC Soft Deadline Announced.`);
 	});
 
@@ -216,7 +216,7 @@ var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
 	rule_proof_cc_hard_notif.minute = 0;
 	rule_proof_cc_hard_notif.second = 0;
 	  var proof_cc_hard_notif = schedule.scheduleJob(rule_proof_cc_hard_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard deadline to proofread all Community Couture articles is today**. Make sure that all the CC entries have been checked by three proofreaders by the end of today`).catch(console.error);
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline to proofread all Community Couture articles is today**. Make sure that all the CC entries have been checked by three proofreaders by the end of today`).catch(console.error);
 		  //console.log(`Proofreaders CC Hard Deadline Announced.`);
 	  });
 
@@ -228,7 +228,7 @@ var rule_photo_soft_notif = new schedule.RecurrenceRule();
 	rule_photo_soft_notif.minute = 0;
 	rule_photo_soft_notif.second = 0;
 	var photo_soft_notif = schedule.scheduleJob(rule_photo_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft deadline for all non-Community Couture articles is today**. Make sure you have started all photography work before the end of the day.\n\n<@&${photographerPing}> **hard deadline for internal Community Couture articles is today**. Make sure you have submitted all photography work for internal Community Couture articles by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for all non-Community Couture articles is today**. Make sure you have started all photography work before the end of the day.\n\n<@&${photographerPing}> **hard jolli-deadline for internal Community Couture articles is today**. Make sure you have submitted all photography work for internal Community Couture articles by the end of the day.`).catch(console.error);
 		//console.log(`Photographers Soft Deadline Announced.`);
 	});
 
@@ -240,7 +240,7 @@ var rule_qa_cc_hard_notif = new schedule.RecurrenceRule();
 	rule_qa_cc_hard_notif.minute = 0;
 	rule_qa_cc_hard_notif.second = 0;
 	  var qa_cc_hard_notif = schedule.scheduleJob(rule_qa_cc_hard_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for QA for all Community Couture photos is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for QA for all Community Couture photos is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
 		  //console.log(`QA CC Photo Hard Deadline Announced.`);
 	  });
 
@@ -252,7 +252,7 @@ var rule_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_photo_hard_notif.minute = 0;
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
 		//console.log(`Photographers Hard Deadline Announced.`);
 	});
 
@@ -264,7 +264,7 @@ var rule_proof_hard_notif = new schedule.RecurrenceRule();
 	rule_proof_hard_notif.minute = 1;
 	rule_proof_hard_notif.second = 0;
 	var proof_hard_notif = schedule.scheduleJob(rule_proof_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard deadline is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
 		//console.log(`Proofreaders Hard Deadline Announced.`);
 	});
 
@@ -276,7 +276,7 @@ var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_qa_photo_hard_notif.minute = 0;
 	rule_qa_photo_hard_notif.second = 0;
 	  var qa_photo_hard_notif = schedule.scheduleJob(rule_qa_photo_hard_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for all photo QA is today**! Ensure that all photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all photo QA is today**! Ensure that all photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
 		  //console.log(`QA Photo Hard Deadline Announced.`);
 	  });
 
@@ -288,7 +288,7 @@ var rule_design_soft_notif = new schedule.RecurrenceRule();
 	rule_design_soft_notif.minute = 0;
 	rule_design_soft_notif.second = 0;
 	var design_soft_notif = schedule.scheduleJob(rule_design_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft deadline is today**. Make sure you have submitted at least a rough draft or example of your designs by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft or example of your designs by the end of the day.`).catch(console.error);
 		//console.log(`Designers Soft Deadline Announced.`);
 	});
 var rule_design_hard_notif = new schedule.RecurrenceRule();
@@ -299,7 +299,7 @@ var rule_design_hard_notif = new schedule.RecurrenceRule();
 	rule_design_hard_notif.minute = 0;
 	rule_design_hard_notif.second = 0;
 	var design_hard_notif = schedule.scheduleJob(rule_design_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard deadline is today**! Make sure you have submitted your completed designs by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted your completed designs by the end of the day.`).catch(console.error);
 		//console.log(`Designers Hard Deadline Announced.`);
 	});
 
@@ -311,7 +311,7 @@ var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_design_qa_hard_notif.minute = 0;
 	rule_design_qa_hard_notif.second = 0;
 	var design_qa_hard_notif = schedule.scheduleJob(rule_design_qa_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
@@ -323,7 +323,7 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 	rule_design_ti_hard_notif.minute = 0;
 	rule_design_ti_hard_notif.second = 0;
 	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> should ensure that your InDesign packages are uploaded to the Drive with the right revisions! `).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer** should also ensure that the social media promos are done and submitted to #social-media before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
