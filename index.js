@@ -75,7 +75,9 @@ var ccclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'America/
   //console.log(`Community Collection closed.`);
 });
 
-// NEXT MONTHLY MEETING
+// ======================= NEXT MONTHLY MEETING
+
+/* ===== ORIG
 var rule_second_notif_start = new schedule.RecurrenceRule();
   rule_second_notif_start.tz = 'America/New_York';
 	rule_second_notif_start.month = months;
@@ -129,6 +131,51 @@ var staff_meeting_second_notif_hour = schedule.scheduleJob(rule_second_notif_hou
     client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today ${hammerTimeHelper(staff_meeting_second_start.nextInvocation(), 'R')}!**`).catch(console.error);
     //console.log(`1st Monthly Staff Meeting Announced Hour Before.`);
 });
+*/
+
+// ODD MONTHS
+const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
+var staff_mtg_start_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
+	//console.log(`Community Collection closed.`);
+  });
+
+var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: oddMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(
+		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'F')} ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}`
+		).catch(console.error);	
+});
+
+var staff_mtg_onDayEarly_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 12, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today!** It starts ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'f')}`).catch(console.error);
+});
+
+var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 16, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}!**`).catch(console.error);
+});
+
+// EVEN MONTHS
+const evenMonths = [ 1, 3, 5, 7, 9, 11 ];
+var staff_mtg_start_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
+  //console.log(`Community Collection closed.`);
+});
+
+var staff_mtg_2ndthurs_even = schedule.scheduleJob({month: evenMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(
+		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'F')} ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'R')}`
+		).catch(console.error);	
+});
+
+var staff_mtg_onDayEarly_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 7, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon!** It starts ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'f')}`).catch(console.error);
+});
+
+var staff_mtg_onDayHour_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'R')}!**`).catch(console.error);
+});
+
+// ===============================================================
 
 var rule_design_first_notif = new schedule.RecurrenceRule();
   rule_design_first_notif.tz = 'America/New_York';
@@ -351,10 +398,10 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 const pauseStaffReminders = (interaction) => {
   try {
     // skip next month's meeting reminders
-    staff_meeting_second_notif_preday.cancelNext(true);
+    /*staff_meeting_second_notif_preday.cancelNext(true);
     staff_meeting_second_notif_day.cancelNext(true);
     staff_meeting_second_notif_hour.cancelNext(true);
-    staff_meeting_second_start.cancelNext(true);
+    staff_meeting_second_start.cancelNext(true);*/
 
     // skip next month's magazine deadline reminders
     design_first_notif.cancelNext(true);
@@ -486,7 +533,7 @@ client.on('interactionCreate', async interaction => {
 					.setStyle(ButtonStyle.Danger),
 				);
 
-			await interaction.reply({ content: `**Are you jolli-sure you want to set the break month?** Once it is set, it cannot be unset until it auto-unsets itself month from now OR asking Yulia to reset the bot.`, 
+			await interaction.reply({ content: `**Are you jolli-sure you want to set the break month?** Once it is set, it cannot be unset until it auto-unsets itself month from now OR asking Yulia to reset the bot. Note that this won't cancel the following meeting.`, 
 			components: [isBreakMonth_row], ephemeral: true, });
 			// BUTTONS PARSED IN BUTTON INTERACTIONS
 		} else {
@@ -496,10 +543,19 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'when-meeting') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
-			const nextMeeting = staff_meeting_second_start.nextInvocation();
-			const hmNextMeeting = hammerTimeHelper(nextMeeting, 'F');
-			const tillNextMeeting = hammerTimeHelper(nextMeeting, 'R');
-			await interaction.reply(`Your next scheduled jolli-meeting is at ${hmNextMeeting} which is ${tillNextMeeting} from now`);
+
+			let nextMeeting = staff_mtg_start_odd.nextInvocation();
+			let ffMeeting = staff_mtg_start_even.nextInvocation();
+
+			// check next meeting
+			if (staff_mtg_start_even.nextInvocation() < staff_mtg_start_odd.nextInvocation())
+			{
+				nextMeeting = staff_mtg_start_even.nextInvocation();
+				ffMeeting = staff_mtg_start_odd.nextInvocation();
+			}
+
+			await interaction.reply(`Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now \n\n
+				The following meeting after that won't be till ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'F')} which is ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation, 'R')} from now `);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
