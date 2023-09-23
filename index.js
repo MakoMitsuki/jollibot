@@ -52,6 +52,11 @@ const hammerTimeHelper = (d, format) => {
 	}
 }
 
+var events = require('./events');
+
+// POSETOBER
+events.posetober(schedule, hammerTimeHelper);
+
 // WEEKLY FEATURE OPEN
 schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_weekly_feature).send(`<@&${contestAlertsPing}> **[Submissions for the Weekly Feature are now OPEN!]**`).catch(console.error);
