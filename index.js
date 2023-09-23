@@ -54,7 +54,7 @@ const hammerTimeHelper = (d, format) => {
 
 const getMidnightSameDay = (d, format) => {
 	try {
-		const newDTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59);
+		const newDTime = new Date(d.getFullYear(), d.getMonth(), (d.getDate() + 1), 5, 59);
 		const epoch = parseInt(newDTime.getTime()/1000);
 		return `<t:${epoch}:${format}>`;
 	}catch (error) {
