@@ -52,6 +52,17 @@ const hammerTimeHelper = (d, format) => {
 	}
 }
 
+const getMidnightSameDay = (d, format) => {
+	try {
+		const newDTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59);
+		const epoch = parseInt(newDTime.getTime()/1000);
+		return `<t:${epoch}:${format}>`;
+	}catch (error) {
+		console.log(`[[GET MIDNIGHT SAME DAY ERROR - d = ${d} // format = ${format}]] ${error}`);
+		return d;
+	}
+}
+
 // ================================================================== POSETOBER
 const buildEmbed = (dayNum, name, imgUrl) => {
 
@@ -700,8 +711,10 @@ client.on('interactionCreate', async interaction => {
 					{
 						"name": `GLAM ARTIST`,
 						"value": `Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
-					  },
+							${getMidnightSameDay(glam_soft_notif.nextInvocation(), 'F')} ${getMidnightSameDay(glam_soft_notif.nextInvocation(), 'R')}
+							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}
+							${getMidnightSameDay(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${getMidnightSameDay(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
+					},
 					  {
 						"name": `AUTHOR`,
 						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}
