@@ -55,7 +55,7 @@ const hammerTimeHelper = (d, format) => {
 var events = require('./events');
 
 // POSETOBER
-events.posetober(schedule, hammerTimeHelper);
+events.posetober(schedule, hammerTimeHelper, client);
 
 // WEEKLY FEATURE OPEN
 schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0, tz: 'America/New_York'}, function(){

@@ -16,7 +16,7 @@ const buildEmbed = (dayNum, name, imgUrl) => {
 }
 
 module.exports = {
-    posetober: function (schedule, hammerTimeHelper) {
+    posetober: function (schedule, hammerTimeHelper, client) {
         const channel_posetober = process.env.CHANNEL_POSETOBER;
         const posetoberPing = process.env.POSETOBER_PING;
         const posetoberMonth = 9
