@@ -1,4 +1,15 @@
 // ================================================================== POSETOBER
+
+/*
+    //client.channels.cache.get(channel_posetober).send(`<@&${posetoberPing}> test ping`).catch(console.error);
+    var day1When = day1.nextInvocation();
+    var day15When = day15.nextInvocation();
+    var day19When = day19.nextInvocation();
+    client.channels.cache.get('466296346094338060').send(`**Posetober has been set up.** It will ping the 1st one on ${hammerTimeHelper(day1When, 'F')} and ping the 15th one on ${hammerTimeHelper(day15When, 'F')}`).catch(console.error);
+	client.channels.cache.get('466296346094338060').send(`Test for the **19TH DAY (Nightmare Before Christmas)** which should ping on ${hammerTimeHelper(day19When, 'F')}`).catch(console.error);
+	client.channels.cache.get('466296346094338060').send({content: `<@${yuliaPing}>`,  embeds: [buildEmbed(19, "Nightmare Before Christmas", "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D2CBF9E937934C0C3D3E24F514A4A804EC2620B1C99F1EB8BDE83687FCD8AFEE/scale?width=1200&aspectRatio=1.78&format=jpeg")] }).catch(console.error);
+*/
+
 const buildEmbed = (dayNum, name, imgUrl) => {
 
     const emb = {
