@@ -77,8 +77,15 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}
 });
 
 // COMMUNITY COLLECTION OPEN
+const cc_embed = {
+	"title": `Community Collection submissions for the next issue is now open!`,
+	"description": `Submit **up to two of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
+	"color": 0x005f73
+  }
+
 var ccopen = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
-  client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
+  //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
+  client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
