@@ -327,7 +327,7 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
-// EORZEA COLLECTION PING EDEON
+/* // EORZEA COLLECTION PING EDEON
 var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
   rule_eorzea_collection_notif.tz = 'America/New_York';
 	rule_eorzea_collection_notif.month = months;
@@ -339,7 +339,7 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_collaborators).send(`<@${edeonPing}> **It is time to renew the jolli-blood pact.**`).catch(console.error);
 		//console.log(`Eorzea Collection ping sent.`);
 	});
-
+/*
 /* ================================= SCHEDULE END =================================== */
 
 /*
