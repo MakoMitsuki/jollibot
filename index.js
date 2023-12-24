@@ -121,12 +121,12 @@ const gotm_vote_embed = {
 	"color": 0x005f73
   }
 
-var gotm_vote = schedule.scheduleJob({date: 7, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+var gotm_vote = schedule.scheduleJob({date: 9, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-var gotm_close = schedule.scheduleJob({date: 8, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+var gotm_close = schedule.scheduleJob({date: 10, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
