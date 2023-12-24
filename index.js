@@ -17,6 +17,7 @@ const channel_collaborators = process.env.CHANNEL_COLLABORATORS;
 const channel_staff_announce = process.env.CHANNEL_STAFF_ANNOUNCE;
 const channels_weekly_feature = process.env.CHANNEL_WEEKLY_FEATURE;
 const channels_community_collection = process.env.CHANNEL_COMMUNITY_COLLECTION;
+const channels_gotm = process.env.CHANNEL_GLAM_OF_THE_MONTH;
 
 const staffDiscordId = process.env.STAFF_DISCORD_ID;
 const testDiscordId = process.env.ROBOT_YULIA_SERVER_ID;
@@ -77,23 +78,58 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}
 });
 
 // COMMUNITY COLLECTION OPEN
-const cc_embed = {
+const ccol_embed = {
 	"title": `Community Collection submissions for the next issue is now open!`,
 	"description": `Submit **up to two of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
 	"color": 0x005f73
   }
 
-var ccopen = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE
-var ccclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+var ccolclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
+
+// GLAM OF THE MONTH OPEN
+const gotm_open_embed = {
+	"type": "rich",
+	"title": `GPOSERS Glam of the Month submissions for the next issue is now open!`,
+	"description": `Submit your best glamour for a chance to be featured in the magazine!\n\n[Read the rules before submitting.](https://discord.com/channels/465931452085829643/1185612785112060066/1187716569229447268)`,
+	"color": 0x005f73,
+	"fields": [
+	  {
+		"name": `Submission Template File`,
+		"value": `https://docs.google.com/document/d/1ysb6zW4FzTWRnD2CIF3c-MScRwC2OmjNuHWnKzNuoM0/edit`
+	  }
+	]
+  }
+
+var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_open_embed] }).catch(console.error); 
+  //console.log(`Community Collection opened.`);
+});
+
+const gotm_vote_embed = {
+	"title": `Glam of the Month Voting Time!`,
+	"description": ` Submissions for the next issue is now closed! Everyone choose ONE glamour you'd like to be featured in the magazine! Cast your vote by reacting :gposers1: under the glam.`,
+	"color": 0x005f73
+  }
+
+var gotm_vote = schedule.scheduleJob({date: 7, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_vote_embed] }).catch(console.error);
+	//console.log(`Community Collection closed.`);
+  });
+
+var gotm_close = schedule.scheduleJob({date: 8, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
+	//console.log(`Community Collection closed.`);
+  });
 
 // ODD MONTHS
 const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
@@ -308,7 +344,7 @@ var rule_design_hard_notif = new schedule.RecurrenceRule();
 	rule_design_hard_notif.minute = 0;
 	rule_design_hard_notif.second = 0;
 	var design_hard_notif = schedule.scheduleJob(rule_design_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted your completed designs by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted the PDFs of your completed designs for QA by the end of the day.`).catch(console.error);
 		//console.log(`Designers Hard Deadline Announced.`);
 	});
 
@@ -421,8 +457,12 @@ const commands = [
 		description: '[STAFF DISCORD ONLY] Lets you know when all the deadlines are'
 	},
 	{
-		name: 'when-cc',
-		description: '[STAFF DISCORD ONLY] CCTest'
+		name: 'when-ccol',
+		description: '[STAFF DISCORD ONLY] When is the next Community Collection times'
+	},
+	{
+		name: 'when-gotm',
+		description: '[STAFF DISCORD ONLY] When is the next Glam of the Month times'
 	},
   ];
 
@@ -441,6 +481,11 @@ const commands = [
 client.on('ready', () => {
  	console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setPresence({activities: [{name: 'Overwatch with my best friend Iza'}], status: 'available'});
+
+	client.channels.cache.get(channels_gotm).send(`**TESTING GOTM** Please ignore!`).catch(console.error);
+	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_open_embed] }).catch(console.error); 
+	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_vote_embed] }).catch(console.error);
+	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
 });
 
 client.on('message', async msg => {
@@ -514,11 +559,23 @@ client.on('interactionCreate', async interaction => {
 		}
 	}
 
-    if (interaction.commandName === 'when-cc') {
+    if (interaction.commandName === 'when-ccol') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
-			const opentime = ccopen.nextInvocation();
-			const closetime = ccclose.nextInvocation();
-			await interaction.reply(`Your next scheduled CCOpen is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now. Closing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
+			const opentime = ccolopen.nextInvocation();
+			const closetime = ccolclose.nextInvocation();
+			await interaction.reply(`Your next scheduled Community Collection Open is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now. Closing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
+	}
+
+	if (interaction.commandName === 'when-gotm') {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			const opentime = gotm_open.nextInvocation();
+			const votetime = gotm_vote.nextInvocation();
+			const closetime = gotm_close.nextInvocation();
+			await interaction.reply(`Your next scheduled Glam of the Month is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now.\nVoting is at ${hammerTimeHelper(votetime, 'F')} which is ${hammerTimeHelper(votetime, 'R')} from now. \nClosing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
