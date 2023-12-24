@@ -571,12 +571,6 @@ client.on('interactionCreate', async interaction => {
 			const votetime = gotm_vote.nextInvocation();
 			const closetime = gotm_close.nextInvocation();
 			await interaction.reply(`Your next scheduled Glam of the Month is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now.\nVoting is at ${hammerTimeHelper(votetime, 'F')} which is ${hammerTimeHelper(votetime, 'R')} from now. \nClosing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
-		
-			// TEST
-			client.channels.cache.get(channels_gotm).send(`**TESTING GOTM** Please ignore!`).catch(console.error);
-			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
-			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
-			client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
