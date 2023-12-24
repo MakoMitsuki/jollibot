@@ -111,7 +111,7 @@ const gotm_open_embed = {
   }
 
 var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
-  client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_open_embed] }).catch(console.error); 
+  client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
@@ -122,7 +122,7 @@ const gotm_vote_embed = {
   }
 
 var gotm_vote = schedule.scheduleJob({date: 7, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
-	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_vote_embed] }).catch(console.error);
+	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
@@ -574,8 +574,8 @@ client.on('interactionCreate', async interaction => {
 		
 			// TEST
 			client.channels.cache.get(channels_gotm).send(`**TESTING GOTM** Please ignore!`).catch(console.error);
-			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_open_embed] }).catch(console.error); 
-			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_gotm_vote_embed] }).catch(console.error);
+			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
+			client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 			client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
 		}
 		else {
