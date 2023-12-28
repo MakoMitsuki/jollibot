@@ -84,9 +84,9 @@ const ccol_embed = {
 	"color": 0x005f73
   }
 
-var ccolopen = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
-  client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [cc_embed] }).catch(console.error); 
+  client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
@@ -110,7 +110,7 @@ const gotm_open_embed = {
 	]
   }
 
-var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
