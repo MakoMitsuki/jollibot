@@ -173,6 +173,23 @@ var staff_mtg_onDayHour_even = schedule.scheduleJob({month: evenMonths, date: se
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
+// DESIGNER MEETINGS
+
+const first_sat_dates = [1, 2, 3, 4, 5, 6, 7];
+
+var designer_mtg_start = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channel_staff_announce).send(`**Our <@&${designerPing}> jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
+  //console.log(`Community Collection closed.`);
+});
+
+var designer_mtg_onDayEarly = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 0, minute: 30, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting soon!** It starts ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'f')}`).catch(console.error);
+});
+
+var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 8, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting really soon! It's starting ${hammerTimeHelper(design_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
+});
+
 // ===============================================================
 
 var rule_design_first_notif = new schedule.RecurrenceRule();
@@ -186,6 +203,7 @@ var rule_design_first_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> Today is the 1st. **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
 		//console.log(`Designer 1st Notification Announced.`);
 	});
+	
 var rule_glam_soft_notif = new schedule.RecurrenceRule();
   rule_glam_soft_notif.tz = 'America/New_York';
 	rule_glam_soft_notif.month = monthsNov;
@@ -227,7 +245,7 @@ var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_auth_soft_glam_hard_notif.minute = 0;
 	rule_auth_soft_glam_hard_notif.second = 0;
 	var auth_soft_glam_hard_notif = schedule.scheduleJob(rule_auth_soft_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.\n\n<@&${glamArtistPing}> **hard jolli-deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.`).catch(console.error);
 		//console.log(`Authors Soft Deadline Announced. Glam Artists Hard Deadline Announced.`);
 	});
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
@@ -328,18 +346,18 @@ var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
 	rule_design_soft_notif.month = monthsDec;
-	rule_design_soft_notif.date = 19;
+	rule_design_soft_notif.date = 17;
 	rule_design_soft_notif.hour = 12;
 	rule_design_soft_notif.minute = 0;
 	rule_design_soft_notif.second = 0;
 	var design_soft_notif = schedule.scheduleJob(rule_design_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft or example of your designs by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. If you have not submitted to QA yet, you are required to submit a PDF of your work-in-progress to the designers channel by the end of the day.`).catch(console.error);
 		//console.log(`Designers Soft Deadline Announced.`);
 	});
 var rule_design_hard_notif = new schedule.RecurrenceRule();
   rule_design_hard_notif.tz = 'America/New_York';
 	rule_design_hard_notif.month = monthsDec;
-	rule_design_hard_notif.date = 22;
+	rule_design_hard_notif.date = 20;
 	rule_design_hard_notif.hour = 12;
 	rule_design_hard_notif.minute = 0;
 	rule_design_hard_notif.second = 0;
@@ -537,6 +555,10 @@ client.on('interactionCreate', async interaction => {
 			let nextMeeting_onDayHour = staff_mtg_onDayHour_odd.nextInvocation();
 			let ffMeeting = staff_mtg_start_even.nextInvocation();
 
+			let nextDesignerMeeting = designer_mtg_start.nextInvocation();
+			let nextDesignerMeeting_onDayEarly = designer_mtg_onDayEarly.nextInvocation();
+			let nextDesignerMeeting_onDayHour = designer_mtg_onDayHour.nextInvocation();
+
 			// check next meeting
 			if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
 			{
@@ -547,7 +569,7 @@ client.on('interactionCreate', async interaction => {
 				nextMeeting_onDayHour = staff_mtg_onDayHour_even.nextInvocation();
 			}
 
-			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now `);
+			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now \n\nThe next **Designer Meeting** will be at ${hammerTimeHelper(nextDesignerMeeting, 'F')} which is ${hammerTimeHelper(nextDesignerMeeting, 'R')} from now. \nReminder pings for this designer meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextDesignerMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextDesignerMeeting_onDayHour, 'F')}`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
