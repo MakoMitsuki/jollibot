@@ -96,25 +96,7 @@ var ccolclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'Americ
   //console.log(`Community Collection closed.`);
 });
 
-// GLAM OF THE MONTH OPEN
-const gotm_open_embed = {
-	"type": "rich",
-	"title": `GPOSERS Glam of the Month submissions for the next issue is now open!`,
-	"description": `Submit your best glamour for a chance to be featured in the magazine!\n\n[Read the rules before submitting.](https://discord.com/channels/465931452085829643/1185612785112060066/1187716569229447268)`,
-	"color": 0x005f73,
-	"fields": [
-	  {
-		"name": `Submission Template File`,
-		"value": `https://docs.google.com/document/d/1ysb6zW4FzTWRnD2CIF3c-MScRwC2OmjNuHWnKzNuoM0/edit`
-	  }
-	]
-  }
-
-var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
-  client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
-  //console.log(`Community Collection opened.`);
-});
-
+// GLAM OF THE MONTH
 const gotm_vote_embed = {
 	"title": `Glam of the Month Voting Time!`,
 	"description": ` Submissions for the next issue is now closed! Everyone choose ONE glamour you'd like to be featured in the magazine! Cast your vote by reacting :gposers1: under the glam.`,
@@ -130,6 +112,29 @@ var gotm_close = schedule.scheduleJob({date: 10, hour: 12, minute: 30, tz: 'Amer
 	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
+
+// GLAM OF THE MONTH OPEN
+const gotm_open_embed = {
+	"type": "rich",
+	"title": `GPOSERS Glam of the Month submissions for the next issue is now open!`,
+	"description": `Submit your best glamour for a chance to be featured in the magazine!\n\n[Read the rules before submitting.](https://discord.com/channels/465931452085829643/1185612785112060066/1187716569229447268)`,
+	"color": 0x005f73,
+	"fields": [
+	  {
+		"name": `Submission Template File`,
+		"value": `https://docs.google.com/document/d/1ysb6zW4FzTWRnD2CIF3c-MScRwC2OmjNuHWnKzNuoM0/edit`
+	  },
+	  {
+		"name": `Deadline of submissions`,
+		"value": `${hammerTimeHelper(gotm_vote.nextInvocation(), 'F')} which is ${hammerTimeHelper(gotm_vote.nextInvocation(), 'R')} from now`
+	  }
+	]
+  }
+
+var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
+  //console.log(`Community Collection opened.`);
+});
 
 // ODD MONTHS
 const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
