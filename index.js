@@ -250,7 +250,7 @@ var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_auth_soft_glam_hard_notif.minute = 0;
 	rule_auth_soft_glam_hard_notif.second = 0;
 	var auth_soft_glam_hard_notif = schedule.scheduleJob(rule_auth_soft_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.\n\n<@&${glamArtistPing}> **hard jolli-deadline for internal CC glamours is today**! Make sure to submit your work by the end of the day to the proofreaders channel.`).catch(console.error);
 		//console.log(`Authors Soft Deadline Announced. Glam Artists Hard Deadline Announced.`);
 	});
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
@@ -615,9 +615,7 @@ client.on('interactionCreate', async interaction => {
 					{
 						"name": `GLAM ARTIST`,
 						"value": `Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}
-							${getMidnightSameDay(glam_soft_notif.nextInvocation(), 'F')} ${getMidnightSameDay(glam_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}
-							${getMidnightSameDay(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${getMidnightSameDay(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
+							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
 					},
 					  {
 						"name": `AUTHOR`,
