@@ -184,11 +184,11 @@ const first_sat_dates = [1, 2, 3, 4, 5, 6, 7];
 
 var designer_mtg_start = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channel_staff_announce).send(`**Our <@&${designerPing}> jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
-  //console.log(`Community Collection closed.`);
+  //console.log(`Designer Meeting ping`);
 });
 
 var designer_mtg_onDayEarly = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 0, minute: 30, second: 0, tz: 'America/New_York'}, function(){
-	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting soon!** It starts ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'f')}`).catch(console.error);
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting soon!** It starts ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start.nextInvocation(), 'f')}`).catch(console.error);
 });
 
 var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 8, minute: 0, second: 0, tz: 'America/New_York'}, function(){
