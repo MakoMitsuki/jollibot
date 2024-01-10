@@ -99,7 +99,7 @@ var ccolclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'Americ
 // GLAM OF THE MONTH
 const gotm_vote_embed = {
 	"title": `Glam of the Month Voting Time!`,
-	"description": ` Submissions for the next issue is now closed! Everyone choose ONE glamour you'd like to be featured in the magazine! Cast your vote by reacting :gposers1: under the glam.`,
+	"description": ` Submissions for the next issue are now closed! Everyone choose **ONE glamour** you'd like to be featured in the magazine! Cast your vote by reacting <:gposers1:1119066668912623746> under the glam.`,
 	"color": 0x005f73
   }
 
@@ -109,7 +109,7 @@ var gotm_vote = schedule.scheduleJob({date: 10, hour: 9, minute: 0, tz: 'America
   });
 
 var gotm_close = schedule.scheduleJob({date: 10, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
-	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature!`).catch(console.error);
+	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature! <:gposers1:1119066668912623746>`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
@@ -599,7 +599,7 @@ client.on('interactionCreate', async interaction => {
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
 				.setTitle('GPOSERS Staff Deadlines')
-				.setDescription(`Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.setDescription(`<:gposers1:1119066668912623746> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
 				.addFields(
 					{
 						"name": `GLAM ARTIST`,
