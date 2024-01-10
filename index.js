@@ -599,7 +599,7 @@ client.on('interactionCreate', async interaction => {
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
 				.setTitle('GPOSERS Staff Deadlines')
-				.setDescription(`<:gposers1:1119066668912623746> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
 				.addFields(
 					{
 						"name": `GLAM ARTIST`,
