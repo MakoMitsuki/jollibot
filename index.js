@@ -346,7 +346,7 @@ var rule_design_soft_notif = new schedule.RecurrenceRule();
 	rule_design_soft_notif.minute = 0;
 	rule_design_soft_notif.second = 0;
 	var design_soft_notif = schedule.scheduleJob(rule_design_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. If you have not submitted to QA yet, you are required to submit a PDF of your work-in-progress to the designers channel by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. If you have not submitted your work for QA yet, you are required to submit a PDF of your work-in-progress to the designers channel by the end of the day.`).catch(console.error);
 		//console.log(`Designers Soft Deadline Announced.`);
 	});
 var rule_design_hard_notif = new schedule.RecurrenceRule();
