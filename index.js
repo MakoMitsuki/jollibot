@@ -188,11 +188,11 @@ var designer_mtg_start = schedule.scheduleJob({month: monthsNov, date: first_sat
 });
 
 var designer_mtg_onDayEarly = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 0, minute: 30, second: 0, tz: 'America/New_York'}, function(){
-	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting soon!** It starts ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start.nextInvocation(), 'f')}`).catch(console.error);
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting soon!** It starts ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'f')}`).catch(console.error);
 });
 
 var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 8, minute: 0, second: 0, tz: 'America/New_York'}, function(){
-	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting really soon! It's starting ${hammerTimeHelper(design_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
+	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting really soon! It's starting ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
 // ===============================================================
