@@ -199,11 +199,11 @@ var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first
 
 var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 	rule_glamartist_limit_lift_notif.tz = 'America/New_York';
-	rule_glamartist_limit_lift_notif = monthsDec;
-	rule_glamartist_limit_lift_notif = 1;
-	rule_glamartist_limit_lift_notif = 0;
-	rule_glamartist_limit_lift_notif = 0;
-	rule_glamartist_limit_lift_notif = 0;
+	rule_glamartist_limit_lift_notif.month = monthsDec;
+	rule_glamartist_limit_lift_notif.date = 28;
+	rule_glamartist_limit_lift_notif.hour = 0;
+	rule_glamartist_limit_lift_notif.minute = 1;
+	rule_glamartist_limit_lift_notif.second = 0;
 	var glamartist_limit_lift_notif = schedule.scheduleJob(rule_glamartist_limit_lift_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> Today is the 28th. **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
 		//console.log(`Glam Artist 28th Lift Notification Announced.`);
