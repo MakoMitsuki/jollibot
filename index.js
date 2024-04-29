@@ -555,23 +555,28 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'when-meeting') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
-			try{
+
+			let nextMeeting = staff_mtg_start_odd.nextInvocation();
+			let nextMeeting_2ndthurs = staff_mtg_2ndthurs_odd.nextInvocation();
+			let nextMeeting_onDayEarly = staff_mtg_onDayEarly_odd.nextInvocation();
+			let nextMeeting_onDayHour = staff_mtg_onDayHour_odd.nextInvocation();
+			let ffMeeting = staff_mtg_start_even.nextInvocation();
+
+			let nextDesignerMeeting = designer_mtg_start.nextInvocation();
+			let nextDesignerMeeting_onDayEarly = designer_mtg_onDayEarly.nextInvocation();
+			let nextDesignerMeeting_onDayHour = designer_mtg_onDayHour.nextInvocation();
+
+			// check next meeting
+			if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
+			{
 				nextMeeting = staff_mtg_start_even.nextInvocation();
 				ffMeeting = staff_mtg_start_odd.nextInvocation();
 				nextMeeting_2ndthurs = staff_mtg_2ndthurs_even.nextInvocation();
 				nextMeeting_onDayEarly = staff_mtg_onDayEarly_even.nextInvocation();
 				nextMeeting_onDayHour = staff_mtg_onDayHour_even.nextInvocation();
-
-				await interaction.reply(`>> **Your next scheduled special schedule jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**
-				\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}
-				\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}
-				\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\n
-				\n\nThe **Anniversary Designer Meeting** will be at ${hammerTimeHelper(nextDesignerMeeting, 'F')} which is ${hammerTimeHelper(nextDesignerMeeting, 'R')} from now.
-				\nReminder pings for this designer meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextDesignerMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextDesignerMeeting_onDayHour, 'F')}`);
-			
 			}
-			catch(e) {}
 
+			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now \n\nThe next **Designer Meeting** will be at ${hammerTimeHelper(nextDesignerMeeting, 'F')} which is ${hammerTimeHelper(nextDesignerMeeting, 'R')} from now. \nReminder pings for this designer meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextDesignerMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextDesignerMeeting_onDayHour, 'F')}`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
