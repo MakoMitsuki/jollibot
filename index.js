@@ -138,27 +138,26 @@ var gotm_open = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minu
 
 // ODD MONTHS
 const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
-var staff_mtg_start_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_start_odd = schedule.scheduleJob({month: 4, date: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
-	//console.log(`Community Collection closed.`);
   });
 
-var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: oddMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: 4, date: 2, dayOfWeek: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(
 		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'F')} ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}`
 		).catch(console.error);	
 });
 
-var staff_mtg_onDayEarly_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 12, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_onDayEarly_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 12, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today!** It starts ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'f')}`).catch(console.error);
 });
 
-var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 16, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 16, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
 // EVEN MONTHS
-const evenMonths = [ 1, 3, 5, 7, 9, 11 ];
+/*const evenMonths = [ 1, 3, 5, 7, 9, 11 ];
 var staff_mtg_start_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
   //console.log(`Community Collection closed.`);
@@ -176,10 +175,11 @@ var staff_mtg_onDayEarly_even = schedule.scheduleJob({month: evenMonths, date: s
 
 var staff_mtg_onDayHour_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_even.nextInvocation(), 'R')}!**`).catch(console.error);
-});
+});*/
 
 // DESIGNER MEETINGS
 
+/*
 const first_sat_dates = [1, 2, 3, 4, 5, 6, 7];
 
 var designer_mtg_start = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
@@ -193,7 +193,7 @@ var designer_mtg_onDayEarly = schedule.scheduleJob({month: monthsNov, date: firs
 
 var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first_sat_dates, dayOfWeek: 6, hour: 8, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting really soon! It's starting ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
-});
+});*/
 
 // ===============================================================
 
@@ -562,9 +562,9 @@ client.on('interactionCreate', async interaction => {
 			let nextMeeting_onDayHour = staff_mtg_onDayHour_odd.nextInvocation();
 			let ffMeeting = staff_mtg_start_even.nextInvocation();
 
-			let nextDesignerMeeting = designer_mtg_start.nextInvocation();
+			/*let nextDesignerMeeting = designer_mtg_start.nextInvocation();
 			let nextDesignerMeeting_onDayEarly = designer_mtg_onDayEarly.nextInvocation();
-			let nextDesignerMeeting_onDayHour = designer_mtg_onDayHour.nextInvocation();
+			let nextDesignerMeeting_onDayHour = designer_mtg_onDayHour.nextInvocation();*/
 
 			// check next meeting
 			if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
@@ -576,7 +576,10 @@ client.on('interactionCreate', async interaction => {
 				nextMeeting_onDayHour = staff_mtg_onDayHour_even.nextInvocation();
 			}
 
-			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now \n\nThe next **Designer Meeting** will be at ${hammerTimeHelper(nextDesignerMeeting, 'F')} which is ${hammerTimeHelper(nextDesignerMeeting, 'R')} from now. \nReminder pings for this designer meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextDesignerMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextDesignerMeeting_onDayHour, 'F')}`);
+			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**
+			\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}
+			\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}
+			\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
