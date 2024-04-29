@@ -599,8 +599,8 @@ client.on('interactionCreate', async interaction => {
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
-				.setTitle('GPOSERS Staff Deadlines')
-				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.setTitle('GPOSERS June 2024 Staff Deadlines')
+				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines for June 2024 in respect to Dawntrail. Note that some of the dates displayed may or may not be accurate due to the special nature of the deadlines. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6) or asking any of your Group Leads for clarification!`)
 				.addFields(
 					{
 						"name": `GLAM ARTIST`,
