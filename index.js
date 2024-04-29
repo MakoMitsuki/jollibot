@@ -84,14 +84,14 @@ const ccol_embed = {
 	"color": 0x005f73
   }
 
-var ccolopen = schedule.scheduleJob({date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE
-var ccolclose = schedule.scheduleJob({date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+var ccolclose = schedule.scheduleJob({month: monthsNov, date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
@@ -103,12 +103,12 @@ const gotm_vote_embed = {
 	"color": 0x005f73
   }
 
-var gotm_vote = schedule.scheduleJob({date: 10, hour: 9, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_vote = schedule.scheduleJob({month: monthsNov, date: 10, hour: 9, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-var gotm_close = schedule.scheduleJob({date: 10, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_close = schedule.scheduleJob({month: monthsNov, date: 10, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature! <:gposers1:1119066668912623746>`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
@@ -131,7 +131,7 @@ const gotm_open_embed = {
 	]
   }
 
-var gotm_open = schedule.scheduleJob({date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
