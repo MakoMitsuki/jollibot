@@ -560,21 +560,21 @@ client.on('interactionCreate', async interaction => {
 			let nextMeeting_2ndthurs = staff_mtg_2ndthurs_odd.nextInvocation();
 			let nextMeeting_onDayEarly = staff_mtg_onDayEarly_odd.nextInvocation();
 			let nextMeeting_onDayHour = staff_mtg_onDayHour_odd.nextInvocation();
-			let ffMeeting = staff_mtg_start_even.nextInvocation();
+			//let ffMeeting = staff_mtg_start_even.nextInvocation();
 
 			/*let nextDesignerMeeting = designer_mtg_start.nextInvocation();
 			let nextDesignerMeeting_onDayEarly = designer_mtg_onDayEarly.nextInvocation();
 			let nextDesignerMeeting_onDayHour = designer_mtg_onDayHour.nextInvocation();*/
 
 			// check next meeting
-			if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
+			/*if (staff_mtg_start_even.nextInvocation().toDate() < staff_mtg_start_odd.nextInvocation().toDate())
 			{
 				nextMeeting = staff_mtg_start_even.nextInvocation();
 				ffMeeting = staff_mtg_start_odd.nextInvocation();
 				nextMeeting_2ndthurs = staff_mtg_2ndthurs_even.nextInvocation();
 				nextMeeting_onDayEarly = staff_mtg_onDayEarly_even.nextInvocation();
 				nextMeeting_onDayHour = staff_mtg_onDayHour_even.nextInvocation();
-			}
+			}*/
 
 			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**
 			\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}
