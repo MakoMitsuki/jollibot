@@ -138,21 +138,21 @@ var gotm_open = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minu
 
 // ODD MONTHS
 const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
-var staff_mtg_start_odd = schedule.scheduleJob({month: 4, date: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_start_odd = schedule.scheduleJob({month: 4, date: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
   });
 
-var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: 4, date: 2, dayOfWeek: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: 4, date: 2, dayOfWeek: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(
 		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'F')} ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}`
 		).catch(console.error);	
 });
 
-var staff_mtg_onDayEarly_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 12, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_onDayEarly_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 7, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today!** It starts ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')} at ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'f')}`).catch(console.error);
 });
 
-var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 16, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: 4, date: 4, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(staff_mtg_start_odd.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
