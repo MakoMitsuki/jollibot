@@ -44,6 +44,7 @@ const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
 const monthsDec = [0, 1, 2, 3, 4, 5, 7, 8, 9, 11];
+const monthsNov28 = [0, 1, 2, 3, 4, 5, 8, 9, 10];
 
 const hammerTimeHelper = (d, format) => {
 	try {
@@ -84,7 +85,7 @@ const ccol_embed = {
 	"color": 0x005f73
   }
 
-var ccolopen = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({month: monthsNov28, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
@@ -131,16 +132,16 @@ const gotm_open_embed = {
 	]
   }
 
-var gotm_open = schedule.scheduleJob({month: monthsNov, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({month: monthsNov28, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
 // ODD MONTHS
-const oddMonths = [ 0, 2, 4, 6, 8, 10 ];
+const oddMonths = [ 0, 2, 4, 8, 10 ];
 var staff_mtg_start_odd = schedule.scheduleJob({month: oddMonths, date: second_sat_dates, dayOfWeek: 6, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
-	//console.log(`Community Collection closed.`);
+	//console.log(`odd mtgs.`);
   });
 
 var staff_mtg_2ndthurs_odd = schedule.scheduleJob({month: oddMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 17, minute: 0, second: 0, tz: 'America/New_York'}, function(){
@@ -161,7 +162,7 @@ var staff_mtg_onDayHour_odd = schedule.scheduleJob({month: oddMonths, date: seco
 const evenMonths = [ 1, 3, 5, 7, 9, 11 ];
 var staff_mtg_start_even = schedule.scheduleJob({month: evenMonths, date: second_sat_dates, dayOfWeek: 6, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
-  //console.log(`Community Collection closed.`);
+  //console.log(`even mtgs.`);
 });
 
 var staff_mtg_2ndthurs_even = schedule.scheduleJob({month: evenMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
@@ -322,7 +323,7 @@ var rule_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_photo_hard_notif.minute = 0;
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.\n\n<@&${qaPing}> **hard deadline to QA CC photos is today. Make sure that all CC photos have all three QA by the end of today.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.\n\n<@&${qaPing}> **hard deadline to QA CC photos is today.** Make sure that all CC photos have all three QA by the end of today.`).catch(console.error);
 		//console.log(`Photographers Hard Deadline & QA CC Hard Deadline Announced.`);
 	});
 
@@ -393,7 +394,7 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 	rule_design_ti_hard_notif.minute = 0;
 	rule_design_ti_hard_notif.second = 0;
 	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer** should also ensure that the social media promos are done and submitted to #social-media before magazine release.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to #social-media before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
