@@ -44,8 +44,8 @@ const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
 const monthsDec = [0, 1, 2, 3, 4, 5, 7, 8, 9, 11];
-const monthsNov28 = [0, 1, 2, 3, 4, 6, 8, 9, 10];
-const monthsDec28 = [0, 1, 2, 3, 4, 6, 8, 9, 11];
+const monthsNov28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10];
+const monthsDec28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 11];
 
 const hammerTimeHelper = (d, format) => {
 	try {
