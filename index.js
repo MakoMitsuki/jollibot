@@ -44,7 +44,8 @@ const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
 const monthsDec = [0, 1, 2, 3, 4, 5, 7, 8, 9, 11];
-const monthsNov28 = [0, 1, 2, 3, 4, 5, 8, 9, 10];
+const monthsNov28 = [0, 1, 2, 3, 4, 7, 8, 9, 10];
+const monthsDec28 = [0, 1, 2, 3, 4, 7, 8, 9, 11];
 
 const hammerTimeHelper = (d, format) => {
 	try {
@@ -200,7 +201,7 @@ var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first
 
 var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 	rule_glamartist_limit_lift_notif.tz = 'America/New_York';
-	rule_glamartist_limit_lift_notif.month = monthsDec;
+	rule_glamartist_limit_lift_notif.month = monthsDec28;
 	rule_glamartist_limit_lift_notif.date = 28;
 	rule_glamartist_limit_lift_notif.hour = 0;
 	rule_glamartist_limit_lift_notif.minute = 1;
