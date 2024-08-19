@@ -494,7 +494,7 @@ const commands = [
     }, 
 	{
 		name: 'skip-designer-meeting',
-		description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications.',
+		description: '[ADMIN ONLY FUNCTION] Skip next designer meeting.',
 	},
 	{
 		name: 'when-meeting',
