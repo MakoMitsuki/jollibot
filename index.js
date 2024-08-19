@@ -420,6 +420,23 @@ var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
 	R : time till
 */
 
+const pauseNextDesignerMeeting = (interaction) => {
+	try {
+		// skip meeting
+		designer_mtg_onDayEarly.cancelNext(true);
+		designer_mtg_onDayHour.cancelNext(true);
+		designer_mtg_start.cancelNext(true);
+
+		// TODO: client log success
+		interaction.reply(`**Next designer meeting cancelled!** Type \`/when-meeting\` to check when the next meeting is.`);
+	} catch (error) {
+		// TODO: client log error
+		interaction.reply(`**ERROR:** Something went jolli-wrong when cancelling next designer meeting! <@${yuliaPing} pls fix.>`);
+		console.log(`[[SKIPDESIGNERMEETING]] ${error}`);
+		return;
+	}
+}
+
 const pauseStaffReminders = (interaction) => {
   try {
     // skip next month's meeting reminders
@@ -475,6 +492,10 @@ const commands = [
       name: 'breakmonth',
       description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications.',
     }, 
+	{
+		name: 'skip-designer-meeting',
+		description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications.',
+	},
 	{
 		name: 'when-meeting',
 		description: '[STAFF DISCORD ONLY] Lets you know when your next staff meeting is.'
@@ -552,6 +573,30 @@ client.on('interactionCreate', async interaction => {
 			// BUTTONS PARSED IN BUTTON INTERACTIONS
 		} else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the break month!`);
+		}
+    }
+
+	if (interaction.commandName === 'skip-designer-meeting') {
+		// EDITOR ONLY
+		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
+			// BREAK MONTH
+			const isSkipMtg_row = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('yesskipdesignermtgbutton')
+					.setLabel(`Yes, skip the next designer meeting!`)
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
+					.setCustomId('noskipdesignermtgbutton')
+					.setLabel(`Never Mind...`)
+					.setStyle(ButtonStyle.Danger),
+				);
+
+			await interaction.reply({ content: `**Are you jolli-sure you want to skip the next designer meeting?** Once it is set, it cannot be unset until it auto-unsets itself a month from now OR asking Yulia to reset the bot. Note that this won't cancel the meeting after that.`, 
+			components: [isSkipMtg_row], ephemeral: true, });
+			// BUTTONS PARSED IN BUTTON INTERACTIONS
+		} else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the designer meeting times!`);
 		}
     }
 
@@ -690,6 +735,13 @@ client.on('interactionCreate', async interaction => {
       } 
 	  else if (interaction.customId === 'nobreakbutton') {
 		// DONT CANCEL ALL NOTIFS
+		await interaction.reply(`Gotcha! No break for now.`);
+	  }
+	  else if (interaction.customId === 'yesskipdesignermtgbutton') {
+		// CABCEL DESIGNER MTG
+		await pauseNextDesignerMeeting(interaction);
+	  } else if (interaction.customId === 'noskipdesignermtgbutton') {
+		// CONT CANCEL DESIGNER MTG
 		await interaction.reply(`Gotcha! No break for now.`);
 	  } else {
 		return;
