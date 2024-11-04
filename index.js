@@ -272,14 +272,26 @@ var rule_artist_harddec_notif = new schedule.RecurrenceRule();
 		//console.log(`Artists Hard Deadline Announced.`);
 	});
 
-var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
-  rule_auth_soft_glam_hard_notif.tz = 'America/New_York';
-	rule_auth_soft_glam_hard_notif.month = monthsNovSD;
-	rule_auth_soft_glam_hard_notif.date = 5;
-	rule_auth_soft_glam_hard_notif.hour = 12;
-	rule_auth_soft_glam_hard_notif.minute = 0;
-	rule_auth_soft_glam_hard_notif.second = 0;
-	var auth_soft_glam_hard_notif = schedule.scheduleJob(rule_auth_soft_glam_hard_notif, function(){
+var rule_auth_soft_notif = new schedule.RecurrenceRule();
+  rule_auth_soft_notif.tz = 'America/New_York';
+	rule_auth_soft_notif.month = monthsNovSD;
+	rule_auth_soft_notif.date = 5;
+	rule_auth_soft_notif.hour = 12;
+	rule_auth_soft_notif.minute = 0;
+	rule_auth_soft_notif.second = 0;
+	var auth_soft_notif = schedule.scheduleJob(rule_auth_soft_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.`).catch(console.error);
+		//console.log(`Authors Soft Deadline Announced`);
+	});
+
+var rule_glam_hard_notif = new schedule.RecurrenceRule();
+	rule_glam_hard_notif.tz = 'America/New_York';
+	rule_glam_hard_notif.month = monthsNov;
+	rule_glam_hard_notif.date = 5;
+	rule_glam_hard_notif.hour = 12;
+	rule_glam_hard_notif.minute = 0;
+	rule_glam_hard_notif.second = 0;
+	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.\n\n<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day to the proofreaders channel.`).catch(console.error);
 		//console.log(`Authors Soft Deadline Announced. Glam Artists Hard Deadline Announced.`);
 	});
@@ -761,11 +773,11 @@ client.on('interactionCreate', async interaction => {
 						"name": `GLAM ARTIST`,
 						"value": `Glam Artist Limit Lift - 28th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
 							Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}`
+							Hard Deadline - 5th - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}`
 					},
 					  {
 						"name": `AUTHOR`,
-						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_glam_hard_notif.nextInvocation(), 'R')}
+						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'R')}
 							Hard Deadline- 11th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  {
