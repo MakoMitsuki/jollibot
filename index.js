@@ -434,6 +434,7 @@ var rule_design_ti_harddec_notif = new schedule.RecurrenceRule();
 	var design_ti_harddec_notif = schedule.scheduleJob(rule_design_ti_harddec_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to #social-media before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
+	});
 
 /* ================================= SCHEDULE END =================================== */
 
