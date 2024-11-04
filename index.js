@@ -334,7 +334,7 @@ var rule_photo_soft_notif = new schedule.RecurrenceRule();
 
 var rule_cc_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_cc_photo_hard_notif.tz = 'America/New_York';
-	rule_cc_photo_hard_notif.month = monthsNovSD;
+	rule_cc_photo_hard_notif.month = monthsNov;
 	rule_cc_photo_hard_notif.date = 10;
 	rule_cc_photo_hard_notif.hour = 12;
 	rule_cc_photo_hard_notif.minute = 0;
