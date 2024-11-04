@@ -13,7 +13,6 @@ const tenorAPI = process.env.TENOR_API_KEY;
 
 /* ================================= SCHEDULE START ================================= */
 
-const channel_collaborators = process.env.CHANNEL_COLLABORATORS;
 const channel_staff_announce = process.env.CHANNEL_STAFF_ANNOUNCE;
 const channels_weekly_feature = process.env.CHANNEL_WEEKLY_FEATURE;
 const channels_community_collection = process.env.CHANNEL_COMMUNITY_COLLECTION;
@@ -23,7 +22,6 @@ const staffDiscordId = process.env.STAFF_DISCORD_ID;
 const testDiscordId = process.env.ROBOT_YULIA_SERVER_ID;
 
 const yuliaPing = process.env.YULIA;
-const edeonPing = process.env.EDEON;
 const staffEditorRole = process.env.STAFF_EDITOR_ROLE;
 const ricardoRole = process.env.STAFF_RICARDO_ROLE;
 
@@ -43,8 +41,7 @@ const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
-const monthsDec = [0, 1, 2, 3, 4, 5, 7, 8, 9, 11];
-const monthsNov28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10];
+const monthsDesignerNormal = [0, 1, 2, 3, 4, 5, 7, 8, 9];
 const monthsDec28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 11];
 
 const hammerTimeHelper = (d, format) => {
@@ -86,7 +83,7 @@ const ccol_embed = {
 	"color": 0x005f73
   }
 
-var ccolopen = schedule.scheduleJob({month: monthsNov28, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({month: monthsDec28, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
@@ -126,14 +123,14 @@ const gotm_open_embed = {
 		"name": `Submission Template File`,
 		"value": `https://docs.google.com/document/d/1ysb6zW4FzTWRnD2CIF3c-MScRwC2OmjNuHWnKzNuoM0/edit`
 	  },
-	  {
+	  /*{
 		"name": `Deadline of submissions`,
 		"value": `${hammerTimeHelper(gotm_vote.nextInvocation(), 'F')} which is ${hammerTimeHelper(gotm_vote.nextInvocation(), 'R')} from now`
-	  }
+	  }*/
 	]
   }
 
-var gotm_open = schedule.scheduleJob({month: monthsNov28, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({month: monthsDec28, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
@@ -352,9 +349,11 @@ var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 		  //console.log(`QA Photo Hard Deadline Announced.`);
 	  });
 
+// DESIGNER NORMAL DEADLINES
+
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
-	rule_design_soft_notif.month = monthsDec;
+	rule_design_soft_notif.month = monthsDesignerNormal;
 	rule_design_soft_notif.date = 17;
 	rule_design_soft_notif.hour = 12;
 	rule_design_soft_notif.minute = 0;
@@ -365,7 +364,7 @@ var rule_design_soft_notif = new schedule.RecurrenceRule();
 	});
 var rule_design_hard_notif = new schedule.RecurrenceRule();
   rule_design_hard_notif.tz = 'America/New_York';
-	rule_design_hard_notif.month = monthsDec;
+	rule_design_hard_notif.month = monthsDesignerNormal;
 	rule_design_hard_notif.date = 20;
 	rule_design_hard_notif.hour = 12;
 	rule_design_hard_notif.minute = 0;
@@ -377,7 +376,7 @@ var rule_design_hard_notif = new schedule.RecurrenceRule();
 
 var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_design_qa_hard_notif.tz = 'America/New_York';
-	rule_design_qa_hard_notif.month = monthsDec;
+	rule_design_qa_hard_notif.month = monthsDesignerNormal;
 	rule_design_qa_hard_notif.date = 23;
 	rule_design_qa_hard_notif.hour = 12;
 	rule_design_qa_hard_notif.minute = 0;
@@ -389,7 +388,7 @@ var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 
 var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 	rule_design_ti_hard_notif.tz = 'America/New_York';
-	rule_design_ti_hard_notif.month = monthsDec;
+	rule_design_ti_hard_notif.month = monthsDesignerNormal;
 	rule_design_ti_hard_notif.hour = 12;
 	rule_design_ti_hard_notif.date = 24;
 	rule_design_ti_hard_notif.minute = 0;
@@ -399,19 +398,43 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
-/* // EORZEA COLLECTION PING EDEON
-var rule_eorzea_collection_notif = new schedule.RecurrenceRule();
-  rule_eorzea_collection_notif.tz = 'America/New_York';
-	rule_eorzea_collection_notif.month = months;
-	rule_eorzea_collection_notif.date = 1;
-	rule_eorzea_collection_notif.hour = 12;
-	rule_eorzea_collection_notif.minute = 0;
-	rule_eorzea_collection_notif.second = 0;
-	var eorzea_collection_notif = schedule.scheduleJob(rule_eorzea_collection_notif, function(){
-		client.channels.cache.get(channel_collaborators).send(`<@${edeonPing}> **It is time to renew the jolli-blood pact.**`).catch(console.error);
-		//console.log(`Eorzea Collection ping sent.`);
+// DESIGNER DECEMBER DEADLINES
+
+var rule_design_harddec_notif = new schedule.RecurrenceRule();
+  rule_design_harddec_notif.tz = 'America/New_York';
+	rule_design_harddec_notif.month = 11;
+	rule_design_harddec_notif.date = 10;
+	rule_design_harddec_notif.hour = 12;
+	rule_design_harddec_notif.minute = 0;
+	rule_design_harddec_notif.second = 0;
+	var design_harddec_notif = schedule.scheduleJob(rule_design_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted the PDFs of your completed designs for QA by the end of the day.`).catch(console.error);
+		//console.log(`Designers Hard Deadline Announced.`);
 	});
-/*
+
+var rule_design_qa_harddec_notif = new schedule.RecurrenceRule();
+	rule_design_qa_harddec_notif.tz = 'America/New_York';
+	rule_design_qa_harddec_notif.month = 11;
+	rule_design_qa_harddec_notif.date = 13;
+	rule_design_qa_harddec_notif.hour = 12;
+	rule_design_qa_harddec_notif.minute = 0;
+	rule_design_qa_harddec_notif.second = 0;
+	var design_qa_harddec_notif = schedule.scheduleJob(rule_design_qa_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
+	});
+
+var rule_design_ti_harddec_notif = new schedule.RecurrenceRule();
+	rule_design_ti_harddec_notif.tz = 'America/New_York';
+	rule_design_ti_harddec_notif.month = 11;
+	rule_design_ti_harddec_notif.hour = 12;
+	rule_design_ti_harddec_notif.date = 15;
+	rule_design_ti_harddec_notif.minute = 0;
+	rule_design_ti_harddec_notif.second = 0;
+	var design_ti_harddec_notif = schedule.scheduleJob(rule_design_ti_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to #social-media before magazine release.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
+
 /* ================================= SCHEDULE END =================================== */
 
 /*
@@ -490,7 +513,7 @@ const commands = [
 	},
     {
       name: 'breakmonth',
-      description: '[ADMIN ONLY FUNCTION] Pause all GPOSERS Staff notifications.',
+      description: '[ADMIN ONLY FUNCTION] [TEMPORARILY DISABLED] Pause all GPOSERS Staff notifications.',
     }, 
 	{
 		name: 'skip-designer-meeting',
@@ -556,7 +579,7 @@ client.on('interactionCreate', async interaction => {
 		// EDITOR ONLY
 		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
 			// BREAK MONTH
-			const isBreakMonth_row = new ActionRowBuilder()
+			/*const isBreakMonth_row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('yesbreakbutton')
@@ -570,7 +593,8 @@ client.on('interactionCreate', async interaction => {
 
 			await interaction.reply({ content: `**Are you jolli-sure you want to set the break month?** Once it is set, it cannot be unset until it auto-unsets itself month from now OR asking Yulia to reset the bot. Note that this won't cancel the following meeting.`, 
 			components: [isBreakMonth_row], ephemeral: true, });
-			// BUTTONS PARSED IN BUTTON INTERACTIONS
+			// BUTTONS PARSED IN BUTTON INTERACTIONS */
+			await interaction.reply(`**Break Month Function has been disabled at the moment.** Contact Yulia to manually set the break month.`);
 		} else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the break month!`);
 		}
@@ -655,6 +679,22 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'when-deadlines') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			var normalDesignerDeadlines = ({
+				"name": `DESIGNER`,
+				"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
+					Soft Deadline - 17th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
+					Hard Deadline - 20th - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
+					Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'R')}`
+			  })
+			var decemberDesignerDeadlines = ({
+				"name": `DESIGNER (DECEMBER SPECIAL)`,
+				"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
+					Hard Deadline - 12th - ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'R')}
+					Indesign Turn In Deadline - 15th - ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'R')}`
+			})
+
+			let isNovDec = (new Date().getMonth() === 10 || new Date().getMonth() === 11);
+
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
@@ -678,13 +718,7 @@ client.on('interactionCreate', async interaction => {
 							General Soft Deadline and CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
 							Hard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
-					  {
-						"name": `DESIGNER`,
-						"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
-							Soft Deadline - 17th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 20th - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
-							Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'R')}`
-					  },
+					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
 					  {
 						"name": `ARTIST`,
 						"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}
@@ -697,7 +731,9 @@ client.on('interactionCreate', async interaction => {
 							Proofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}
 							QA CC Photo Hard Deadline - 13th ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}
 							QA Photo Hard Deadline - 15th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}
-							QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`
+							${isNovDec ?
+								`QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_harddec_notif.nextInvocation(), 'R')}`
+								: `QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`}`
 					  }
 				)
 				.setTimestamp()
@@ -738,7 +774,7 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply(`Gotcha! No break for now.`);
 	  }
 	  else if (interaction.customId === 'yesskipdesignermtgbutton') {
-		// CABCEL DESIGNER MTG
+		// CANCEL DESIGNER MTG
 		await pauseNextDesignerMeeting(interaction);
 	  } else if (interaction.customId === 'noskipdesignermtgbutton') {
 		// CONT CANCEL DESIGNER MTG
