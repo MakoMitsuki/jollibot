@@ -734,7 +734,7 @@ client.on('interactionCreate', async interaction => {
 			var decemberDesignerDeadlines = ({
 				"name": `DESIGNER (DECEMBER SPECIAL)`,
 				"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
-					Hard Deadline - 12th - ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'R')}
+					Hard Deadline - 10th - ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'R')}
 					Indesign Turn In Deadline - 15th - ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'R')}`
 			})
 
@@ -746,7 +746,7 @@ client.on('interactionCreate', async interaction => {
 
 			var decemberArtistDeadlines = ({
 				"name": `ARTIST (DECEMBER SPECIAL)`,
-				"value": `Hard Deadline - 12th - ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'R')}`
+				"value": `Hard Deadline - 10th - ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'R')}`
 			  })
 
 			let isNovDec = (new Date().getMonth() === 10 || new Date().getMonth() === 11);
