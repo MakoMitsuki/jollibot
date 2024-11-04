@@ -41,7 +41,7 @@ const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
-const monthsNovSD = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
+const monthsNovSD = [0, 1, 2, 3, 4, 5, 7, 8, 9];
 const monthsDesignerNormal = [0, 1, 2, 3, 4, 5, 7, 8, 9];
 const monthsDec28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 11];
 
@@ -223,7 +223,7 @@ var rule_design_first_notif = new schedule.RecurrenceRule();
 	
 var rule_glam_soft_notif = new schedule.RecurrenceRule();
   rule_glam_soft_notif.tz = 'America/New_York';
-	rule_glam_soft_notif.month = monthsNov;
+	rule_glam_soft_notif.month = monthsNovSD;
 	rule_glam_soft_notif.date = 3;
 	rule_glam_soft_notif.hour = 12;
 	rule_glam_soft_notif.minute = 0;
@@ -232,9 +232,11 @@ var rule_glam_soft_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
 		//console.log(`Glam Artists Soft Deadline Announced.`);
 	});
+
+
 var rule_artist_soft_notif = new schedule.RecurrenceRule();
   rule_artist_soft_notif.tz = 'America/New_York';
-	rule_artist_soft_notif.month = monthsNov;
+	rule_artist_soft_notif.month = monthsNovSD;
 	rule_artist_soft_notif.date = 10;
 	rule_artist_soft_notif.hour = 12;
 	rule_artist_soft_notif.minute = 1;
@@ -243,9 +245,11 @@ var rule_artist_soft_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **soft jolli-deadline for all magazine-related artwork is today**. Make sure you have started all artwork before the end of the day.`).catch(console.error);
 		//console.log(`Artists Soft Deadline Announced.`);
 	});
+
+// NORMAL ARTIST HD
 var rule_artist_hard_notif = new schedule.RecurrenceRule();
   rule_artist_hard_notif.tz = 'America/New_York';
-	rule_artist_hard_notif.month = monthsNov;
+	rule_artist_hard_notif.month = monthsDesignerNormal;
 	rule_artist_hard_notif.date = 13;
 	rule_artist_hard_notif.hour = 12;
 	rule_artist_hard_notif.minute = 2;
@@ -254,9 +258,23 @@ var rule_artist_hard_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
 		//console.log(`Artists Hard Deadline Announced.`);
 	});
+
+// DEC ARTIST HD
+var rule_artist_harddec_notif = new schedule.RecurrenceRule();
+  rule_artist_harddec_notif.tz = 'America/New_York';
+	rule_artist_harddec_notif.month = 11;
+	rule_artist_harddec_notif.date = 10;
+	rule_artist_harddec_notif.hour = 12;
+	rule_artist_harddec_notif.minute = 2;
+	rule_artist_harddec_notif.second = 0;
+	var artist_harddec_notif = schedule.scheduleJob(rule_artist_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
+		//console.log(`Artists Hard Deadline Announced.`);
+	});
+
 var rule_auth_soft_glam_hard_notif = new schedule.RecurrenceRule();
   rule_auth_soft_glam_hard_notif.tz = 'America/New_York';
-	rule_auth_soft_glam_hard_notif.month = monthsNov;
+	rule_auth_soft_glam_hard_notif.month = monthsNovSD;
 	rule_auth_soft_glam_hard_notif.date = 5;
 	rule_auth_soft_glam_hard_notif.hour = 12;
 	rule_auth_soft_glam_hard_notif.minute = 0;
@@ -280,7 +298,7 @@ var rule_auth_hard_notif = new schedule.RecurrenceRule();
 
 var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
   rule_photo_cc_soft_notif.tz = 'America/New_York';
-	rule_photo_cc_soft_notif.month = monthsNov;
+	rule_photo_cc_soft_notif.month = monthsNovSD;
 	rule_photo_cc_soft_notif.date = 7;
 	rule_photo_cc_soft_notif.hour = 12;
 	rule_photo_cc_soft_notif.minute = 0;
@@ -292,7 +310,7 @@ var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
 
 var rule_photo_soft_notif = new schedule.RecurrenceRule();
   rule_photo_soft_notif.tz = 'America/New_York';
-	rule_photo_soft_notif.month = monthsNov;
+	rule_photo_soft_notif.month = monthsNovSD;
 	rule_photo_soft_notif.date = 10;
 	rule_photo_soft_notif.hour = 12;
 	rule_photo_soft_notif.minute = 0;
@@ -695,13 +713,24 @@ client.on('interactionCreate', async interaction => {
 					Indesign Turn In Deadline - 15th - ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'R')}`
 			})
 
+			var normalArtistDeadlines = ({
+				"name": `ARTIST`,
+				"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}
+					Hard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
+			  })
+
+			var decemberArtistDeadlines = ({
+				"name": `ARTIST (DECEMBER SPECIAL)`,
+				"value": `Hard Deadline - 12th - ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'R')}`
+			  })
+
 			let isNovDec = (new Date().getMonth() === 10 || new Date().getMonth() === 11);
 
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
 				.setTitle('GPOSERS Staff Deadlines')
-				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate and we follow a special schedule for the months of July, November, and December. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
 				.addFields(
 					{
 						"name": `GLAM ARTIST`,
@@ -721,11 +750,7 @@ client.on('interactionCreate', async interaction => {
 							Hard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
-					  {
-						"name": `ARTIST`,
-						"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
-					  },
+					  (isNovDec ? decemberArtistDeadlines : normalArtistDeadlines),
 					  {
 						"name": `QA / PROOFREADER`,
 						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
