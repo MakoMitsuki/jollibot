@@ -304,8 +304,20 @@ var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
 	rule_photo_cc_soft_notif.minute = 0;
 	rule_photo_cc_soft_notif.second = 0;
 	var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for Community Couture articles is today**. Make sure you have started all Community Couture photography work before the end of the day.\n\n<@&${proofreaderPing}> **hard jolli-deadline for proofreading CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
-		//console.log(`Photographers CC Soft Deadline Announced. Proofreader CC Hard Deadline Announced`);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for Community Couture articles is today**. Make sure you have started all Community Couture photography work before the end of the day.`).catch(console.error);
+		//console.log(`Photographers CC Soft Deadline Announced.`);
+	});
+
+var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
+	rule_proof_cc_hard_notif.tz = 'America/New_York';
+	rule_proof_cc_hard_notif.month = monthsNov;
+	rule_proof_cc_hard_notif.date = 7;
+	rule_proof_cc_hard_notif.hour = 12;
+	rule_proof_cc_hard_notif.minute = 0;
+	rule_proof_cc_hard_notif.second = 0;
+	var proof_cc_hard_notif = schedule.scheduleJob(rule_proof_cc_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for proofreading CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
+		//console.log(`Proofreader CC Hard Deadline Announced`);
 	});
 
 var rule_photo_soft_notif = new schedule.RecurrenceRule();
@@ -316,8 +328,20 @@ var rule_photo_soft_notif = new schedule.RecurrenceRule();
 	rule_photo_soft_notif.minute = 0;
 	rule_photo_soft_notif.second = 0;
 	var photo_soft_notif = schedule.scheduleJob(rule_photo_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for all non-glam articles is today**. Make sure you have started all photography work before the end of the day.\n\n<@&${photographerPing}> **hard jolli-deadline for Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
-		//console.log(`Photographers Soft Deadline and Photographers CC Hard Deadline Announced.`);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for all non-glam articles is today**. Make sure you have started all photography work before the end of the day.`).catch(console.error);
+		//console.log(`Photographers Soft Deadline`);
+	});
+
+var rule_cc_photo_hard_notif = new schedule.RecurrenceRule();
+	rule_cc_photo_hard_notif.tz = 'America/New_York';
+	rule_cc_photo_hard_notif.month = monthsNovSD;
+	rule_cc_photo_hard_notif.date = 10;
+	rule_cc_photo_hard_notif.hour = 12;
+	rule_cc_photo_hard_notif.minute = 0;
+	rule_cc_photo_hard_notif.second = 0;
+	var cc_photo_hard_notif = schedule.scheduleJob(rule_cc_photo_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
+		//console.log(`Photographers CC Hard Deadline Announced.`);
 	});
 
 var rule_proof_gotm_hard_notif = new schedule.RecurrenceRule();
@@ -598,6 +622,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.commandName === 'breakmonth') {
 		// EDITOR ONLY
 		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
+			// ================= UNADJUSTED CODE
 			// BREAK MONTH
 			/*const isBreakMonth_row = new ActionRowBuilder()
 			.addComponents(
@@ -746,14 +771,15 @@ client.on('interactionCreate', async interaction => {
 					  {
 						"name": `PHOTOGRAPHER`,
 						"value": `CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
-							General Soft Deadline and CC Hard Deadline - 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
+							General Soft Deadline- 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
+							CC Hard Deadline - 10th - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
 							Hard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
 					  (isNovDec ? decemberArtistDeadlines : normalArtistDeadlines),
 					  {
 						"name": `QA / PROOFREADER`,
-						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
+						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'R')}
 							Proofreader Glam of the Month Hard Deadline - 11th - ${hammerTimeHelper(proof_gotm_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_gotm_hard_notif.nextInvocation(), 'R')}
 							Proofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}
 							QA CC Photo Hard Deadline - 13th ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}
