@@ -292,8 +292,8 @@ var rule_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_glam_hard_notif.minute = 0;
 	rule_glam_hard_notif.second = 0;
 	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.\n\n<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day to the proofreaders channel.`).catch(console.error);
-		//console.log(`Authors Soft Deadline Announced. Glam Artists Hard Deadline Announced.`);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day to the proofreaders channel.`).catch(console.error);
+		//console.log(`Glam Artists Hard Deadline Announced.`);
 	});
 
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
@@ -487,7 +487,7 @@ var rule_design_ti_harddec_notif = new schedule.RecurrenceRule();
 	rule_design_ti_harddec_notif.minute = 0;
 	rule_design_ti_harddec_notif.second = 0;
 	var design_ti_harddec_notif = schedule.scheduleJob(rule_design_ti_harddec_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to #social-media before magazine release.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! \n\n**Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the **Publishing Materials Folder** in the drive and shown in #social-media before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
