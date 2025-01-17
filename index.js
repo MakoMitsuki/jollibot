@@ -499,15 +499,42 @@ var rule_design_ti_harddec_notif = new schedule.RecurrenceRule();
 	R : time till
 */
 
-const pauseNextDesignerMeeting = (interaction) => {
+const pauseNextStaffMeeting = (interaction) => {
 	try {
 		// skip meeting
+		let isNextEven = new Date(staff_mtg_start_even) > new Date(staff_mtg_start_odd);
+
+		if (isNextEven){
+			staff_mtg_2ndthurs_even.cancelNext(true);
+			staff_mtg_onDayEarly_even.cancelNext(true);
+			staff_mtg_onDayHour_even.cancelNext(true);
+			staff_mtg_start_even.cancelNext(true);
+		} else {
+			staff_mtg_2ndthurs_odd.cancelNext(true);
+			staff_mtg_onDayEarly_odd.cancelNext(true);
+			staff_mtg_onDayHour_odd.cancelNext(true);
+			staff_mtg_start_odd.cancelNext(true);
+		}
+
+		// TODO: client log success
+		interaction.reply(`**Next staff meeting cancelled!** Type \`/when-meeting\` to double-check when the next meeting is.`);
+	} catch (error) {
+		// TODO: client log error
+		interaction.reply(`**ERROR:** Something went jolli-wrong when cancelling next staff meeting! <@${yuliaPing} pls fix.>`);
+		console.log(`[[SKIPSTAFFMEETING]] ${error}`);
+		return;
+	}
+}
+
+const pauseNextDesignerMeeting = (interaction) => {
+	try {
+		// skip designer meeting
 		designer_mtg_onDayEarly.cancelNext(true);
 		designer_mtg_onDayHour.cancelNext(true);
 		designer_mtg_start.cancelNext(true);
 
 		// TODO: client log success
-		interaction.reply(`**Next designer meeting cancelled!** Type \`/when-meeting\` to check when the next meeting is.`);
+		interaction.reply(`**Next designer meeting cancelled!** Type \`/when-meeting\` to double-check when the next meeting is.`);
 	} catch (error) {
 		// TODO: client log error
 		interaction.reply(`**ERROR:** Something went jolli-wrong when cancelling next designer meeting! <@${yuliaPing} pls fix.>`);
@@ -570,7 +597,11 @@ const commands = [
     {
       name: 'breakmonth',
       description: '[ADMIN ONLY FUNCTION] [TEMPORARILY DISABLED] Pause all GPOSERS Staff notifications.',
-    }, 
+    },
+	{
+		name: 'skip-staff-meeting',
+		description: '[ADMIN ONLY FUNCTION] Skip next staff meeting.',
+	}, 
 	{
 		name: 'skip-designer-meeting',
 		description: '[ADMIN ONLY FUNCTION] Skip next designer meeting.',
@@ -654,6 +685,30 @@ client.on('interactionCreate', async interaction => {
 			await interaction.reply(`**Break Month Function has been disabled at the moment.** Contact Yulia to manually set the break month.`);
 		} else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the break month!`);
+		}
+    }
+
+	if (interaction.commandName === 'skip-staff-meeting') {
+		// EDITOR ONLY
+		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
+			// BREAK MONTH
+			const isSkipMtg_row = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('yesskipstaffmtgbutton')
+					.setLabel(`Yes, skip the next staff meeting!`)
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
+					.setCustomId('noskipstaffmtgbutton')
+					.setLabel(`Never Mind...`)
+					.setStyle(ButtonStyle.Danger),
+				);
+
+			await interaction.reply({ content: `**Are you jolli-sure you want to skip the next staff meeting?** Once it is set, it cannot be unset until it auto-unsets itself a month from now OR asking Yulia to reset the bot. Note that this won't cancel the meeting after that.`, 
+			components: [isSkipMtg_row], ephemeral: true, });
+			// BUTTONS PARSED IN BUTTON INTERACTIONS
+		} else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the staff meeting times!`);
 		}
     }
 
@@ -838,12 +893,19 @@ client.on('interactionCreate', async interaction => {
 		// DONT CANCEL ALL NOTIFS
 		await interaction.reply(`Gotcha! No break for now.`);
 	  }
+	  else if (interaction.customId === 'yesskipstaffmtgbutton') {
+		// CANCEL STAFF MTG
+		await pauseNextStaffMeeting(interaction);
+	  } else if (interaction.customId === 'noskipstaffmtgbutton') {
+		// DONT CANCEL STAFF MTG
+		await interaction.reply(`Gotcha! We keep the staff meeting for now.`);
+	  }
 	  else if (interaction.customId === 'yesskipdesignermtgbutton') {
 		// CANCEL DESIGNER MTG
 		await pauseNextDesignerMeeting(interaction);
 	  } else if (interaction.customId === 'noskipdesignermtgbutton') {
-		// CONT CANCEL DESIGNER MTG
-		await interaction.reply(`Gotcha! No break for now.`);
+		// DONT CANCEL DESIGNER MTG
+		await interaction.reply(`Gotcha! We keep the designer meeting for now.`);
 	  } else {
 		return;
 	  }
