@@ -6,8 +6,11 @@ const schedule = require('node-schedule');
 const fetch = require('node-fetch');
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
-const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent] });
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const client = new Client({
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions],
+	partials: [Partials.Message, Partials.Channel, Partials.Reaction]
+});
 
 const tenorAPI = process.env.TENOR_API_KEY;
 
