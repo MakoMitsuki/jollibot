@@ -659,10 +659,8 @@ client.on('message', async msg => {
 
 // https://discord.js.org/docs/packages/discord.js/14.14.1/Events:Enum#/docs/discord.js/main/class/Client?scrollTo=e-messageReactionRemove
 client.on('messageReactionRemove', (reaction, user) => {
-	console.log("hey theres a reaction remove");
     if (reaction.message.channel.id === '465932520266137600') {
-		console.log("hey theres a reaction remove at the channel");
-        client.channels.cache.get('1082385963675811921').send(`${user.username} removed their "${reaction.emoji.name}" reaction at ${reaction.message.id}`);
+        client.channels.cache.get('1082385963675811921').send(`**${user.username}** removed their "${reaction.emoji.name}" reaction at https://discord.com/channels/465931452085829643/465932520266137600/${reaction.message.id}`);
     }
 });
 
