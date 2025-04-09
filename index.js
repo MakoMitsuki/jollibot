@@ -295,7 +295,7 @@ var rule_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_glam_hard_notif.minute = 0;
 	rule_glam_hard_notif.second = 0;
 	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day to the proofreaders channel.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day in the proofreaders channel and your glam's chara file in the glam folder so that the Photographers can finish work.`).catch(console.error);
 		//console.log(`Glam Artists Hard Deadline Announced.`);
 	});
 
@@ -452,7 +452,7 @@ var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
 	rule_design_ti_hard_notif.minute = 0;
 	rule_design_ti_hard_notif.second = 0;
 	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to #social-media before magazine release.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the Publishing folder in the Drive before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
