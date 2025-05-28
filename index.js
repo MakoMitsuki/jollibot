@@ -70,7 +70,7 @@ const getMidnightSameDay = (d, format) => {
 	}
 }
 
-// ======================================================================
+// ==================================== WEEKLY FEATURE ======================================
 
 // WEEKLY FEATURE OPEN
 schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0, tz: 'America/New_York'}, function(){
@@ -83,43 +83,47 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}
   //console.log(`Weekly Feature closed.`);
 });
 
-// COMMUNITY COLLECTION OPEN
+// ==================================== COMMUNITY COLLECTION ===================================
+
 const ccol_embed = {
 	"title": `Community Collection submissions for the next issue is now open!`,
 	"description": `Submit **up to two of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
 	"color": 0x005f73
   }
 
-var ccolopen = schedule.scheduleJob({month: monthsDec28, date: 28, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+// COMMUNITY COLLECTION OPEN - 1ST EARLY NORMAL
+var ccolopen = schedule.scheduleJob({month: monthsEarlyNormal, date: 1, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
-// COMMUNITY COLLECTION CLOSE
-var ccolclose = schedule.scheduleJob({month: monthsNov, date: 14, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+// COMMUNITY COLLECTION CLOSE - 20TH EARLY NORMAL
+var ccolclose = schedule.scheduleJob({month: monthsEarlyNormal, date: 20, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
 
-// GLAM OF THE MONTH
+// =========================================== GOTM ==============================================
+
+// GLAM OF THE MONTH - ENDS 26TH EARLY NORMAL
 const gotm_vote_embed = {
 	"title": `Glam of the Month Voting Time!`,
 	"description": ` Submissions for the next issue are now closed! Everyone choose **ONE glamour** you'd like to be featured in the magazine! Cast your vote by reacting <:gposers1:1119066668912623746> under the glam.`,
 	"color": 0x005f73
   }
 
-var gotm_vote = schedule.scheduleJob({month: monthsNov, date: 10, hour: 9, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_vote = schedule.scheduleJob({month: monthsEarlyNormal, date: 26, hour: 8, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-var gotm_close = schedule.scheduleJob({month: monthsNov, date: 10, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_close = schedule.scheduleJob({month: monthsEarlyNormal, date: 26, hour: 14, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature! <:gposers1:1119066668912623746>`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-// GLAM OF THE MONTH OPEN
+// GLAM OF THE MONTH OPEN - 20TH EARLY NORMAL
 const gotm_open_embed = {
 	"type": "rich",
 	"title": `GPOSERS Glam of the Month submissions for the next issue is now open!`,
@@ -130,14 +134,14 @@ const gotm_open_embed = {
 		"name": `Submission Template File`,
 		"value": `https://docs.google.com/document/d/1ysb6zW4FzTWRnD2CIF3c-MScRwC2OmjNuHWnKzNuoM0/edit`
 	  },
-	  /*{
+	  {
 		"name": `Deadline of submissions`,
-		"value": `${hammerTimeHelper(gotm_vote.nextInvocation(), 'F')} which is ${hammerTimeHelper(gotm_vote.nextInvocation(), 'R')} from now`
-	  }*/
+		"value": `The 26th of this month.`
+	  }
 	]
   }
 
-var gotm_open = schedule.scheduleJob({month: monthsDec28, date: 28, hour: 12, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({month: monthsEarlyNormal, date: 20, hour: 12, minute: 1, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
@@ -198,13 +202,25 @@ var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
 	});
 
+// STAFF CONTRIBUTORS TAB DEADLINE - 20TH EARLY MONTH
+var rule_sheet_notif = new schedule.RecurrenceRule();
+  rule_sheet_notif.tz = 'America/New_York';
+	rule_sheet_notif.month = monthsEarlyNormal;
+	rule_sheet_notif.date = 20;
+	rule_sheet_notif.hour = 0;
+	rule_sheet_notif.minute = 0;
+	rule_sheet_notif.second = 0;
+	var sheet_notif = schedule.scheduleJob(rule_sheet_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
+	});
+
 // DESIGNER LIMIT - 20TH EARLY MONTH
 var rule_design_first_notif = new schedule.RecurrenceRule();
   rule_design_first_notif.tz = 'America/New_York';
 	rule_design_first_notif.month = monthsEarlyNormal;
 	rule_design_first_notif.date = 20;
 	rule_design_first_notif.hour = 0;
-	rule_design_first_notif.minute = 0;
+	rule_design_first_notif.minute = 1;
 	rule_design_first_notif.second = 0;
 	var design_first_notif = schedule.scheduleJob(rule_design_first_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
