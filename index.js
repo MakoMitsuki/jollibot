@@ -212,6 +212,32 @@ var rule_sheetdec_notif = new schedule.RecurrenceRule();
 	  client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab for the __December issue__!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
 	});
 
+// ============================================== ARTIST =============================================
+
+// ARTIST HARD DEADLINE - LATE MONTH 8TH
+var rule_artist_hard_notif = new schedule.RecurrenceRule();
+	rule_artist_hard_notif.tz = 'America/New_York';
+	rule_artist_hard_notif.month = [0, 2, 4, 7, 9];
+	rule_artist_hard_notif.date = 8;
+	rule_artist_hard_notif.hour = 12;
+	rule_artist_hard_notif.minute = 2;
+	rule_artist_hard_notif.second = 0;
+	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all artwork by the end of the day and ping your relevant Designer.`).catch(console.error);
+	});
+
+// HOLIDAY ARTIST HARD DEADLINE - DEC 1ST
+var rule_hol_artist_hard_notif = new schedule.RecurrenceRule();
+	rule_hol_artist_hard_notif.tz = 'America/New_York';
+	rule_hol_artist_hard_notif.month = 12;
+	rule_hol_artist_hard_notif.date = 1;
+	rule_hol_artist_hard_notif.hour = 12;
+	rule_hol_artist_hard_notif.minute = 2;
+	rule_hol_artist_hard_notif.second = 0;
+	var hol_artist_hard_notif = schedule.scheduleJob(rule_hol_artist_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for the December is today**! Make sure you have submitted all artwork by the end of the day and ping your relevant Designer.`).catch(console.error);
+	});
+
 // ==================================== NORMAL MAGAZINE DATES ========================================
 const monthsEarlyNormal = [1, 3, 6, 8, 9, 11]; // feb, apr, jul, sept, [oct for non designer stuff], dec
 const monthsLateNormal = [0, 2, 4, 7, 9, 10]; // jan, mar, may, aug, oct, [nov for non designer stuff]
@@ -382,18 +408,6 @@ var rule_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
-	});
-
-// ARTIST HARD DEADLINE - LATE MONTH 8TH
-var rule_artist_hard_notif = new schedule.RecurrenceRule();
-  rule_artist_hard_notif.tz = 'America/New_York';
-	rule_artist_hard_notif.month = monthsLateNormal;
-	rule_artist_hard_notif.date = 8;
-	rule_artist_hard_notif.hour = 12;
-	rule_artist_hard_notif.minute = 2;
-	rule_artist_hard_notif.second = 0;
-	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all artwork by the end of the day and ping your relevant Designer.`).catch(console.error);
 	});
 
 // QA PHOTO DEADLINE - LATE MONTH 11TH
