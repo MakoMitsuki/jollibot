@@ -42,15 +42,11 @@ const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 
 const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
-
 const months = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
 const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
 const monthsNovSD = [0, 1, 2, 3, 4, 5, 7, 8, 9];
 const monthsDesignerNormal = [0, 1, 2, 3, 4, 5, 7, 8, 9];
 const monthsDec28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 11];
-
-const monthsEarlyNormal = [1, 3, 6, 8, 11]; // feb, apr, jul, sept, dec
-const monthsLateNormal = [0, 2, 4, 7, 9]; // jan, mar, may, aug, oct
 
 const hammerTimeHelper = (d, format) => {
 	try {
@@ -72,8 +68,6 @@ const getMidnightSameDay = (d, format) => {
 		return d;
 	}
 }
-
-// ======================================================================
 
 // WEEKLY FEATURE OPEN
 schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0, tz: 'America/New_York'}, function(){
@@ -204,248 +198,301 @@ var designer_mtg_onDayHour = schedule.scheduleJob({month: monthsNov, date: first
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${designerPing}> jolli-meeting really soon! It's starting ${hammerTimeHelper(designer_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
-// ============================================= NORMAL DATES ========================================
+// ===============================================================
 
-// GLAM ARTIST LIMIT - 15TH EARLY MONTH
+// GLAM ARTIST LIMIT
 var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 	rule_glamartist_limit_lift_notif.tz = 'America/New_York';
-	rule_glamartist_limit_lift_notif.month = monthsEarlyNormal;
-	rule_glamartist_limit_lift_notif.date = 15;
+	rule_glamartist_limit_lift_notif.month = monthsDec28;
+	rule_glamartist_limit_lift_notif.date = 28;
 	rule_glamartist_limit_lift_notif.hour = 0;
 	rule_glamartist_limit_lift_notif.minute = 1;
 	rule_glamartist_limit_lift_notif.second = 0;
 	var glamartist_limit_lift_notif = schedule.scheduleJob(rule_glamartist_limit_lift_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> Today is the 28th. **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
+		//console.log(`Glam Artist 28th Lift Notification Announced.`);
 	});
 
-// DESIGNER LIMIT - 20TH EARLY MONTH
+// DESIGNER LIMIT
 var rule_design_first_notif = new schedule.RecurrenceRule();
   rule_design_first_notif.tz = 'America/New_York';
-	rule_design_first_notif.month = monthsEarlyNormal;
-	rule_design_first_notif.date = 20;
+	rule_design_first_notif.month = monthsNov;
+	rule_design_first_notif.date = 1;
 	rule_design_first_notif.hour = 0;
 	rule_design_first_notif.minute = 0;
 	rule_design_first_notif.second = 0;
 	var design_first_notif = schedule.scheduleJob(rule_design_first_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> Today is the 1st. **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
+		//console.log(`Designer 1st Lift Notification Announced.`);
+	});
+	
+var rule_glam_soft_notif = new schedule.RecurrenceRule();
+  rule_glam_soft_notif.tz = 'America/New_York';
+	rule_glam_soft_notif.month = monthsNovSD;
+	rule_glam_soft_notif.date = 3;
+	rule_glam_soft_notif.hour = 12;
+	rule_glam_soft_notif.minute = 0;
+	rule_glam_soft_notif.second = 0;
+	var glam_soft_notif = schedule.scheduleJob(rule_glam_soft_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **soft jolli-deadline is today**. Make sure you have submitted at least a rough draft of your work by the end of the day.`).catch(console.error);
+		//console.log(`Glam Artists Soft Deadline Announced.`);
 	});
 
-// GLAM ARTIST HARD DEADLINE - 23RD EARLY MONTH
-var rule_glam_hard_notif = new schedule.RecurrenceRule();
-	rule_glam_hard_notif.tz = 'America/New_York';
-	rule_glam_hard_notif.month = monthsEarlyNormal;
-	rule_glam_hard_notif.date = 23;
-	rule_glam_hard_notif.hour = 12;
-	rule_glam_hard_notif.minute = 0;
-	rule_glam_hard_notif.second = 0;
-	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your work by the end of the day in the glam artists channel for review.`).catch(console.error);
+
+var rule_artist_soft_notif = new schedule.RecurrenceRule();
+  rule_artist_soft_notif.tz = 'America/New_York';
+	rule_artist_soft_notif.month = monthsNovSD;
+	rule_artist_soft_notif.date = 10;
+	rule_artist_soft_notif.hour = 12;
+	rule_artist_soft_notif.minute = 1;
+	rule_artist_soft_notif.second = 0;
+	var artist_soft_notif = schedule.scheduleJob(rule_artist_soft_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **soft jolli-deadline for all magazine-related artwork is today**. Make sure you have started all artwork before the end of the day.`).catch(console.error);
+		//console.log(`Artists Soft Deadline Announced.`);
 	});
 
-// AUTHOR SOFT DEADLINE - 25TH EARLY MONTH
+// NORMAL ARTIST HD
+var rule_artist_hard_notif = new schedule.RecurrenceRule();
+  rule_artist_hard_notif.tz = 'America/New_York';
+	rule_artist_hard_notif.month = monthsDesignerNormal;
+	rule_artist_hard_notif.date = 13;
+	rule_artist_hard_notif.hour = 12;
+	rule_artist_hard_notif.minute = 2;
+	rule_artist_hard_notif.second = 0;
+	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
+		//console.log(`Artists Hard Deadline Announced.`);
+	});
+
+// DEC ARTIST HD
+var rule_artist_harddec_notif = new schedule.RecurrenceRule();
+  rule_artist_harddec_notif.tz = 'America/New_York';
+	rule_artist_harddec_notif.month = 11;
+	rule_artist_harddec_notif.date = 10;
+	rule_artist_harddec_notif.hour = 12;
+	rule_artist_harddec_notif.minute = 2;
+	rule_artist_harddec_notif.second = 0;
+	var artist_harddec_notif = schedule.scheduleJob(rule_artist_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all magazine-related artwork is today**. Make sure you have submitted all artwork by the end of the day.`).catch(console.error);
+		//console.log(`Artists Hard Deadline Announced.`);
+	});
+
 var rule_auth_soft_notif = new schedule.RecurrenceRule();
   rule_auth_soft_notif.tz = 'America/New_York';
-	rule_auth_soft_notif.month = monthsEarlyNormal;
-	rule_auth_soft_notif.date = 25;
+	rule_auth_soft_notif.month = monthsNovSD;
+	rule_auth_soft_notif.date = 5;
 	rule_auth_soft_notif.hour = 12;
 	rule_auth_soft_notif.minute = 0;
 	rule_auth_soft_notif.second = 0;
 	var auth_soft_notif = schedule.scheduleJob(rule_auth_soft_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.`).catch(console.error);
+		//console.log(`Authors Soft Deadline Announced`);
 	});
 
-// GLAM ARTIST REVISION DEADLINE - 26TH EARLY MONTH
-var rule_glam_rev_notif = new schedule.RecurrenceRule();
-	rule_glam_rev_notif.tz = 'America/New_York';
-	rule_glam_rev_notif.month = monthsEarlyNormal;
-	rule_glam_rev_notif.date = 26;
-	rule_glam_rev_notif.hour = 12;
-	rule_glam_rev_notif.minute = 1;
-	rule_glam_rev_notif.second = 0;
-	var glam_rev_notif = schedule.scheduleJob(rule_glam_rev_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **revision jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your work by the end of the day in the proofreader's channel and your glam's chara file in the glam folder so that the Photographers can finish work.`).catch(console.error);
+var rule_glam_hard_notif = new schedule.RecurrenceRule();
+	rule_glam_hard_notif.tz = 'America/New_York';
+	rule_glam_hard_notif.month = monthsNov;
+	rule_glam_hard_notif.date = 5;
+	rule_glam_hard_notif.hour = 12;
+	rule_glam_hard_notif.minute = 0;
+	rule_glam_hard_notif.second = 0;
+	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! Make sure to submit your work by the end of the day in the proofreaders channel and your glam's chara file in the glam folder so that the Photographers can finish work.`).catch(console.error);
+		//console.log(`Glam Artists Hard Deadline Announced.`);
 	});
 
-// PHOTO CC SOFT DEADLINE - 27TH EARLY MONTH
-var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
-	rule_photo_cc_soft_notif.tz = 'America/New_York';
-	  rule_photo_cc_soft_notif.month = monthsEarlyNormal;
-	  rule_photo_cc_soft_notif.date = 27;
-	  rule_photo_cc_soft_notif.hour = 12;
-	  rule_photo_cc_soft_notif.minute = 0;
-	  rule_photo_cc_soft_notif.second = 0;
-	  var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for Community Couture articles is today**. Make sure you have started all Community Couture photography work before the end of the day.`).catch(console.error);
-	  });
-
-// PROOF CC DEADLINE - 28TH EARLY MONTH
-var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
-	rule_proof_cc_hard_notif.tz = 'America/New_York';
-	rule_proof_cc_hard_notif.month = monthsEarlyNormal;
-	rule_proof_cc_hard_notif.date = 28;
-	rule_proof_cc_hard_notif.hour = 12;
-	rule_proof_cc_hard_notif.minute = 0;
-	rule_proof_cc_hard_notif.second = 0;
-	var proof_cc_hard_notif = schedule.scheduleJob(rule_proof_cc_hard_notif, function(){
-	  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for proofreading CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
-	});
-
-// AUTHOR HARD DEADLINE - 30TH EARLY MONTH EXCEPT FEBRUARY at 28th
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
   rule_auth_hard_notif.tz = 'America/New_York';
-	rule_auth_hard_notif.month = [3, 6, 8, 11];
-	rule_auth_hard_notif.date = 30;
+	rule_auth_hard_notif.month = monthsNov;
+	rule_auth_hard_notif.date = 11;
 	rule_auth_hard_notif.hour = 12;
 	rule_auth_hard_notif.minute = 0;
 	rule_auth_hard_notif.second = 0;
 	var auth_hard_notif = schedule.scheduleJob(rule_auth_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **hard jolli-deadline is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
+		//console.log(`Authors Hard Deadline Announced.`);
 	});
 
-// AUTHOR HARD DEADLINE FEB 28TH
-var rule_auth_hard_feb_notif = new schedule.RecurrenceRule();
-  rule_auth_hard_feb_notif.tz = 'America/New_York';
-	rule_auth_hard_feb_notif.month = 1;
-	rule_auth_hard_feb_notif.date = 28;
-	rule_auth_hard_feb_notif.hour = 12;
-	rule_auth_hard_feb_notif.minute = 0;
-	rule_auth_hard_feb_notif.second = 0;
-	var auth_hard_feb_notif = schedule.scheduleJob(rule_auth_hard_feb_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **hard jolli-deadline for February is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
+var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
+  rule_photo_cc_soft_notif.tz = 'America/New_York';
+	rule_photo_cc_soft_notif.month = monthsNovSD;
+	rule_photo_cc_soft_notif.date = 7;
+	rule_photo_cc_soft_notif.hour = 12;
+	rule_photo_cc_soft_notif.minute = 0;
+	rule_photo_cc_soft_notif.second = 0;
+	var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for Community Couture articles is today**. Make sure you have started all Community Couture photography work before the end of the day.`).catch(console.error);
+		//console.log(`Photographers CC Soft Deadline Announced.`);
 	});
 
-// CC PHOTO HARD DEADLINE - LATE MONTH 1ST
-var rule_cc_photo_hard_notif = new schedule.RecurrenceRule();
-	rule_cc_photo_hard_notif.tz = 'America/New_York';
-	rule_cc_photo_hard_notif.month = monthsLateNormal;
-	rule_cc_photo_hard_notif.date = 1;
-	rule_cc_photo_hard_notif.hour = 12;
-	rule_cc_photo_hard_notif.minute = 0;
-	rule_cc_photo_hard_notif.second = 0;
-	var cc_photo_hard_notif = schedule.scheduleJob(rule_cc_photo_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
+var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
+	rule_proof_cc_hard_notif.tz = 'America/New_York';
+	rule_proof_cc_hard_notif.month = monthsNov;
+	rule_proof_cc_hard_notif.date = 7;
+	rule_proof_cc_hard_notif.hour = 12;
+	rule_proof_cc_hard_notif.minute = 0;
+	rule_proof_cc_hard_notif.second = 0;
+	var proof_cc_hard_notif = schedule.scheduleJob(rule_proof_cc_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for proofreading CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
+		//console.log(`Proofreader CC Hard Deadline Announced`);
 	});
 
-// PROOFREADING GENERAL DEADLINE - LATE MONTH 2ND
-var rule_proof_hard_notif = new schedule.RecurrenceRule();
-	rule_proof_hard_notif.tz = 'America/New_York';
-	rule_proof_hard_notif.month = monthsLateNormal;
-	rule_proof_hard_notif.date = 2;
-	rule_proof_hard_notif.hour = 12;
-	rule_proof_hard_notif.minute = 1;
-	rule_proof_hard_notif.second = 0;
-	var proof_hard_notif = schedule.scheduleJob(rule_proof_hard_notif, function(){
-	  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for all articles is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
-	});
-
-// PHOTO SOFT DEADLINE - LATE MONTH 3RD
 var rule_photo_soft_notif = new schedule.RecurrenceRule();
   rule_photo_soft_notif.tz = 'America/New_York';
-	rule_photo_soft_notif.month = monthsLateNormal;
-	rule_photo_soft_notif.date = 3;
+	rule_photo_soft_notif.month = monthsNovSD;
+	rule_photo_soft_notif.date = 10;
 	rule_photo_soft_notif.hour = 12;
 	rule_photo_soft_notif.minute = 0;
 	rule_photo_soft_notif.second = 0;
 	var photo_soft_notif = schedule.scheduleJob(rule_photo_soft_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for all non-glam articles is today**. Make sure you have started all photography work before the end of the day.`).catch(console.error);
+		//console.log(`Photographers Soft Deadline`);
 	});
 
-// QA CC PHOTO DEADLINE - LATE MONTH 4TH
-var rule_qa_cc_photo_hard_notif = new schedule.RecurrenceRule();
-	rule_qa_cc_photo_hard_notif.tz = 'America/New_York';
-	rule_qa_cc_photo_hard_notif.month = monthsLateNormal;
-	rule_qa_cc_photo_hard_notif.date = 4;
-	rule_qa_cc_photo_hard_notif.hour = 12;
-	rule_qa_cc_photo_hard_notif.minute = 0;
-	rule_qa_cc_photo_hard_notif.second = 0;
-	  var qa_cc_photo_hard_notif = schedule.scheduleJob(rule_qa_cc_photo_hard_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all CC photo QA is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
-	  });
+var rule_cc_photo_hard_notif = new schedule.RecurrenceRule();
+	rule_cc_photo_hard_notif.tz = 'America/New_York';
+	rule_cc_photo_hard_notif.month = monthsNov;
+	rule_cc_photo_hard_notif.date = 10;
+	rule_cc_photo_hard_notif.hour = 12;
+	rule_cc_photo_hard_notif.minute = 0;
+	rule_cc_photo_hard_notif.second = 0;
+	var cc_photo_hard_notif = schedule.scheduleJob(rule_cc_photo_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
+		//console.log(`Photographers CC Hard Deadline Announced.`);
+	});
 
-// PHOTO HARD DEADLINE - LATE MONTH 8TH
+var rule_proof_gotm_hard_notif = new schedule.RecurrenceRule();
+	rule_proof_gotm_hard_notif.tz = 'America/New_York';
+	rule_proof_gotm_hard_notif.month = monthsNov;
+	rule_proof_gotm_hard_notif.date = 11;
+	rule_proof_gotm_hard_notif.hour = 12;
+	rule_proof_gotm_hard_notif.minute = 1;
+	rule_proof_gotm_hard_notif.second = 0;
+	var proof_gotm_hard_notif = schedule.scheduleJob(rule_proof_gotm_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for proofreading the Glam of the Month is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
+		//console.log(`Proofreaders Glam of the Month Hard Deadline Announced.`);
+	});
+
 var rule_photo_hard_notif = new schedule.RecurrenceRule();
   rule_photo_hard_notif.tz = 'America/New_York';
-	rule_photo_hard_notif.month = monthsLateNormal;
-	rule_photo_hard_notif.date = 8;
+	rule_photo_hard_notif.month = monthsNov;
+	rule_photo_hard_notif.date = 13;
 	rule_photo_hard_notif.hour = 12;
 	rule_photo_hard_notif.minute = 0;
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.\n\n<@&${qaPing}> **hard deadline to QA CC photos is today.** Make sure that all CC photos have all three QA by the end of today.`).catch(console.error);
 		//console.log(`Photographers Hard Deadline & QA CC Hard Deadline Announced.`);
 	});
 
-// ARTIST HARD DEADLINE - LATE MONTH 8TH
-var rule_artist_hard_notif = new schedule.RecurrenceRule();
-  rule_artist_hard_notif.tz = 'America/New_York';
-	rule_artist_hard_notif.month = monthsLateNormal;
-	rule_artist_hard_notif.date = 8;
-	rule_artist_hard_notif.hour = 12;
-	rule_artist_hard_notif.minute = 2;
-	rule_artist_hard_notif.second = 0;
-	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all artwork by the end of the day and ping your relevant Designer.`).catch(console.error);
-		//console.log(`Photographers Hard Deadline & QA CC Hard Deadline Announced.`);
+var rule_proof_hard_notif = new schedule.RecurrenceRule();
+  rule_proof_hard_notif.tz = 'America/New_York';
+	rule_proof_hard_notif.month = monthsNov;
+	rule_proof_hard_notif.date = 13;
+	rule_proof_hard_notif.hour = 12;
+	rule_proof_hard_notif.minute = 1;
+	rule_proof_hard_notif.second = 0;
+	var proof_hard_notif = schedule.scheduleJob(rule_proof_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for all articles is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
+		//console.log(`Proofreaders Hard Deadline Announced.`);
 	});
 
-// QA PHOTO DEADLINE - LATE MONTH 11TH
 var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_qa_photo_hard_notif.tz = 'America/New_York';
-	rule_qa_photo_hard_notif.month = monthsLateNormal;
-	rule_qa_photo_hard_notif.date = 11;
+	rule_qa_photo_hard_notif.month = monthsNov;
+	rule_qa_photo_hard_notif.date = 15;
 	rule_qa_photo_hard_notif.hour = 12;
 	rule_qa_photo_hard_notif.minute = 0;
 	rule_qa_photo_hard_notif.second = 0;
 	  var qa_photo_hard_notif = schedule.scheduleJob(rule_qa_photo_hard_notif, function(){
 		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all photo QA is today**! Ensure that all photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+		  //console.log(`QA Photo Hard Deadline Announced.`);
 	  });
 
-// DESIGNER SOFT DEADLINE - LATE MONTH 15TH
+// DESIGNER NORMAL DEADLINES
+
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
-	rule_design_soft_notif.month = monthsLateNormal;
-	rule_design_soft_notif.date = 15;
+	rule_design_soft_notif.month = monthsDesignerNormal;
+	rule_design_soft_notif.date = 17;
 	rule_design_soft_notif.hour = 12;
 	rule_design_soft_notif.minute = 0;
 	rule_design_soft_notif.second = 0;
 	var design_soft_notif = schedule.scheduleJob(rule_design_soft_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline is today**. If you have not submitted your work for QA yet, you are required to submit a PDF of your work-in-progress to the designers channel by the end of the day.`).catch(console.error);
+		//console.log(`Designers Soft Deadline Announced.`);
 	});
-
-// DESIGNER HARD DEADLINE - LATE MONTH 20TH
 var rule_design_hard_notif = new schedule.RecurrenceRule();
-	rule_design_hard_notif.tz = 'America/New_York';
-	rule_design_hard_notif.month = monthsLateNormal;
+  rule_design_hard_notif.tz = 'America/New_York';
+	rule_design_hard_notif.month = monthsDesignerNormal;
 	rule_design_hard_notif.date = 20;
 	rule_design_hard_notif.hour = 12;
 	rule_design_hard_notif.minute = 0;
 	rule_design_hard_notif.second = 0;
 	var design_hard_notif = schedule.scheduleJob(rule_design_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted the PDFs of your completed designs for QA by the end of the day.`).catch(console.error);
+		//console.log(`Designers Hard Deadline Announced.`);
 	});
 
-// QA DESIGN HARD DEADLINE - LATE MONTH 23RD
 var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_design_qa_hard_notif.tz = 'America/New_York';
-	rule_design_qa_hard_notif.month = monthsLateNormal;
+	rule_design_qa_hard_notif.month = monthsDesignerNormal;
 	rule_design_qa_hard_notif.date = 23;
 	rule_design_qa_hard_notif.hour = 12;
 	rule_design_qa_hard_notif.minute = 0;
 	rule_design_qa_hard_notif.second = 0;
 	var design_qa_hard_notif = schedule.scheduleJob(rule_design_qa_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
 	});
 
-// DESIGNER REVISION DEADLINE - LATE MONTH 24TH
-var rule_design_rev_hard_notif = new schedule.RecurrenceRule();
-	rule_design_rev_hard_notif.tz = 'America/New_York';
-	rule_design_rev_hard_notif.month = monthsLateNormal;
-	rule_design_rev_hard_notif.hour = 12;
-	rule_design_rev_hard_notif.date = 24;
-	rule_design_rev_hard_notif.minute = 0;
-	rule_design_rev_hard_notif.second = 0;
-	var design_rev_hard_notif = schedule.scheduleJob(rule_design_rev_hard_notif, function(){
+var rule_design_ti_hard_notif = new schedule.RecurrenceRule();
+	rule_design_ti_hard_notif.tz = 'America/New_York';
+	rule_design_ti_hard_notif.month = monthsDesignerNormal;
+	rule_design_ti_hard_notif.hour = 12;
+	rule_design_ti_hard_notif.date = 24;
+	rule_design_ti_hard_notif.minute = 0;
+	rule_design_ti_hard_notif.second = 0;
+	var design_ti_hard_notif = schedule.scheduleJob(rule_design_ti_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the Publishing folder in the Drive before magazine release.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
+	});
+
+// DESIGNER DECEMBER DEADLINES
+
+var rule_design_harddec_notif = new schedule.RecurrenceRule();
+  rule_design_harddec_notif.tz = 'America/New_York';
+	rule_design_harddec_notif.month = 11;
+	rule_design_harddec_notif.date = 10;
+	rule_design_harddec_notif.hour = 12;
+	rule_design_harddec_notif.minute = 0;
+	rule_design_harddec_notif.second = 0;
+	var design_harddec_notif = schedule.scheduleJob(rule_design_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline is today**! Make sure you have submitted the PDFs of your completed designs for QA by the end of the day.`).catch(console.error);
+		//console.log(`Designers Hard Deadline Announced.`);
+	});
+
+var rule_design_qa_harddec_notif = new schedule.RecurrenceRule();
+	rule_design_qa_harddec_notif.tz = 'America/New_York';
+	rule_design_qa_harddec_notif.month = 11;
+	rule_design_qa_harddec_notif.date = 13;
+	rule_design_qa_harddec_notif.hour = 12;
+	rule_design_qa_harddec_notif.minute = 0;
+	rule_design_qa_harddec_notif.second = 0;
+	var design_qa_harddec_notif = schedule.scheduleJob(rule_design_qa_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for designer QA today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+		//console.log(`Designers QA Deadline Announced.`);
+	});
+
+var rule_design_ti_harddec_notif = new schedule.RecurrenceRule();
+	rule_design_ti_harddec_notif.tz = 'America/New_York';
+	rule_design_ti_harddec_notif.month = 11;
+	rule_design_ti_harddec_notif.hour = 12;
+	rule_design_ti_harddec_notif.date = 15;
+	rule_design_ti_harddec_notif.minute = 0;
+	rule_design_ti_harddec_notif.second = 0;
+	var design_ti_harddec_notif = schedule.scheduleJob(rule_design_ti_harddec_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! \n\n**Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the **Publishing Materials Folder** in the drive and shown in #social-media before magazine release.`).catch(console.error);
 		//console.log(`Designers QA Deadline Announced.`);
 	});
 
