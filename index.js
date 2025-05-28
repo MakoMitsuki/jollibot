@@ -43,9 +43,6 @@ const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 
-const monthsNov = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10];
-const monthsDec28 = [0, 1, 2, 3, 4, 6, 7, 8, 9, 11];
-
 const monthsEarlyNormal = [1, 3, 6, 8, 11]; // feb, apr, jul, sept, dec
 const monthsLateNormal = [0, 2, 4, 7, 9]; // jan, mar, may, aug, oct
 
@@ -85,6 +82,8 @@ schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 5, tz: 'America/New_York'}
 
 // ==================================== COMMUNITY COLLECTION ===================================
 
+const monthsCommunityCollection = [1, 3, 6, 8, 10, 11];
+
 const ccol_embed = {
 	"title": `Community Collection submissions for the next issue is now open!`,
 	"description": `Submit **up to two of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
@@ -92,38 +91,40 @@ const ccol_embed = {
   }
 
 // COMMUNITY COLLECTION OPEN - 1ST EARLY NORMAL
-var ccolopen = schedule.scheduleJob({month: monthsEarlyNormal, date: 1, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+var ccolopen = schedule.scheduleJob({month: monthsCommunityCollection, date: 1, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
   //client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[Submissions for the Community Collection are now OPEN!]**`).catch(console.error);
   client.channels.cache.get(channels_community_collection).send({content: `<@&${contestAlertsPing}>`,  embeds: [ccol_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
 
 // COMMUNITY COLLECTION CLOSE - 20TH EARLY NORMAL
-var ccolclose = schedule.scheduleJob({month: monthsEarlyNormal, date: 20, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+var ccolclose = schedule.scheduleJob({month: monthsCommunityCollection, date: 20, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_community_collection).send(`<@&${contestAlertsPing}> **[COMMUNITY COLLECTION SUBMISSIONS ARE NOW CLOSED!]**`).catch(console.error);
   //console.log(`Community Collection closed.`);
 });
 
 // =========================================== GOTM ==============================================
 
-// GLAM OF THE MONTH - ENDS 26TH EARLY NORMAL
+const monthsGOTM = [1, 3, 6, 8, 9, 11];
+
+// GLAM OF THE MONTH - ENDS 26TH EARLY NORMAL - DOES NOT RUN NOVEMBER
 const gotm_vote_embed = {
 	"title": `Glam of the Month Voting Time!`,
 	"description": ` Submissions for the next issue are now closed! Everyone choose **ONE glamour** you'd like to be featured in the magazine! Cast your vote by reacting <:gposers1:1119066668912623746> under the glam.`,
 	"color": 0x005f73
   }
 
-var gotm_vote = schedule.scheduleJob({month: monthsEarlyNormal, date: 26, hour: 8, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_vote = schedule.scheduleJob({month: monthsGOTM, date: 26, hour: 8, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_vote_embed] }).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-var gotm_close = schedule.scheduleJob({month: monthsEarlyNormal, date: 26, hour: 14, minute: 0, tz: 'America/New_York'}, function(){
+var gotm_close = schedule.scheduleJob({month: monthsGOTM, date: 26, hour: 14, minute: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channels_gotm).send(`<@&${contestAlertsPing}> **VOTING NOW CLOSED!** Tune in to the next issue for the winner's feature! <:gposers1:1119066668912623746>`).catch(console.error);
 	//console.log(`Community Collection closed.`);
   });
 
-// GLAM OF THE MONTH OPEN - 20TH EARLY NORMAL
+// GLAM OF THE MONTH OPEN - 20TH EARLY NORMAL - DOES NOT RUN NOVEMBER
 const gotm_open_embed = {
 	"type": "rich",
 	"title": `GPOSERS Glam of the Month submissions for the next issue is now open!`,
@@ -141,7 +142,7 @@ const gotm_open_embed = {
 	]
   }
 
-var gotm_open = schedule.scheduleJob({month: monthsEarlyNormal, date: 20, hour: 12, minute: 1, tz: 'America/New_York'}, function(){
+var gotm_open = schedule.scheduleJob({month: monthsGOTM, date: 20, hour: 12, minute: 1, tz: 'America/New_York'}, function(){
   client.channels.cache.get(channels_gotm).send({content: `<@&${contestAlertsPing}>`,  embeds: [gotm_open_embed] }).catch(console.error); 
   //console.log(`Community Collection opened.`);
 });
