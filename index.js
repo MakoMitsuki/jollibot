@@ -464,10 +464,10 @@ const pauseNextStaffMeeting = (interaction) => {
 			late_staff_mtg_onDayHour.cancelNext(true);
 			late_staff_mtg_start.cancelNext(true);
 		} else {
-			early_staff_mtg_2ndthurs_odd.cancelNext(true);
-			early_staff_mtg_onDayEarly_odd.cancelNext(true);
-			early_staff_mtg_onDayHour_odd.cancelNext(true);
-			early_staff_mtg_start_odd.cancelNext(true);
+			early_staff_mtg_2ndthurs.cancelNext(true);
+			early_staff_mtg_onDayEarly.cancelNext(true);
+			early_staff_mtg_onDayHour.cancelNext(true);
+			early_staff_mtg_start.cancelNext(true);
 		}
 
 		// TODO: client log success
@@ -665,10 +665,10 @@ client.on('interactionCreate', async interaction => {
 			if (early_staff_mtg_start.nextInvocation().toDate() < late_staff_mtg_start.nextInvocation().toDate())
 			{
 				nextMeeting = early_staff_mtg_start.nextInvocation();
-				ffMeeting = early_staff_mtg_start.nextInvocation();
 				nextMeeting_2ndthurs = early_staff_mtg_2ndthurs.nextInvocation();
 				nextMeeting_onDayEarly = early_staff_mtg_onDayEarly.nextInvocation();
-				nextMeeting_onDayHour = late_staff_mtg_onDayHour.nextInvocation();
+				nextMeeting_onDayHour = early_staff_mtg_onDayHour.nextInvocation();
+				ffMeeting = late_staff_mtg_start.nextInvocation();
 			}
 
 			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now \n`);
