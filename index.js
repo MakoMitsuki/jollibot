@@ -189,6 +189,32 @@ var late_staff_mtg_onDayHour = schedule.scheduleJob({month: lateMeetingMonths, d
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(late_staff_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
+// ============================================= CONTRIBUTORS SHEET ==================================
+
+// STAFF CONTRIBUTORS TAB DEADLINE - 20TH EARLY MONTH EXCEPT ON OCT 15TH
+var rule_sheet_notif = new schedule.RecurrenceRule();
+	rule_sheet_notif.tz = 'America/New_York';
+	rule_sheet_notif.month =[1, 3, 6, 8, 11];
+	rule_sheet_notif.date = 20;
+	rule_sheet_notif.hour = 0;
+	rule_sheet_notif.minute = 0;
+	rule_sheet_notif.second = 0;
+	var sheet_notif = schedule.scheduleJob(rule_sheet_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
+	});
+
+// DECEMBER ISSUE THAT PINGS ON OCT 15TH
+var rule_sheetdec_notif = new schedule.RecurrenceRule();
+	rule_sheetdec_notif.tz = 'America/New_York';
+	rule_sheetdec_notif.month = 9;
+	rule_sheetdec_notif.date = 15;
+	rule_sheetdec_notif.hour = 0;
+	rule_sheetdec_notif.minute = 0;
+	rule_sheetdec_notif.second = 0;
+	var sheetdec_notif = schedule.scheduleJob(rule_sheetdec_notif, function(){
+	  client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab for the __December issue__!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
+	});
+
 // ============================================= NORMAL DATES ========================================
 
 // GLAM ARTIST LIMIT - 15TH EARLY MONTH
@@ -201,18 +227,6 @@ var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 	rule_glamartist_limit_lift_notif.second = 0;
 	var glamartist_limit_lift_notif = schedule.scheduleJob(rule_glamartist_limit_lift_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
-	});
-
-// STAFF CONTRIBUTORS TAB DEADLINE - 20TH EARLY MONTH
-var rule_sheet_notif = new schedule.RecurrenceRule();
-  rule_sheet_notif.tz = 'America/New_York';
-	rule_sheet_notif.month = monthsEarlyNormal;
-	rule_sheet_notif.date = 20;
-	rule_sheet_notif.hour = 0;
-	rule_sheet_notif.minute = 0;
-	rule_sheet_notif.second = 0;
-	var sheet_notif = schedule.scheduleJob(rule_sheet_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
 	});
 
 // DESIGNER LIMIT - 20TH EARLY MONTH
