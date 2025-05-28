@@ -559,44 +559,6 @@ const pauseNextStaffMeeting = (interaction) => {
 	}
 }
 
-const pauseStaffReminders = (interaction) => {
-  try {
-    // skip next month's meeting reminders
-    /*staff_meeting_second_notif_preday.cancelNext(true);
-    staff_meeting_second_notif_day.cancelNext(true);
-    staff_meeting_second_notif_hour.cancelNext(true);
-    staff_meeting_second_start.cancelNext(true);*/
-
-    // skip next month's magazine deadline reminders
-	glamartist_limit_lift_notif.cancelNext(true);
-    design_first_notif.cancelNext(true);
-    glam_soft_notif.cancelNext(true);
-    artist_soft_notif.cancelNext(true);
-    artist_hard_notif.cancelNext(true);
-    auth_soft_glam_hard_notif.cancelNext(true);
-    auth_hard_notif.cancelNext(true);
-    photo_cc_soft_notif.cancelNext(true);
-    photo_soft_notif.cancelNext(true);
-	proof_gotm_hard_notif.cancelNext(true);
-    photo_hard_notif.cancelNext(true);
-    proof_hard_notif.cancelNext(true);
-	qa_photo_hard_notif.cancelNext(true);
-    design_soft_notif.cancelNext(true);
-    design_hard_notif.cancelNext(true);
-	design_qa_hard_notif.cancelNext(true);
-	design_ti_hard_notif.cancelNext(true);
-    
-    // TODO: client log success
-    interaction.reply(`**Break month commenced!** All magazine deadlines have been paused until this time next month. Enoy the jolli-day!`);
-  }
-  catch (error) {
-    // TODO: client log error
-    interaction.reply(`**ERROR:** Something went jolli-wrong when scheduling the break month! <@${yuliaPing} pls fix.>`);
-    console.log(`[[BREAKMONTH]] ${error}`);
-    return;
-  }
-}
-
 const commands = [
     {
       name: 'urmom',
@@ -610,10 +572,6 @@ const commands = [
 		name: 'ricardo',
 		description: 'A random Ricardo.'
 	},
-    {
-      name: 'breakmonth',
-      description: '[ADMIN ONLY FUNCTION] [TEMPORARILY DISABLED] Pause all GPOSERS Staff notifications.',
-    },
 	{
 		name: 'skip-staff-meeting',
 		description: '[ADMIN ONLY FUNCTION] Skip next staff meeting.',
@@ -679,32 +637,6 @@ client.on('interactionCreate', async interaction => {
 
     if (interaction.commandName === 'urmom') {
         await interaction.reply('gay');
-    }
-    
-    if (interaction.commandName === 'breakmonth') {
-		// EDITOR ONLY
-		if (interaction.member.roles.cache.some(r => r.id === staffEditorRole) || interaction.member.roles.cache.some(r => r.id === ricardoRole)) {
-			// ================= UNADJUSTED CODE
-			// BREAK MONTH
-			/*const isBreakMonth_row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId('yesbreakbutton')
-					.setLabel(`Yes, It's break time baybee!`)
-					.setStyle(ButtonStyle.Success),
-				new ButtonBuilder()
-					.setCustomId('nobreakbutton')
-					.setLabel(`Never Mind...`)
-					.setStyle(ButtonStyle.Danger),
-				);
-
-			await interaction.reply({ content: `**Are you jolli-sure you want to set the break month?** Once it is set, it cannot be unset until it auto-unsets itself month from now OR asking Yulia to reset the bot. Note that this won't cancel the following meeting.`, 
-			components: [isBreakMonth_row], ephemeral: true, });
-			// BUTTONS PARSED IN BUTTON INTERACTIONS */
-			await interaction.reply(`**Break Month Function has been disabled at the moment.** Contact Yulia to manually set the break month.`);
-		} else {
-			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to set the break month!`);
-		}
     }
 
 	if (interaction.commandName === 'skip-staff-meeting') {
@@ -875,24 +807,16 @@ client.on('interactionCreate', async interaction => {
 	}
 
     if (interaction.isButton()) {
-      // BUTTON COMMANDS
-      if (interaction.customId === 'yesbreakbutton') {
-		// PAUSE ALL NOTIFS
-		await pauseStaffReminders(interaction);
-      } 
-	  else if (interaction.customId === 'nobreakbutton') {
-		// DONT CANCEL ALL NOTIFS
-		await interaction.reply(`Gotcha! No break for now.`);
-	  }
-	  else if (interaction.customId === 'yesskipstaffmtgbutton') {
-		// CANCEL STAFF MTG
-		await pauseNextStaffMeeting(interaction);
-	  } else if (interaction.customId === 'noskipstaffmtgbutton') {
-		// DONT CANCEL STAFF MTG
-		await interaction.reply(`Gotcha! We keep the staff meeting for now.`);
-	  } else {
-		return;
-	  }
+      	// BUTTON COMMANDS
+		if (interaction.customId === 'yesskipstaffmtgbutton') {
+			// CANCEL STAFF MTG
+			await pauseNextStaffMeeting(interaction);
+		} else if (interaction.customId === 'noskipstaffmtgbutton') {
+			// DONT CANCEL STAFF MTG
+			await interaction.reply(`Gotcha! We keep the staff meeting for now.`);
+		} else {
+			return;
+		}
     }
 	} catch (error) {
 		console.log(`SOMETHING WENT WRONG ON AN INTERACTION: ${error}`);
