@@ -43,9 +43,6 @@ const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 
-const monthsEarlyNormal = [1, 3, 6, 8, 11]; // feb, apr, jul, sept, dec
-const monthsLateNormal = [0, 2, 4, 7, 9]; // jan, mar, may, aug, oct
-
 const hammerTimeHelper = (d, format) => {
 	try {
 		const epoch = parseInt(d.getTime() / 1000);
@@ -215,7 +212,9 @@ var rule_sheetdec_notif = new schedule.RecurrenceRule();
 	  client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab for the __December issue__!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
 	});
 
-// ============================================= NORMAL DATES ========================================
+// ==================================== NORMAL MAGAZINE DATES ========================================
+const monthsEarlyNormal = [1, 3, 6, 8, 9, 11]; // feb, apr, jul, sept, [oct for non designer stuff], dec
+const monthsLateNormal = [0, 2, 4, 7, 9, 10]; // jan, mar, may, aug, oct, [nov for non designer stuff]
 
 // GLAM ARTIST LIMIT - 15TH EARLY MONTH
 var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
@@ -383,7 +382,6 @@ var rule_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_photo_hard_notif.second = 0;
 	var photo_hard_notif = schedule.scheduleJob(rule_photo_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all photography work by the end of the day.`).catch(console.error);
-		//console.log(`Photographers Hard Deadline & QA CC Hard Deadline Announced.`);
 	});
 
 // ARTIST HARD DEADLINE - LATE MONTH 8TH
@@ -396,7 +394,6 @@ var rule_artist_hard_notif = new schedule.RecurrenceRule();
 	rule_artist_hard_notif.second = 0;
 	var artist_hard_notif = schedule.scheduleJob(rule_artist_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${artistPing}> **hard jolli-deadline for all articles is today**! Make sure you have submitted all artwork by the end of the day and ping your relevant Designer.`).catch(console.error);
-		//console.log(`Photographers Hard Deadline & QA CC Hard Deadline Announced.`);
 	});
 
 // QA PHOTO DEADLINE - LATE MONTH 11TH
@@ -411,10 +408,14 @@ var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all photo QA is today**! Ensure that all photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
 	  });
 
+// =============================== DESIGNER - NORMAL ==============================
+
+const monthsDesignerNormal = [0, 2, 4, 7, 9]; // jan, mar, may, aug, oct, [NOT NOVEMBER]
+
 // DESIGNER SOFT DEADLINE - LATE MONTH 15TH
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
-	rule_design_soft_notif.month = monthsLateNormal;
+	rule_design_soft_notif.month = monthsDesignerNormal;
 	rule_design_soft_notif.date = 15;
 	rule_design_soft_notif.hour = 12;
 	rule_design_soft_notif.minute = 0;
@@ -426,7 +427,7 @@ var rule_design_soft_notif = new schedule.RecurrenceRule();
 // DESIGNER HARD DEADLINE - LATE MONTH 20TH
 var rule_design_hard_notif = new schedule.RecurrenceRule();
 	rule_design_hard_notif.tz = 'America/New_York';
-	rule_design_hard_notif.month = monthsLateNormal;
+	rule_design_hard_notif.month = monthsDesignerNormal;
 	rule_design_hard_notif.date = 20;
 	rule_design_hard_notif.hour = 12;
 	rule_design_hard_notif.minute = 0;
@@ -438,7 +439,7 @@ var rule_design_hard_notif = new schedule.RecurrenceRule();
 // QA DESIGN HARD DEADLINE - LATE MONTH 23RD
 var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_design_qa_hard_notif.tz = 'America/New_York';
-	rule_design_qa_hard_notif.month = monthsLateNormal;
+	rule_design_qa_hard_notif.month = monthsDesignerNormal;
 	rule_design_qa_hard_notif.date = 23;
 	rule_design_qa_hard_notif.hour = 12;
 	rule_design_qa_hard_notif.minute = 0;
@@ -450,17 +451,66 @@ var rule_design_qa_hard_notif = new schedule.RecurrenceRule();
 // DESIGNER REVISION DEADLINE - LATE MONTH 24TH
 var rule_design_rev_hard_notif = new schedule.RecurrenceRule();
 	rule_design_rev_hard_notif.tz = 'America/New_York';
-	rule_design_rev_hard_notif.month = monthsLateNormal;
-	rule_design_rev_hard_notif.hour = 12;
+	rule_design_rev_hard_notif.month = monthsDesignerNormal;
 	rule_design_rev_hard_notif.date = 24;
+	rule_design_rev_hard_notif.hour = 12;
 	rule_design_rev_hard_notif.minute = 0;
 	rule_design_rev_hard_notif.second = 0;
 	var design_rev_hard_notif = schedule.scheduleJob(rule_design_rev_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the Publishing folder in the Drive before magazine release.`).catch(console.error);
-		//console.log(`Designers QA Deadline Announced.`);
 	});
 
-/* ================================= SCHEDULE END =================================== */
+// =============================== DESIGNER - HOLIDAY SCHEDULE ==============================
+
+// HOLIDAY DESIGNER SOFT DEADLINE - DEC 12TH
+var rule_hol_design_soft_notif = new schedule.RecurrenceRule();
+	rule_hol_design_soft_notif.tz = 'America/New_York';
+	rule_hol_design_soft_notif.month = 12;
+	rule_hol_design_soft_notif.date = 12;
+	rule_hol_design_soft_notif.hour = 12;
+	rule_hol_design_soft_notif.minute = 0;
+	rule_hol_design_soft_notif.second = 0;
+	var hol_design_soft_notif = schedule.scheduleJob(rule_hol_design_soft_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **soft jolli-deadline for the December issue is today**. If you have not submitted your work for QA yet, you are required to submit a PDF of your work-in-progress to the designers channel by the end of the day.`).catch(console.error);
+	});
+
+// HOLIDAY DESIGNER HARD DEADLINE - DEC 15TH
+var rule_hol_design_hard_notif = new schedule.RecurrenceRule();
+	rule_hol_design_hard_notif.tz = 'America/New_York';
+	rule_hol_design_hard_notif.month = 12;
+	rule_hol_design_hard_notif.date = 15;
+	rule_hol_design_hard_notif.hour = 12;
+	rule_hol_design_hard_notif.minute = 0;
+	rule_hol_design_hard_notif.second = 0;
+	var hol_design_hard_notif = schedule.scheduleJob(rule_hol_design_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **hard jolli-deadline for the December issue is today**! Make sure you have submitted the PDFs of your completed designs for QA by the end of the day.`).catch(console.error);
+	});
+
+// HOLIDAY QA DESIGN HARD DEADLINE - DEC 18TH
+var rule_hol_design_qa_hard_notif = new schedule.RecurrenceRule();
+	rule_hol_design_qa_hard_notif.tz = 'America/New_York';
+	rule_hol_design_qa_hard_notif.month = 12;
+	rule_hol_design_qa_hard_notif.date = 18;
+	rule_hol_design_qa_hard_notif.hour = 12;
+	rule_hol_design_qa_hard_notif.minute = 0;
+	rule_hol_design_qa_hard_notif.second = 0;
+	var hol_design_qa_hard_notif = schedule.scheduleJob(rule_hol_design_qa_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for the December issue Designer QA is today**! Ensure that all designs have **three** QA before the end of the day.`).catch(console.error);
+	});
+
+// HOLIDAY DESIGNER REVISION DEADLINE - DEC 19TH
+var rule_hol_design_rev_hard_notif = new schedule.RecurrenceRule();
+	rule_hol_design_rev_hard_notif.tz = 'America/New_York';
+	rule_hol_design_rev_hard_notif.month = 12;
+	rule_hol_design_rev_hard_notif.date = 19;
+	rule_hol_design_rev_hard_notif.hour = 12;
+	rule_hol_design_rev_hard_notif.minute = 0;
+	rule_hol_design_rev_hard_notif.second = 0;
+	var hol_design_rev_hard_notif = schedule.scheduleJob(rule_hol_design_rev_hard_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **revision jolli-deadline for the December issue is today**! Ensure that your InDesign packages are uploaded to the Drive with the right revisions! **Front Cover Designer and Recruitment Page Designer** should also ensure that the social media and website promos are done and submitted to the Publishing folder in the Drive before magazine release.`).catch(console.error);
+	});
+
+/* ================================= SCHEDULE END =========================================== */
 
 /*
 	f : dd MM yyyy hh:mm
