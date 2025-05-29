@@ -731,7 +731,7 @@ client.on('interactionCreate', async interaction => {
 				"value": `Designer Limit Lift - 20th - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
 					Soft Deadline - 15th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
 					Hard Deadline - 20th - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
-					Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'R')}`
+					Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_rev_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_rev_hard_notif.nextInvocation(), 'R')}`
 			  });
 			var decemberDesignerDeadlines = ({
 				"name": `DESIGNER (DECEMBER SPECIAL)`,
