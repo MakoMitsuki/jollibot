@@ -682,7 +682,6 @@ client.on('interactionCreate', async interaction => {
 			let nextMeeting_2ndthurs = late_staff_mtg_2ndthurs.nextInvocation();
 			let nextMeeting_onDayEarly = late_staff_mtg_onDayEarly.nextInvocation();
 			let nextMeeting_onDayHour = late_staff_mtg_onDayHour.nextInvocation();
-			let ffMeeting = early_staff_mtg_start.nextInvocation();
 
 			// check next meeting
 			if (early_staff_mtg_start.nextInvocation().toDate() < late_staff_mtg_start.nextInvocation().toDate())
@@ -691,10 +690,9 @@ client.on('interactionCreate', async interaction => {
 				nextMeeting_2ndthurs = early_staff_mtg_2ndthurs.nextInvocation();
 				nextMeeting_onDayEarly = early_staff_mtg_onDayEarly.nextInvocation();
 				nextMeeting_onDayHour = early_staff_mtg_onDayHour.nextInvocation();
-				ffMeeting = late_staff_mtg_start.nextInvocation();
 			}
 
-			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}\n\nThe following meeting after that won't be till ${hammerTimeHelper(ffMeeting, 'F')} which is ${hammerTimeHelper(ffMeeting, 'R')} from now \n`);
+			await interaction.reply(`>> **Your next scheduled jolli-meeting is at ${hammerTimeHelper(nextMeeting, 'F')} which is ${hammerTimeHelper(nextMeeting, 'R')} from now**\nReminder pings for this meeting will be sent out before the date during these times:\n- ${hammerTimeHelper(nextMeeting_2ndthurs, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayEarly, 'F')}\n- ${hammerTimeHelper(nextMeeting_onDayHour, 'F')}`);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
