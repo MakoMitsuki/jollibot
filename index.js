@@ -229,7 +229,7 @@ var rule_artist_hard_notif = new schedule.RecurrenceRule();
 // HOLIDAY ARTIST HARD DEADLINE - DEC 1ST
 var rule_hol_artist_hard_notif = new schedule.RecurrenceRule();
 	rule_hol_artist_hard_notif.tz = 'America/New_York';
-	rule_hol_artist_hard_notif.month = 12;
+	rule_hol_artist_hard_notif.month = 11;
 	rule_hol_artist_hard_notif.date = 1;
 	rule_hol_artist_hard_notif.hour = 12;
 	rule_hol_artist_hard_notif.minute = 2;
