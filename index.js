@@ -254,18 +254,6 @@ var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
 	});
 
-// DESIGNER LIMIT - 20TH EARLY MONTH
-var rule_design_first_notif = new schedule.RecurrenceRule();
-  rule_design_first_notif.tz = 'America/New_York';
-	rule_design_first_notif.month = monthsEarlyNormal;
-	rule_design_first_notif.date = 20;
-	rule_design_first_notif.hour = 0;
-	rule_design_first_notif.minute = 1;
-	rule_design_first_notif.second = 0;
-	var design_first_notif = schedule.scheduleJob(rule_design_first_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
-	});
-
 // GLAM ARTIST HARD DEADLINE - 23RD EARLY MONTH
 var rule_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_glam_hard_notif.tz = 'America/New_York';
@@ -326,10 +314,10 @@ var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
 	  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for proofreading CC glamour sheets is today**! Make sure you have finished proofreading them by the end of the day.`).catch(console.error);
 	});
 
-// AUTHOR HARD DEADLINE - 30TH EARLY MONTH EXCEPT FEBRUARY at 28th
+// AUTHOR HARD DEADLINE - 30TH EARLY MONTH INCLUDING OCTOBER EXCEPT FEBRUARY at 28th
 var rule_auth_hard_notif = new schedule.RecurrenceRule();
   rule_auth_hard_notif.tz = 'America/New_York';
-	rule_auth_hard_notif.month = [3, 6, 8, 11];
+	rule_auth_hard_notif.month = [3, 6, 8, 9, 11];
 	rule_auth_hard_notif.date = 30;
 	rule_auth_hard_notif.hour = 12;
 	rule_auth_hard_notif.minute = 0;
@@ -426,6 +414,18 @@ var rule_qa_photo_hard_notif = new schedule.RecurrenceRule();
 
 const monthsDesignerNormal = [0, 2, 4, 7, 9]; // jan, mar, may, aug, oct, [NOT NOVEMBER]
 
+// DESIGNER LIMIT - 20TH EARLY MONTH
+var rule_design_first_notif = new schedule.RecurrenceRule();
+  rule_design_first_notif.tz = 'America/New_York';
+	rule_design_first_notif.month = [1, 3, 6, 8, 11]; // normal early months
+	rule_design_first_notif.date = 20;
+	rule_design_first_notif.hour = 0;
+	rule_design_first_notif.minute = 1;
+	rule_design_first_notif.second = 0;
+	var design_first_notif = schedule.scheduleJob(rule_design_first_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **The limit on picking up articles has now been removed for the month.**`).catch(console.error);
+	});
+
 // DESIGNER SOFT DEADLINE - LATE MONTH 15TH
 var rule_design_soft_notif = new schedule.RecurrenceRule();
   rule_design_soft_notif.tz = 'America/New_York';
@@ -475,6 +475,18 @@ var rule_design_rev_hard_notif = new schedule.RecurrenceRule();
 	});
 
 // =============================== DESIGNER - HOLIDAY SCHEDULE ==============================
+
+// DESIGNER LIMIT - 20TH EARLY MONTH
+var rule_hol_design_first_notif = new schedule.RecurrenceRule();
+  rule_hol_design_first_notif.tz = 'America/New_York';
+	rule_hol_design_first_notif.month = [1, 3, 6, 8, 11]; // normal early months
+	rule_hol_design_first_notif.date = 15;
+	rule_hol_design_first_notif.hour = 0;
+	rule_hol_design_first_notif.minute = 1;
+	rule_hol_design_first_notif.second = 0;
+	var hol_design_first_notif = schedule.scheduleJob(rule_hol_design_first_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${designerPing}> **The limit on picking up articles has now been removed for the December issue.**`).catch(console.error);
+	});
 
 // HOLIDAY DESIGNER SOFT DEADLINE - DEC 12TH
 var rule_hol_design_soft_notif = new schedule.RecurrenceRule();
@@ -716,30 +728,41 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			var normalDesignerDeadlines = ({
 				"name": `DESIGNER`,
-				"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
-					Soft Deadline - 17th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
+				"value": `Designer Limit Lift - 20th - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
+					Soft Deadline - 15th - ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_soft_notif.nextInvocation(), 'R')}
 					Hard Deadline - 20th - ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_hard_notif.nextInvocation(), 'R')}
 					Indesign Turn In Deadline - 24th - ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_ti_hard_notif.nextInvocation(), 'R')}`
-			  })
+			  });
 			var decemberDesignerDeadlines = ({
 				"name": `DESIGNER (DECEMBER SPECIAL)`,
-				"value": `Designer Limit Lift - 1st - ${hammerTimeHelper(design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_first_notif.nextInvocation(), 'R')}
-					Hard Deadline - 10th - ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_harddec_notif.nextInvocation(), 'R')}
-					Indesign Turn In Deadline - 15th - ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper( design_ti_harddec_notif.nextInvocation(), 'R')}`
-			})
+				"value": `Designer Limit Lift - Oct 15th - ${hammerTimeHelper(hol_design_first_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_first_notif.nextInvocation(), 'R')}
+					Soft Deadline - Dec 10th - ${hammerTimeHelper(hol_design_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_hard_notif.nextInvocation(), 'R')}
+					Hard Deadline - Dec 15th - ${hammerTimeHelper(hol_design_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_hard_notif.nextInvocation(), 'R')}
+					Indesign Turn In Deadline - Dec 19th - ${hammerTimeHelper(hol_design_rev_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_rev_hard_notif.nextInvocation(), 'R')}`
+			});
 
 			var normalArtistDeadlines = ({
 				"name": `ARTIST`,
-				"value": `Soft Deadline - 10th - ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_soft_notif.nextInvocation(), 'R')}
-					Hard Deadline - 13th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
-			  })
+				"value": `Hard Deadline - 8th - ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_hard_notif.nextInvocation(), 'R')}`
+			  });
 
 			var decemberArtistDeadlines = ({
 				"name": `ARTIST (DECEMBER SPECIAL)`,
-				"value": `Hard Deadline - 10th - ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(artist_harddec_notif.nextInvocation(), 'R')}`
-			  })
+				"value": `Hard Deadline - Dec 1st - ${hammerTimeHelper(hol_artist_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_artist_hard_notif.nextInvocation(), 'R')}`
+			  });
+
+			var normalSheetDeadline = ({
+				"name": `CONTRIBUTORS TAB`,
+				"value": `Deadline - 20th - ${hammerTimeHelper(sheet_notif.nextInvocation(), 'F')} ${hammerTimeHelper(sheet_notif.nextInvocation(), 'R')}`
+			});
+
+			var decemberSheetDeadline = ({
+				"name": `CONTRIBUTORS TAB`,
+				"value": `Deadline - 20th - ${hammerTimeHelper(sheetdec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(sheetdec_notif.nextInvocation(), 'R')}`
+			});
 
 			let isNovDec = (new Date().getMonth() === 10 || new Date().getMonth() === 11);
+			let isFeb = (new Date().getMonth() === 1);
 
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
@@ -747,36 +770,36 @@ client.on('interactionCreate', async interaction => {
 				.setTitle('GPOSERS Staff Deadlines')
 				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate and we follow a special schedule for the months of July, November, and December. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
 				.addFields(
+					(isNovDec ? decemberSheetDeadline : normalSheetDeadline),
 					{
 						"name": `GLAM ARTIST`,
-						"value": `Glam Artist Limit Lift - 28th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
-							Soft Deadline - 3rd - ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline - 5th - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}`
+						"value": `Glam Artist Limit Lift - 15th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
+							Hard Deadline - 23rd - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}
+							Revision Deadline - 26th - ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'R')}`
 					},
 					  {
 						"name": `AUTHOR`,
-						"value": `Soft Deadline - 5th - ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'R')}
-							Hard Deadline- 11th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`
+						"value": `Soft Deadline - 25th - ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_soft_notif.nextInvocation(), 'R')}
+							${isFeb ? `Hard Deadline - Feb 28th - ${hammerTimeHelper(auth_hard_feb_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_feb_notif.nextInvocation(), 'R')}` : `Hard Deadline - 30th - ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(auth_hard_notif.nextInvocation(), 'R')}`}`
 					  },
 					  {
 						"name": `PHOTOGRAPHER`,
-						"value": `CC Soft Deadline - 7th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
-							General Soft Deadline- 10th - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
-							CC Hard Deadline - 10th - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
-							Hard Deadline - 13th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
+						"value": `CC Soft Deadline - 27th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
+							CC Hard Deadline - 1st - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
+							General Soft Deadline- 3rd - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
+							Hard Deadline - 8th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
 					  (isNovDec ? decemberArtistDeadlines : normalArtistDeadlines),
 					  {
 						"name": `QA / PROOFREADER`,
-						"value": `Proofreader CC Hard Deadline - 7th - ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'R')}
-							Proofreader Glam of the Month Hard Deadline - 11th - ${hammerTimeHelper(proof_gotm_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_gotm_hard_notif.nextInvocation(), 'R')}
-							Proofreader Hard Deadline - 13th ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}
-							QA CC Photo Hard Deadline - 13th ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}
-							QA Photo Hard Deadline - 15th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}
+						"value": `Proofreader CC Hard Deadline - 28th - ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'R')}
+							Proofreader Hard Deadline - 2nd ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}
+							QA CC Photo Hard Deadline - 4th ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'R')}
+							QA Photo Hard Deadline - 11th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}
 							${isNovDec ?
-								`QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_harddec_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_harddec_notif.nextInvocation(), 'R')}`
-								: `QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`}`
+								`December QA Design Hard Deadline - Dec 18th - ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'R')}`
+								: `QA Design Hard Deadline - 24th - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`}`
 					  }
 				)
 				.setTimestamp()
