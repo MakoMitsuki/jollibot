@@ -491,7 +491,7 @@ var rule_hol_design_first_notif = new schedule.RecurrenceRule();
 // HOLIDAY DESIGNER SOFT DEADLINE - DEC 12TH
 var rule_hol_design_soft_notif = new schedule.RecurrenceRule();
 	rule_hol_design_soft_notif.tz = 'America/New_York';
-	rule_hol_design_soft_notif.month = 12;
+	rule_hol_design_soft_notif.month = 11;
 	rule_hol_design_soft_notif.date = 12;
 	rule_hol_design_soft_notif.hour = 12;
 	rule_hol_design_soft_notif.minute = 0;
@@ -503,7 +503,7 @@ var rule_hol_design_soft_notif = new schedule.RecurrenceRule();
 // HOLIDAY DESIGNER HARD DEADLINE - DEC 15TH
 var rule_hol_design_hard_notif = new schedule.RecurrenceRule();
 	rule_hol_design_hard_notif.tz = 'America/New_York';
-	rule_hol_design_hard_notif.month = 12;
+	rule_hol_design_hard_notif.month = 11;
 	rule_hol_design_hard_notif.date = 15;
 	rule_hol_design_hard_notif.hour = 12;
 	rule_hol_design_hard_notif.minute = 0;
@@ -515,7 +515,7 @@ var rule_hol_design_hard_notif = new schedule.RecurrenceRule();
 // HOLIDAY QA DESIGN HARD DEADLINE - DEC 18TH
 var rule_hol_design_qa_hard_notif = new schedule.RecurrenceRule();
 	rule_hol_design_qa_hard_notif.tz = 'America/New_York';
-	rule_hol_design_qa_hard_notif.month = 12;
+	rule_hol_design_qa_hard_notif.month = 11;
 	rule_hol_design_qa_hard_notif.date = 18;
 	rule_hol_design_qa_hard_notif.hour = 12;
 	rule_hol_design_qa_hard_notif.minute = 0;
@@ -527,7 +527,7 @@ var rule_hol_design_qa_hard_notif = new schedule.RecurrenceRule();
 // HOLIDAY DESIGNER REVISION DEADLINE - DEC 19TH
 var rule_hol_design_rev_hard_notif = new schedule.RecurrenceRule();
 	rule_hol_design_rev_hard_notif.tz = 'America/New_York';
-	rule_hol_design_rev_hard_notif.month = 12;
+	rule_hol_design_rev_hard_notif.month = 11;
 	rule_hol_design_rev_hard_notif.date = 19;
 	rule_hol_design_rev_hard_notif.hour = 12;
 	rule_hol_design_rev_hard_notif.minute = 0;
