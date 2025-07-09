@@ -290,18 +290,6 @@ var rule_glam_rev_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **revision jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your work by the end of the day in the proofreader's channel and your glam's chara file in the glam folder so that the Photographers can finish work.`).catch(console.error);
 	});
 
-// PHOTO CC SOFT DEADLINE - 27TH EARLY MONTH
-var rule_photo_cc_soft_notif = new schedule.RecurrenceRule();
-	rule_photo_cc_soft_notif.tz = 'America/New_York';
-	  rule_photo_cc_soft_notif.month = monthsEarlyNormal;
-	  rule_photo_cc_soft_notif.date = 27;
-	  rule_photo_cc_soft_notif.hour = 12;
-	  rule_photo_cc_soft_notif.minute = 0;
-	  rule_photo_cc_soft_notif.second = 0;
-	  var photo_cc_soft_notif = schedule.scheduleJob(rule_photo_cc_soft_notif, function(){
-		  client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for Community Couture articles is today**. Make sure you have started all Community Couture photography work before the end of the day.`).catch(console.error);
-	  });
-
 // PROOF CC DEADLINE - 28TH EARLY MONTH
 var rule_proof_cc_hard_notif = new schedule.RecurrenceRule();
 	rule_proof_cc_hard_notif.tz = 'America/New_York';
@@ -360,18 +348,6 @@ var rule_proof_hard_notif = new schedule.RecurrenceRule();
 	rule_proof_hard_notif.second = 0;
 	var proof_hard_notif = schedule.scheduleJob(rule_proof_hard_notif, function(){
 	  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for all articles is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
-	});
-
-// PHOTO SOFT DEADLINE - LATE MONTH 3RD
-var rule_photo_soft_notif = new schedule.RecurrenceRule();
-  rule_photo_soft_notif.tz = 'America/New_York';
-	rule_photo_soft_notif.month = monthsLateNormal;
-	rule_photo_soft_notif.date = 3;
-	rule_photo_soft_notif.hour = 12;
-	rule_photo_soft_notif.minute = 0;
-	rule_photo_soft_notif.second = 0;
-	var photo_soft_notif = schedule.scheduleJob(rule_photo_soft_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **soft jolli-deadline for all non-glam articles is today**. Make sure you have started all photography work before the end of the day.`).catch(console.error);
 	});
 
 // QA CC PHOTO DEADLINE - LATE MONTH 4TH
@@ -766,7 +742,7 @@ client.on('interactionCreate', async interaction => {
 				.setColor(0xff0000)
 				.setAuthor({name: 'Jollibot', iconURL: 'https://i.imgur.com/gdb9maz.jpg'})
 				.setTitle('GPOSERS Staff Deadlines')
-				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate and we follow a special schedule for the months of July, November, and December. You would be better off checking our [GPOSERS Calendar](https://teamup.com/kspn5vv6oz93v2bye6)!`)
+				.setDescription(`<:sparklehaps:671438024235679775> Here are the GPOSERS Staff deadlines. Note that some of the dates displayed may or may not be accurate and we follow a special schedule for the months of July, November, and December. You would be better off checking our [GPOSERS Calendar](https://teamup.com/ksy3urantc127obi1z)!`)
 				.addFields(
 					(isNovDec ? decemberSheetDeadline : normalSheetDeadline),
 					{
@@ -782,9 +758,7 @@ client.on('interactionCreate', async interaction => {
 					  },
 					  {
 						"name": `PHOTOGRAPHER`,
-						"value": `CC Soft Deadline - 27th - ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_cc_soft_notif.nextInvocation(), 'R')}
-							CC Hard Deadline - 1st - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
-							General Soft Deadline- 3rd - ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_soft_notif.nextInvocation(), 'R')}
+						"value": `CC Hard Deadline - 1st - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
 							Hard Deadline - 8th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
