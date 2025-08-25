@@ -83,7 +83,7 @@ const monthsCommunityCollection = [1, 3, 6, 8, 10, 11];
 
 const ccol_embed = {
 	"title": `Community Collection submissions for the next issue is now open!`,
-	"description": `Submit **up to two of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
+	"description": `Submit **up to FOUR of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
 	"color": 0x005f73
   }
 
