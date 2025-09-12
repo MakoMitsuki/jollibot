@@ -613,6 +613,10 @@ const commands = [
 	{
 		name: 'test-arrw',
 		description: '[STAFF DISCORD ONLY]'
+	},
+	{
+		name: 'set-arrw',
+		description: '[STAFF DISCORD ONLY]'
 	}
   ];
 
@@ -824,6 +828,14 @@ client.on('interactionCreate', async interaction => {
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
 		}
+	}
+
+	if (interaction.commandName === 'set-arrw') {
+		const item = interaction.options.getString('item');
+    
+		console.log(`User input: ${item}`);
+
+		await interaction.reply(`item set to: ${item}`);
 	}
 
 	if (interaction.commandName === 'jollidance') {
