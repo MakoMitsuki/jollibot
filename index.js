@@ -14,6 +14,8 @@ const client = new Client({
 
 const tenorAPI = process.env.TENOR_API_KEY;
 
+const { loadState, updateState } = require('./stateManager');
+
 /* ================================= SCHEDULE START ================================= */
 
 const channel_staff_announce = process.env.CHANNEL_STAFF_ANNOUNCE;
@@ -148,10 +150,6 @@ var gotm_open = schedule.scheduleJob({month: monthsGOTM, date: 20, hour: 12, min
 
 const monthsARRW = monthsCommunityCollection;
 
-let currARRWTheme = "N/A";
-let currARRWItem = "N/A";
-let lastARWWDateSet = new Date();
-
 // STARTS 5th to the 19th EARLY MONTH
 const arrw_open_embed = {
 	"type": "rich",
@@ -161,7 +159,7 @@ const arrw_open_embed = {
 	"fields": [
 		{
 			"name": "Current Theme and Item",
-			"value": `The theme is **${currARRWTheme}** and the required item is **${currARRWItem}**`,
+			"value": `The theme is **${loadState.theme}** and the required item is **${loadState.item}**`,
 		},
 		{
 			"name": `Submission Format`,
@@ -650,6 +648,7 @@ const commands = [
 client.on('ready', () => {
  	console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setPresence({activities: [{name: 'Overwatch with my best friend Iza'}], status: 'available'});
+	console.log('Current state:', loadState());
 });
 
 client.on('message', async msg => {
@@ -853,9 +852,17 @@ client.on('interactionCreate', async interaction => {
 			
 				console.log(`User input: ${thm} // ${itm}`);
 
-				currARRWItem = itm;
-				currARRWTheme = thm;
-				lastARWWDateSet = new Date();
+				// Load current state
+				console.log('Current state:', loadState());
+
+				// Update state
+				const newState = updateState({
+					item: itm,
+					theme: thm,
+					dateSet: new Date().toISOString()
+				});
+
+				console.log('Updated state:', newState);
 
 				await interaction.reply(`Theme set to ***${thm}*** and item set to ***${itm}***`);
 			}
