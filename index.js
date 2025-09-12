@@ -151,26 +151,29 @@ var gotm_open = schedule.scheduleJob({month: monthsGOTM, date: 20, hour: 12, min
 const monthsARRW = monthsCommunityCollection;
 
 // STARTS 5th to the 19th EARLY MONTH
-const arrw_open_embed = {
-	"type": "rich",
-	"title": "A Realm Reworn submissions now being accepted!",
-	"description": `Submit your best look using our chosen in-game glamour item! All submissions that [meet the rules and requirements](https://discord.com/channels/465931452085829643/1415352452743430164/1415354792015827056) will be included in the upcoming issue of GPOSERS Magazine!`,
-	"color": 0x005f73,
-	"fields": [
-		{
-			"name": "Current Theme and Item",
-			"value": `The theme is **${loadState.theme}** and the required item is **${loadState.item}**`,
-		},
-		{
-			"name": `Submission Format`,
-			"value": `\`\`\`Name/IGN:\nServer (optional):\nBrief description of your glamour (optional):\nExample:\nName: Leeja Llen\nServer: Lamia\nI am addicted to thighboots, and these are no exception!\`\`\``
-		},
-		{
-			"name": "Deadline of submissions",
-			"value": "The 19th of this month."
+const arrw_open_embed = () => {
+	const cst = loadState();
+	return {
+		"type": "rich",
+		"title": "A Realm Reworn submissions now being accepted!",
+		"description": `Submit your best look using our chosen in-game glamour item! All submissions that [meet the rules and requirements](https://discord.com/channels/465931452085829643/1415352452743430164/1415354792015827056) will be included in the upcoming issue of GPOSERS Magazine!`,
+		"color": 0x005f73,
+		"fields": [
+			{
+				"name": "Current Theme and Item",
+				"value": `The theme is **${cst.theme}** and the required item is **${cst.item}**`,
+			},
+			{
+				"name": `Submission Format`,
+				"value": `\`\`\`Name/IGN:\nServer (optional):\nBrief description of your glamour (optional):\nExample:\nName: Leeja Llen\nServer: Lamia\nI am addicted to thighboots, and these are no exception!\`\`\``
+			},
+			{
+				"name": "Deadline of submissions",
+				"value": "The 19th of this month."
 
-		}
-	]
+			}
+		]
+	};
 }
 
 // ============================================= STAFF MEETINGS ========================================
