@@ -616,7 +616,15 @@ const commands = [
 	},
 	{
 		name: 'set-arrw',
-		description: '[STAFF DISCORD ONLY]'
+		description: '[STAFF DISCORD ONLY]',
+		options: [
+			{
+				name: 'item',
+				description: 'Item needed',
+				type: 3, // 3 = STRING
+				required: true
+			}
+		]
 	}
   ];
 
