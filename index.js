@@ -148,8 +148,9 @@ var gotm_open = schedule.scheduleJob({month: monthsGOTM, date: 20, hour: 12, min
 
 const monthsARRW = monthsCommunityCollection;
 
-let currARRWTheme = "Urmom";
-let currARRWItem = "IsGay";
+let currARRWTheme = "N/A";
+let currARRWItem = "N/A";
+let lastARWWDateSet = new Date();
 
 // STARTS 5th to the 19th EARLY MONTH
 const arrw_open_embed = {
@@ -616,11 +617,17 @@ const commands = [
 	},
 	{
 		name: 'set-arrw',
-		description: '[STAFF DISCORD ONLY]',
+		description: '[STAFF DISCORD ONLY] Set next A Realm Reworn Item and Theme',
 		options: [
 			{
+				name: 'theme',
+				description: 'Theme set',
+				type: 3, // 3 = STRING
+				required: true
+			},
+			{
 				name: 'item',
-				description: 'Item needed',
+				description: 'Item set',
 				type: 3, // 3 = STRING
 				required: true
 			}
@@ -839,11 +846,27 @@ client.on('interactionCreate', async interaction => {
 	}
 
 	if (interaction.commandName === 'set-arrw') {
-		const item = interaction.options.getString('item');
-    
-		console.log(`User input: ${item}`);
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			try {
+				const itm = interaction.options.getString('item');
+				const thm = interaction.options.getString('theme');
+			
+				console.log(`User input: ${thm} // ${itm}`);
 
-		await interaction.reply(`item set to: ${item}`);
+				currARRWItem = itm;
+				currARRWTheme = thm;
+				lastARWWDateSet = new Date();
+
+				await interaction.reply(`Theme set to ***${thm}*** and item set to ***${itm}***`);
+			}
+			catch (e) {
+				console.log(e);
+				await interaction.reply(`Error setting theme and item! Try again later or contact Yoolia.`);
+			}
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
 	}
 
 	if (interaction.commandName === 'jollidance') {
