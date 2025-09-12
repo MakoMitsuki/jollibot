@@ -22,6 +22,7 @@ const channel_staff_announce = process.env.CHANNEL_STAFF_ANNOUNCE;
 const channels_weekly_feature = process.env.CHANNEL_WEEKLY_FEATURE;
 const channels_community_collection = process.env.CHANNEL_COMMUNITY_COLLECTION;
 const channels_gotm = process.env.CHANNEL_GLAM_OF_THE_MONTH;
+const channels_arrw = process.env.CHANNEL_ARRW
 
 const staffDiscordId = process.env.STAFF_DISCORD_ID;
 const testDiscordId = process.env.ROBOT_YULIA_SERVER_ID;
@@ -175,6 +176,21 @@ const arrw_open_embed = () => {
 		]
 	};
 }
+
+// ARRW OPEN - 5th EARLY NORMAL
+var arrw_open = schedule.scheduleJob({month: monthsARRW, date: 5, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channels_arrw).send({content: `<@&${contestAlertsPing}>`,  embeds: [arrw_open_embed()] }).catch(console.error); 
+});
+
+// ARRW CLOSE - 19TH EARLY NORMAL
+var arrw_close = schedule.scheduleJob({month: monthsARRW, date: 19, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channels_arrw).send(`<@&${contestAlertsPing}> **[A REALM REWORN SUBMISSIONS NOW CLOSED!] Stay tuned for the next prompt.**`).catch(console.error);
+});
+
+// ARRW EDITOR REMINDER - 1ST EARLY NORMAL
+var arrw_reminder = schedule.scheduleJob({month: monthsARRW, date: 1, hour: 12, minute: 30, tz: 'America/New_York'}, function(){
+  client.channels.cache.get(channel_staff_announce).send(`<@&${staffEditorRole}> The next A Realm Reworn ping will go out on ${hammerTimeHelper(arrw_open.nextInvocation(), 'R')}. Make sure to check if the theme is set correctly with the \`/test-arrw\` command before then.`).catch(console.error); 
+});
 
 // ============================================= STAFF MEETINGS ========================================
 const earlyMeetingMonths = [ 1, 5, 8 ]; // february, june, sep
@@ -613,6 +629,10 @@ const commands = [
 		description: '[STAFF DISCORD ONLY] When is the next Glam of the Month times'
 	},
 	{
+		name: 'when-arrw',
+		description: '[STAFF DISCORD ONLY] When is the next A Realm Reworn times and what is the next prompt'
+	},
+	{
 		name: 'test-arrw',
 		description: '[STAFF DISCORD ONLY]'
 	},
@@ -747,6 +767,18 @@ client.on('interactionCreate', async interaction => {
 			const votetime = gotm_vote.nextInvocation();
 			const closetime = gotm_close.nextInvocation();
 			await interaction.reply(`Your next scheduled Glam of the Month is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now.\nVoting is at ${hammerTimeHelper(votetime, 'F')} which is ${hammerTimeHelper(votetime, 'R')} from now. \nClosing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.`);
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
+	}
+
+	if (interactions.commandName === 'when-arrw') {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			const opentime = arrw_open.nextInvocation();
+			const closetime = arrw_close.nextInvocation();
+			const remindertime = arrw_reminder.nextInvocation();
+			await interaction.reply({content: `Your next scheduled A Realm Reworn opening is at ${hammerTimeHelper(opentime, 'F')} which is ${hammerTimeHelper(opentime, 'R')} from now.\nThe next closing is at ${hammerTimeHelper(closetime, 'F')} which is ${hammerTimeHelper(closetime, 'R')} from now.\nA reminder to the Editors to reset this theme will be given at ${hammerTimeHelper(remindertime, 'F')} which is ${hammerTimeHelper(remindertime, 'R')} from now. \n\nThis is what will show up in the server on the next opening: `, embeds: [arrw_open_embed()]}).catch(console.error);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
