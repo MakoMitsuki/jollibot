@@ -144,6 +144,43 @@ var gotm_open = schedule.scheduleJob({month: monthsGOTM, date: 20, hour: 12, min
   //console.log(`Community Collection opened.`);
 });
 
+// ============================================= REALM REWORN =========================================
+
+const monthsARRW = monthsCommunityCollection;
+
+let currARRWTheme = "Urmom";
+let currARRWItem = "IsGay";
+
+// STARTS 5th to the 19th EARLY MONTH
+const arrw_open_embed = {
+	"type": "rich",
+	"title": "A Realm Reworn submissions now being accepted!",
+	"description": `Submit your best look using our chosen in-game glamour item! All submissions that [meet the rules and requirements](https://discord.com/channels/465931452085829643/1415352452743430164/1415354792015827056) will be included in the upcoming issue of GPOSERS Magazine!`,
+	"color": 0x005f73,
+	"fields": [
+		{
+			"name": "Current Theme and Item",
+			"value": `The theme is **${currARRWTheme}** and the required item is **${currARRWItem}**`,
+		},
+		{
+			"name": `Submission Format`,
+			"value": `\`\`\`Name/IGN:
+				Server (optional):
+				Brief description of your glamour (optional):
+				Example:
+				Name: Leeja Llen 
+				Server:  Lamia
+				I am addicted to thighboots, and these are no exception!
+			\`\`\``
+		},
+		{
+			"name": "Deadline of submissions",
+			"value": "The 19th of this month."
+
+		}
+	]
+}
+
 // ============================================= STAFF MEETINGS ========================================
 const earlyMeetingMonths = [ 1, 5, 8 ]; // february, june, sep
 const lateMeetingMonths = [ 3, 10 ]; // april, nov
@@ -580,6 +617,10 @@ const commands = [
 		name: 'when-gotm',
 		description: '[STAFF DISCORD ONLY] When is the next Glam of the Month times'
 	},
+	{
+		name: 'test-arrw',
+		description: '[STAFF DISCORD ONLY]'
+	}
   ];
 
 (async () => {
@@ -777,6 +818,15 @@ client.on('interactionCreate', async interaction => {
 				.setTimestamp()
 
 			interaction.reply({ embeds: [deadlineEmbed] });
+		}
+		else {
+			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
+		}
+	}
+
+	if (interaction.commandName === 'test-arrw') {
+		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
+			client.channels.cache.get('466296346094338060').send({content: `testing embed`,  embeds: [arrw_open_embed] }).catch(console.error);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
