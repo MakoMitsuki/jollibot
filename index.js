@@ -840,7 +840,7 @@ client.on('interactionCreate', async interaction => {
 
 	if (interaction.commandName === 'test-arrw') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
-			client.channels.cache.get('466296346094338060').send({content: `testing embed`,  embeds: [arrw_open_embed] }).catch(console.error);
+			client.channels.cache.get('466296346094338060').send({content: `testing embed`,  embeds: [arrw_open_embed()] }).catch(console.error);
 		}
 		else {
 			await interaction.reply(`**STOP RIGHT THERE!** You're not allowed to see that!`);
