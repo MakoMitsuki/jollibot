@@ -164,14 +164,7 @@ const arrw_open_embed = {
 		},
 		{
 			"name": `Submission Format`,
-			"value": `\`\`\`Name/IGN:
-			Server (optional):
-			Brief description of your glamour (optional):
-			Example:
-			Name: Leeja Llen 
-			Server:  Lamia
-			I am addicted to thighboots, and these are no exception!
-			\`\`\``
+			"value": `\`\`\`Name/IGN:\nServer (optional):\nBrief description of your glamour (optional):\nExample:\nName: Leeja Llen\nServer: Lamia\nI am addicted to thighboots, and these are no exception!\`\`\``
 		},
 		{
 			"name": "Deadline of submissions",
