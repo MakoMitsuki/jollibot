@@ -503,7 +503,7 @@ var rule_design_rev_hard_notif = new schedule.RecurrenceRule();
 // DESIGNER LIMIT - 20TH EARLY MONTH
 var rule_hol_design_first_notif = new schedule.RecurrenceRule();
   rule_hol_design_first_notif.tz = 'America/New_York';
-	rule_hol_design_first_notif.month = [1, 3, 6, 8, 11]; // normal early months
+	rule_hol_design_first_notif.month = 11; // normal early months
 	rule_hol_design_first_notif.date = 15;
 	rule_hol_design_first_notif.hour = 0;
 	rule_hol_design_first_notif.minute = 1;
@@ -773,7 +773,7 @@ client.on('interactionCreate', async interaction => {
 		}
 	}
 
-	if (interactions.commandName === 'when-arrw') {
+	if (interaction.commandName === 'when-arrw') {
 		if (interaction.guildId === staffDiscordId || interaction.guildId === testDiscordId) {
 			const opentime = arrw_open.nextInvocation();
 			const closetime = arrw_close.nextInvocation();
