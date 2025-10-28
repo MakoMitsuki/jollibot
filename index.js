@@ -86,7 +86,7 @@ const monthsCommunityCollection = [1, 3, 6, 8, 10, 11];
 
 const ccol_embed = {
 	"title": `Community Collection submissions for the next issue is now open!`,
-	"description": `Submit **up to FOUR of your best screenshots** to be featured in the magazine. Remember that **mods/custom poses/NSFW are NOT allowed** to be submitted here.`,
+	"description": `Submit **up to FOUR of your best screenshots or FFXIV-related artworks** to be featured in the magazine. Remember that **modded screenshots/custom poses/NSFW are NOT allowed** to be submitted here.`,
 	"color": 0x005f73
   }
 
@@ -302,6 +302,18 @@ var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **The limit on picking up glam slots has now been removed for the month.**`).catch(console.error);
 	});
 
+// GLAM ARTIST CHECK-IN DEADLINE - 21ST EARLY MONTH
+var rule_glam_checkin_notif = new schedule.RecurrenceRule();
+	rule_glam_checkin_notif.tz = 'America/New_York';
+	rule_glam_checkin_notif.month = monthsEarlyNormal;
+	rule_glam_checkin_notif.date = 21;
+	rule_glam_checkin_notif.hour = 12;
+	rule_glam_checkin_notif.minute = 0;
+	rule_glam_checkin_notif.second = 0;
+	var glam_checkin_notif = schedule.scheduleJob(rule_glam_checkin_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **check-in jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your glams in the glam artist channel by the end of the day for review.`).catch(console.error);
+	});
+
 // GLAM ARTIST HARD DEADLINE - 23RD EARLY MONTH
 var rule_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_glam_hard_notif.tz = 'America/New_York';
@@ -311,7 +323,7 @@ var rule_glam_hard_notif = new schedule.RecurrenceRule();
 	rule_glam_hard_notif.minute = 0;
 	rule_glam_hard_notif.second = 0;
 	var glam_hard_notif = schedule.scheduleJob(rule_glam_hard_notif, function(){
-		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your work by the end of the day in the glam artists channel for review.`).catch(console.error);
+		client.channels.cache.get(channel_staff_announce).send(`<@&${glamArtistPing}> **hard jolli-deadline for CC glamours is today**! If you already haven't, make sure to submit your work in the proofreading QA channel by the end of the day and upload your chara files.`).catch(console.error);
 	});
 
 // AUTHOR SOFT DEADLINE - 25TH EARLY MONTH
@@ -835,6 +847,7 @@ client.on('interactionCreate', async interaction => {
 					{
 						"name": `GLAM ARTIST`,
 						"value": `Glam Artist Limit Lift - 15th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
+							Check-in Deadline - 23rd - ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'R')}
 							Hard Deadline - 23rd - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}
 							Revision Deadline - 26th - ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'R')}`
 					},
@@ -858,7 +871,7 @@ client.on('interactionCreate', async interaction => {
 							QA Photo Hard Deadline - 11th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}
 							${isNovDec ?
 								`December QA Design Hard Deadline - Dec 18th - ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'R')}`
-								: `QA Design Hard Deadline - 24th - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`}`
+								: `QA Design Hard Deadline - 23rd - ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(design_qa_hard_notif.nextInvocation(), 'R')}`}`
 					  }
 				)
 				.setTimestamp()
