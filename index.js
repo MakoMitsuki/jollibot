@@ -338,11 +338,11 @@ var rule_auth_soft_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **soft jolli-deadline is today**. If you have not submitted your work yet for proofreading, you are required to submit your draft documents to the author's channel by the end of the day.`).catch(console.error);
 	});
 
-// GLAM ARTIST REVISION DEADLINE - 26TH EARLY MONTH
+// GLAM ARTIST REVISION DEADLINE - 25TH EARLY MONTH
 var rule_glam_rev_notif = new schedule.RecurrenceRule();
 	rule_glam_rev_notif.tz = 'America/New_York';
 	rule_glam_rev_notif.month = monthsEarlyNormal;
-	rule_glam_rev_notif.date = 26;
+	rule_glam_rev_notif.date = 25;
 	rule_glam_rev_notif.hour = 12;
 	rule_glam_rev_notif.minute = 1;
 	rule_glam_rev_notif.second = 0;
@@ -847,9 +847,9 @@ client.on('interactionCreate', async interaction => {
 					{
 						"name": `GLAM ARTIST`,
 						"value": `Glam Artist Limit Lift - 15th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
-							Check-in Deadline - 23rd - ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'R')}
+							Check-in Deadline - 21st - ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'R')}
 							Hard Deadline - 23rd - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}
-							Revision Deadline - 26th - ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'R')}`
+							Revision Deadline - 25th - ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'R')}`
 					},
 					  {
 						"name": `AUTHOR`,
