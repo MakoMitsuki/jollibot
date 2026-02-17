@@ -46,9 +46,6 @@ const contestAlertsPing = process.env.CONTEST_ALERTS_PING;
 const second_thurs_dates = [6, 7, 8, 9, 10, 11, 12];
 const second_sat_dates = [8, 9, 10, 11, 12, 13, 14];
 
-const first_thurs_dates = [1, 2, 3, 4, 5];
-const first_sat_dates = [1, 2, 3, 4, 5, 6, 7];
-
 const hammerTimeHelper = (d, format) => {
 	try {
 		const epoch = parseInt(d.getTime() / 1000);
@@ -200,21 +197,21 @@ const earlyMeetingMonths = [ 1, 5, 8 ]; // february, june, sep
 const lateMeetingMonths = [ 3, 10 ]; // april, nov
 
 // EARLY
-var early_staff_mtg_start = schedule.scheduleJob({month: earlyMeetingMonths, date: first_sat_dates, dayOfWeek: 6, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var early_staff_mtg_start = schedule.scheduleJob({month: earlyMeetingMonths, date: second_sat_dates, dayOfWeek: 6, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Our <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting is starting now!**\n\nhttps://media.tenor.com/c3pKaYLittEAAAAd/jollibee-chicken-joy.gif`).catch(console.error);
   });
 
-var early_staff_mtg_2ndthurs = schedule.scheduleJob({month: earlyMeetingMonths, date: first_thurs_dates, dayOfWeek: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var early_staff_mtg_2ndthurs = schedule.scheduleJob({month: earlyMeetingMonths, date: second_thurs_dates, dayOfWeek: 4, hour: 10, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(
 		`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting this weekend:** ${hammerTimeHelper(early_staff_mtg_start.nextInvocation(), 'F')} ${hammerTimeHelper(early_staff_mtg_start.nextInvocation(), 'R')}`
 		).catch(console.error);	
 });
 
-var early_staff_mtg_onDayEarly = schedule.scheduleJob({month: earlyMeetingMonths, date: first_sat_dates, dayOfWeek: 6, hour: 5, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var early_staff_mtg_onDayEarly = schedule.scheduleJob({month: earlyMeetingMonths, date: second_sat_dates, dayOfWeek: 6, hour: 5, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting today!** It starts ${hammerTimeHelper(early_staff_mtg_start.nextInvocation(), 'R')} at ${hammerTimeHelper(early_staff_mtg_start.nextInvocation(), 'f')}`).catch(console.error);
 });
 
-var early_staff_mtg_onDayHour = schedule.scheduleJob({month: earlyMeetingMonths, date: first_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
+var early_staff_mtg_onDayHour = schedule.scheduleJob({month: earlyMeetingMonths, date: second_sat_dates, dayOfWeek: 6, hour: 9, minute: 0, second: 0, tz: 'America/New_York'}, function(){
 	client.channels.cache.get(channel_staff_announce).send(`**Reminder: We have a <@&${staffPing}>/<@&${hiatusPing}>-wide jolli-meeting really soon! It's starting ${hammerTimeHelper(early_staff_mtg_start.nextInvocation(), 'R')}!**`).catch(console.error);
 });
 
