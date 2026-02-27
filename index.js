@@ -184,7 +184,7 @@ var arrw_open = schedule.scheduleJob({month: monthsARRW, date: 5, hour: 12, minu
 
 // ARRW CLOSE - 19TH EARLY NORMAL
 var arrw_close = schedule.scheduleJob({month: monthsARRW, date: 19, hour: 0, minute: 30, tz: 'America/New_York'}, function(){
-  client.channels.cache.get(channels_arrw).send(`<@&${contestAlertsPing}> **[A REALM REWORN SUBMISSIONS NOW CLOSED!] Stay tuned for the next prompt.**`).catch(console.error);
+  client.channels.cache.get(channels_arrw).send(`<@&${contestAlertsPing}> **[A REALM REWORN SUBMISSIONS ARE NOW CLOSED!] Stay tuned for the next prompt.**`).catch(console.error);
 });
 
 // ARRW EDITOR REMINDER - 1ST EARLY NORMAL
@@ -386,16 +386,28 @@ var rule_auth_hard_feb_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${authorPing}> **hard jolli-deadline for February is today**. Make sure you have submitted your completed works by the end of the day.`).catch(console.error);
 	});
 
-// CC PHOTO HARD DEADLINE - LATE MONTH 1ST
+// CC PHOTO HARD DEADLINE - LATE MONTH 1ST EXCEPT MARCH ISSUE -> 3RD MARCH
 var rule_cc_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_cc_photo_hard_notif.tz = 'America/New_York';
-	rule_cc_photo_hard_notif.month = monthsLateNormal;
+	rule_cc_photo_hard_notif.month = [0, 4, 7, 9, 10];
 	rule_cc_photo_hard_notif.date = 1;
 	rule_cc_photo_hard_notif.hour = 12;
 	rule_cc_photo_hard_notif.minute = 0;
 	rule_cc_photo_hard_notif.second = 0;
 	var cc_photo_hard_notif = schedule.scheduleJob(rule_cc_photo_hard_notif, function(){
 		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
+	});
+
+// CC PHOTO HARD DEADLINE MARCH (3rd)
+var rule_cc_photo_hard_mar_notif = new schedule.RecurrenceRule();
+	rule_cc_photo_hard_mar_notif.tz = 'America/New_York';
+	rule_cc_photo_hard_mar_notif.month = 2;
+	rule_cc_photo_hard_mar_notif.date = 3;
+	rule_cc_photo_hard_mar_notif.hour = 12;
+	rule_cc_photo_hard_mar_notif.minute = 0;
+	rule_cc_photo_hard_mar_notif.second = 0;
+	var cc_photo_hard_mar_notif = schedule.scheduleJob(rule_cc_photo_hard_mar_notif, function(){
+		client.channels.cache.get(channel_staff_announce).send(`<@&${photographerPing}> **hard jolli-deadline for the March Community Couture articles is today**. Make sure you have submitted all photography work for Community Couture articles by the end of the day.`).catch(console.error);
 	});
 
 // PROOFREADING GENERAL DEADLINE - LATE MONTH 2ND
@@ -410,15 +422,27 @@ var rule_proof_hard_notif = new schedule.RecurrenceRule();
 	  client.channels.cache.get(channel_staff_announce).send(`<@&${proofreaderPing}> **hard jolli-deadline for all articles is today**! Make sure you have finished proofreading all articles by the end of the day.`).catch(console.error);
 	});
 
-// QA CC PHOTO DEADLINE - LATE MONTH 4TH
+// QA CC PHOTO DEADLINE - LATE MONTH 4TH EXCEPT MARCH (5TH)
 var rule_qa_cc_photo_hard_notif = new schedule.RecurrenceRule();
 	rule_qa_cc_photo_hard_notif.tz = 'America/New_York';
-	rule_qa_cc_photo_hard_notif.month = monthsLateNormal;
+	rule_qa_cc_photo_hard_notif.month = [0, 4, 7, 9, 10];
 	rule_qa_cc_photo_hard_notif.date = 4;
 	rule_qa_cc_photo_hard_notif.hour = 12;
 	rule_qa_cc_photo_hard_notif.minute = 0;
 	rule_qa_cc_photo_hard_notif.second = 0;
 	  var qa_cc_photo_hard_notif = schedule.scheduleJob(rule_qa_cc_photo_hard_notif, function(){
+		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all CC photo QA is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
+	  });
+
+// QA CC PHOTO DEADLINE MARCH (5TH)
+var rule_qa_cc_photo_hard_mar_notif = new schedule.RecurrenceRule();
+	rule_qa_cc_photo_hard_mar_notif.tz = 'America/New_York';
+	rule_qa_cc_photo_hard_mar_notif.month = 2;
+	rule_qa_cc_photo_hard_mar_notif.date = 5;
+	rule_qa_cc_photo_hard_mar_notif.hour = 12;
+	rule_qa_cc_photo_hard_mar_notif.minute = 0;
+	rule_qa_cc_photo_hard_mar_notif.second = 0;
+	  var qa_cc_photo_hard_mar_notif = schedule.scheduleJob(rule_qa_cc_photo_hard_mar_notif, function(){
 		  client.channels.cache.get(channel_staff_announce).send(`<@&${qaPing}> **hard jolli-deadline for all CC photo QA is today**! Ensure that all CC photos have **three** QA before the end of the day. Tag your relevant photographer if there are any urgent changes needed.`).catch(console.error);
 	  });
 
@@ -836,6 +860,7 @@ client.on('interactionCreate', async interaction => {
 
 			let isNovDec = (new Date().getMonth() === 10 || new Date().getMonth() === 11);
 			let isFeb = (new Date().getMonth() === 1);
+			let isEarlyMar = (new Date().getMonth() === 2 && new Date().getDate() < 6);
 
 			const deadlineEmbed = new EmbedBuilder()
 				.setColor(0xff0000)
@@ -858,7 +883,7 @@ client.on('interactionCreate', async interaction => {
 					  },
 					  {
 						"name": `PHOTOGRAPHER`,
-						"value": `CC Hard Deadline - 1st - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}
+						"value": `${(isFeb || isEarlyMar) ? `CC Hard Deadline - Mar 3rd ${hammerTimeHelper(cc_photo_hard_mar_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_mar_notif.nextInvocation(), 'R')}` : `CC Hard Deadline - 1st - ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(cc_photo_hard_notif.nextInvocation(), 'R')}`}
 							Hard Deadline - 8th - ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(photo_hard_notif.nextInvocation(), 'R')}`
 					  },
 					  (isNovDec ? decemberDesignerDeadlines : normalDesignerDeadlines),
@@ -867,7 +892,7 @@ client.on('interactionCreate', async interaction => {
 						"name": `QA / PROOFREADER`,
 						"value": `Proofreader CC Hard Deadline - 28th - ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_cc_hard_notif.nextInvocation(), 'R')}
 							Proofreader Hard Deadline - 2nd ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(proof_hard_notif.nextInvocation(), 'R')}
-							QA CC Photo Hard Deadline - 4th ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'R')}
+							${(isFeb || isEarlyMar) ? `QA CC Photo Hard Deadline - Mar 5th ${hammerTimeHelper(qa_cc_photo_hard_mar_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_photo_hard_mar_notif.nextInvocation(), 'R')}` : `QA CC Photo Hard Deadline - 4th ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_cc_photo_hard_notif.nextInvocation(), 'R')}`}
 							QA Photo Hard Deadline - 11th - ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(qa_photo_hard_notif.nextInvocation(), 'R')}
 							${isNovDec ?
 								`December QA Design Hard Deadline - Dec 18th - ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(hol_design_qa_hard_notif.nextInvocation(), 'R')}`
