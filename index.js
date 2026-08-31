@@ -871,7 +871,7 @@ client.on('interactionCreate', async interaction => {
 					(isNovDec ? decemberSheetDeadline : normalSheetDeadline),
 					{
 						"name": `GLAM ARTIST`,
-						"value": `Glam Artist Limit Lift - 15th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
+						"value": `Glam Artist Limit Lift - 17th - ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glamartist_limit_lift_notif.nextInvocation(), 'R')}
 							Check-in Deadline - 21st - ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_checkin_notif.nextInvocation(), 'R')}
 							Hard Deadline - 23rd - ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_hard_notif.nextInvocation(), 'R')}
 							Revision Deadline - 25th - ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'F')} ${hammerTimeHelper(glam_rev_notif.nextInvocation(), 'R')}`
