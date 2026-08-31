@@ -290,11 +290,11 @@ var rule_hol_artist_hard_notif = new schedule.RecurrenceRule();
 const monthsEarlyNormal = [1, 3, 6, 8, 9, 11]; // feb, apr, jul, sept, [oct for non designer stuff], dec
 const monthsLateNormal = [0, 2, 4, 7, 9, 10]; // jan, mar, may, aug, oct, [nov for non designer stuff]
 
-// GLAM ARTIST LIMIT - 15TH EARLY MONTH
+// GLAM ARTIST LIMIT - 17TH EARLY MONTH
 var rule_glamartist_limit_lift_notif = new schedule.RecurrenceRule();
 	rule_glamartist_limit_lift_notif.tz = 'America/New_York';
 	rule_glamartist_limit_lift_notif.month = monthsEarlyNormal;
-	rule_glamartist_limit_lift_notif.date = 15;
+	rule_glamartist_limit_lift_notif.date = 17;
 	rule_glamartist_limit_lift_notif.hour = 0;
 	rule_glamartist_limit_lift_notif.minute = 1;
 	rule_glamartist_limit_lift_notif.second = 0;
