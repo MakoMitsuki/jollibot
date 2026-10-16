@@ -248,16 +248,16 @@ var rule_sheet_notif = new schedule.RecurrenceRule();
 		client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
 	});
 
-// DECEMBER ISSUE THAT PINGS ON OCT 15TH
+// DECEMBER ISSUE THAT PINGS ON OCT 20TH
 var rule_sheetdec_notif = new schedule.RecurrenceRule();
 	rule_sheetdec_notif.tz = 'America/New_York';
 	rule_sheetdec_notif.month = 9;
-	rule_sheetdec_notif.date = 15;
+	rule_sheetdec_notif.date = 20;
 	rule_sheetdec_notif.hour = 0;
 	rule_sheetdec_notif.minute = 0;
 	rule_sheetdec_notif.second = 0;
 	var sheetdec_notif = schedule.scheduleJob(rule_sheetdec_notif, function(){
-	  client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the deadline to sign the contributor's tab for the __December issue__!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
+	  client.channels.cache.get(channel_staff_announce).send(`<@&${staffPing}> <@&${hiatusPing}> **Today is the ACTUAL deadline to sign the contributor's tab for the __December issue__!** Those who have not signed up yet will be in trouble. *Staff on hiatus are also required to do this.*`).catch(console.error);
 	});
 
 // ============================================== ARTIST =============================================
