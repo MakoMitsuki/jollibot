@@ -8,7 +8,7 @@ const fetch = require('node-fetch');
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
 	partials: [Partials.Message, Partials.Channel, Partials.Reaction]
 });
 
@@ -706,21 +706,8 @@ const commands = [
 
 client.on('ready', () => {
  	console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setPresence({activities: [{name: 'Overwatch with my best friend Iza'}], status: 'available'});
+	client.user.setPresence({activities: [{name: 'Eating Chickenjoy with Rice'}], status: 'online'});
 	console.log('Current state:', loadState());
-});
-
-client.on('message', async msg => {
-	try {
-		if (msg.author.bot) return;
-
-		if (msg.content === "+hey") {
-			console.log(msg.content);
-		}
-	} catch (error) {
-		console.log(`SOMETHING WENT WRONG WITH A MESSAGE COMMAND: ${error}`);
-		return;
-	}
 });
 
 // https://discord.js.org/docs/packages/discord.js/14.14.1/Events:Enum#/docs/discord.js/main/class/Client?scrollTo=e-messageReactionRemove
